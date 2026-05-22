@@ -66,22 +66,22 @@ label. Real bios should never be invented under any circumstances.
 IMAGE MANIFEST — use these Webflow CDN URLs (already hosted, all return 200):
 
 Board (5 headshots):
-- Anne-Marie Esler: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699546a176bf5d4e8d486bc1_anne-marie.jpg
-- Matthew Esler: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699517dc75824922aa5497b7_matthew-esler.jpg
-- Gareth Turner: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699523b8048443520bcdfe10_gareth-turner.jpg
-- Peter O'Connell: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6995392e34a6ed7d726f2e09_peter-oconnell.jpg
-- Matt Sheehan: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/69953ee30dbb7f90bf16eabd_matt-sheehan-2023.jpg
+- Anne-Marie Esler: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699546a176bf5d4e8d486bc1_anne-marie.jpg
+- Matthew Esler: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699517dc75824922aa5497b7_matthew-esler.jpg
+- Gareth Turner: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699523b8048443520bcdfe10_gareth-turner.jpg
+- Peter O'Connell: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/6995392e34a6ed7d726f2e09_peter-oconnell.jpg
+- Matt Sheehan: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69953ee30dbb7f90bf16eabd_matt-sheehan-2023.jpg
 
 Leadership Team (4 headshots):
-- Helen Roelofsen: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/69950dbf21bc65020713efab_helen-roelofsen.jpg
-- Brett Canning: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699553829289fe67d59523c8_brett-canning.jpg
-- Rudy Haddad: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699555f26d98951e7f901b19_rudy-haddad.jpg
-- Erin Egan: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/69963d3531bc6e9dc9985058_erin-egan-crop.jpg
+- Helen Roelofsen: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69950dbf21bc65020713efab_helen-roelofsen.jpg
+- Brett Canning: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699553829289fe67d59523c8_brett-canning.jpg
+- Rudy Haddad: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699555f26d98951e7f901b19_rudy-haddad.jpg
+- Erin Egan: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69963d3531bc6e9dc9985058_erin-egan-crop.jpg
 
 Team Spotlight (3 headshots):
-- Simon Dawe: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/69954c938b3a30e2efeadc61_simon-dawe.jpg
-- Josh Marley: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699512e79b5ea6f88d78bf88_josh-marley.jpg
-- Amir Moghami: https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/699635f08eb8418ba375d975_amir-moghami.jpg
+- Simon Dawe: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69954c938b3a30e2efeadc61_simon-dawe.jpg
+- Josh Marley: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699512e79b5ea6f88d78bf88_josh-marley.jpg
+- Amir Moghami: https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699635f08eb8418ba375d975_amir-moghami.jpg
 
 Padua brand (in canonical-nav.html and canonical-footer.html — don't duplicate):
 - Logo: 6576818ef2c374d506d75b90_padua-logo-horizontal.svg
