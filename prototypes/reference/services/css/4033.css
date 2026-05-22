@@ -1,0 +1,79 @@
+.services-section {
+  background: linear-gradient(-45deg, #f56600, #d21433, #ab2178);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.software-hero {
+  background: linear-gradient(45deg, #3b2383, #ab2178);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.services-hero {
+  background: linear-gradient(-45deg, #f56600, #d21433, #ab2178);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.services-heading {
+  background: -webkit-linear-gradient(180deg, #f56600, #d21433, #ab2178);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.software-heading {
+  background: -webkit-linear-gradient(180deg, #3b2383, #ab2178);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.large-number-compare {
+  background: -webkit-linear-gradient(180deg, #720e4b, #ab2178);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

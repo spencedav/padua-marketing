@@ -6,3 +6,5 @@
 .assetsignore
 README.md
 wrangler.json
+prototypes
+prototypes/**
