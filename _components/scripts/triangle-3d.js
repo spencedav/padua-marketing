@@ -398,7 +398,9 @@ async function init() {
      it into a diffuse halo. Sits inside the geometry where faces hide its
      literal shape; only its LIGHT bleeds through.
      -------------------------------------------------------------------------- */
-  const CORE_BASE_INTENSITY = 16.0;
+  // Without bloom postprocessing the emissive doesn't amplify, so we dial
+  // intensity back to a realistic "small bright dot" value.
+  const CORE_BASE_INTENSITY = 5.0;
   const coreGeom = new THREE.IcosahedronGeometry(0.14, 3);
   const coreMat = new THREE.MeshStandardMaterial({
     color: 0x000000,
@@ -410,7 +412,8 @@ async function init() {
   const core = new THREE.Mesh(coreGeom, coreMat);
   root.add(core);
 
-  // Point light at the core — illuminates the inside of the faces.
+  // Point light at the core — illuminates the inside of the faces. This is
+  // what gives the "lit from within" feel since we no longer have bloom.
   const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 26, 7, 1.6);
   coreLight.position.set(0, 0, 0);
   root.add(coreLight);
@@ -461,48 +464,15 @@ async function init() {
   scene.add(shadowPlane);
 
   /* --------------------------------------------------------------------------
-     EffectComposer + UnrealBloomPass — the "real" glow effect. Loaded
-     dynamically and wrapped in try/catch so any addon failure falls back
-     to plain rendering.
+     No bloom postprocessing — UnrealBloomPass corrupts canvas alpha which
+     produces a visible dark rectangle ("box") around the pyramid. Instead we
+     use a CSS filter: drop-shadow on the canvas element (see CSS in
+     software.html). Drop-shadow follows the alpha-defined pyramid silhouette
+     rather than the canvas rectangle, so the halo appears around the form
+     itself and the canvas is fully transparent everywhere else.
      -------------------------------------------------------------------------- */
-  let composer = null;
-  let bloomPass = null;
-  try {
-    const [
-      { EffectComposer },
-      { RenderPass },
-      { UnrealBloomPass },
-      { OutputPass },
-    ] = await Promise.all([
-      import('three/addons/postprocessing/EffectComposer.js'),
-      import('three/addons/postprocessing/RenderPass.js'),
-      import('three/addons/postprocessing/UnrealBloomPass.js'),
-      import('three/addons/postprocessing/OutputPass.js'),
-    ]);
-    // RGBAFormat + HalfFloatType render target preserves alpha through the
-    // bloom pipeline, so the section bg shows through where the pyramid isn't.
-    const rt = new THREE.WebGLRenderTarget(
-      mount.clientWidth || 320,
-      mount.clientHeight || 320,
-      {
-        type: THREE.HalfFloatType,
-        format: THREE.RGBAFormat,
-        colorSpace: THREE.LinearSRGBColorSpace,
-      }
-    );
-    composer = new EffectComposer(renderer, rt);
-    composer.addPass(new RenderPass(scene, camera));
-    bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(mount.clientWidth || 320, mount.clientHeight || 320),
-      0.6,    // strength — lower because the dark bg already amplifies perceived brightness
-      0.85,   // radius — wider spread for that hazy halo
-      0.25    // threshold — only the bright bits (core, edges, text glow) bloom
-    );
-    composer.addPass(bloomPass);
-    composer.addPass(new OutputPass());
-  } catch (err) {
-    console.warn('[padua-tri3d] bloom unavailable, falling back to plain render', err);
-  }
+  const composer = null;
+  const bloomPass = null;
 
   /* --------------------------------------------------------------------------
      Sizing
@@ -511,7 +481,6 @@ async function init() {
     const w = mount.clientWidth || 320;
     const h = mount.clientHeight || 320;
     renderer.setSize(w, h, false);
-    if (composer) composer.setSize(w, h);
     camera.aspect = w / Math.max(1, h);
     camera.updateProjectionMatrix();
   }
@@ -574,31 +543,20 @@ async function init() {
   canvas.addEventListener('pointerdown', onPress);
 
   /* --------------------------------------------------------------------------
-     Visibility (pause when off-screen)
-     -------------------------------------------------------------------------- */
-  let visible = true;
-  if (window.IntersectionObserver) {
-    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0 }).observe(mount);
-  }
-
-  /* --------------------------------------------------------------------------
-     Animation
+     Animation (always runs — removed IntersectionObserver because it was
+     occasionally getting stuck in the not-visible state on this layout).
      -------------------------------------------------------------------------- */
   const clock = new THREE.Clock();
   function tick() {
     requestAnimationFrame(tick);
-    if (!visible) return;
     const dt = Math.min(0.05, clock.getDelta());
 
-    // Decay the click-flash and apply it to emissive + bloom
+    // Decay the click-flash and apply it to emissive + point light
     flash *= 0.92;
     if (flash < 0.001) flash = 0;
     const breathe = !reduceMotion ? (Math.sin(clock.elapsedTime * 1.2) * 0.08 + 1) : 1;
     coreMat.emissiveIntensity = CORE_BASE_INTENSITY * breathe * (1 + flash * 1.8);
-    coreLight.intensity = 22 * breathe * (1 + flash * 1.6);
-    if (bloomPass) {
-      bloomPass.strength = 0.6 * breathe + flash * 0.5;
-    }
+    coreLight.intensity = 26 * breathe * (1 + flash * 1.6);
 
     if (targetY !== null) {
       const delta = shortestDelta(root.rotation.y, targetY);
@@ -611,8 +569,7 @@ async function init() {
     core.rotation.y -= dt * 0.6;
     core.rotation.x += dt * 0.3;
 
-    if (composer) composer.render();
-    else renderer.render(scene, camera);
+    renderer.render(scene, camera);
   }
   tick();
 }

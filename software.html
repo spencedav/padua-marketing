@@ -539,6 +539,13 @@ h2.section-title em {
 #padua-tri3d canvas {
   width: 100% !important;
   height: 100% !important;
+  /* CSS-driven halo replaces WebGL bloom. drop-shadow follows the canvas's
+     alpha-defined silhouette so the glow appears around the pyramid itself,
+     not around the canvas rectangle — true transparent integration. */
+  filter:
+    drop-shadow(0 0 14px rgba(255, 61, 139, 0.55))
+    drop-shadow(0 0 38px rgba(255, 61, 139, 0.35))
+    drop-shadow(0 0 80px rgba(106, 50, 180, 0.30));
 }
 
 @media (max-width: 900px) {
