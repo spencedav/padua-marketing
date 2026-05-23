@@ -22,6 +22,7 @@
 <meta name="twitter:image" content="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg">
 
 <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!--
@@ -1342,6 +1343,622 @@ body.diff-option-b .diff-card-stat-row { display: none; }
       </div>
     </div>
   </div>
+</section>
+
+<!-- =====================================================================
+     METHODOLOGY REVEAL
+     Scroll-driven, full-bleed sequence: Discover → Compare → Recommend → Review.
+     One sticky stage inside a ~500vh track (4 beats + 1 outro).
+     Modern path: CSS scroll-driven animations (animation-timeline: scroll()).
+     Fallback: IntersectionObserver toggles data-active on .mr-stage.
+     Mobile: collapses to a vertical scroll-snap stack (no sticky).
+     ===================================================================== -->
+<section class="methodology-reveal" aria-label="Our four-stage methodology">
+  <style>
+    .methodology-reveal {
+      --mr-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --mr-chip-opacity: 0.7;
+      position: relative;
+      background: var(--ink);
+      color: var(--text-on-dark);
+    }
+    .methodology-reveal .mr-track {
+      position: relative;
+      height: 500vh; /* 4 beats + outro, each ~100vh */
+    }
+    .methodology-reveal .mr-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      background: var(--ink);
+      display: grid;
+      place-items: center;
+    }
+    /* Stipple to match .hero::before */
+    .methodology-reveal .mr-stage::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
+        radial-gradient(1px 1px at 75% 18%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 45% 12%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 90% 38%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(1px 1px at 12% 72%, rgba(255,255,255,0.25), transparent),
+        radial-gradient(1px 1px at 62% 88%, rgba(255,255,255,0.2), transparent);
+      pointer-events: none;
+    }
+
+    /* The four words. All start centred; transforms move them. */
+    .methodology-reveal .mr-word {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      /* Optical centring: translate(-50%, -50%) plus a small -0.08em nudge to
+         seat cap-height-to-baseline rather than bounding box. */
+      transform: translate(-50%, calc(-50% - 0.08em)) scale(1);
+      transform-origin: 50% 50%;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(96px, 14vw, 220px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      font-variation-settings: "opsz" 72;
+      white-space: nowrap;
+      opacity: 0;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+    .methodology-reveal .mr-word[data-stage="discover"]  { color: var(--discover); }
+    .methodology-reveal .mr-word[data-stage="compare"]   { color: var(--compare); }
+    .methodology-reveal .mr-word[data-stage="recommend"] { color: var(--recommend); }
+    .methodology-reveal .mr-word[data-stage="review"]    { color: var(--review); }
+
+    /* Description that sits under the active word. */
+    .methodology-reveal .mr-desc {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + clamp(80px, 10vw, 140px));
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--text-on-dark-mid);
+      max-width: 48ch;
+      width: calc(100% - 64px);
+      text-align: center;
+      opacity: 0;
+      will-change: opacity;
+      pointer-events: none;
+    }
+
+    /* Chip-state positions. Each "slot" is a coordinate the active word
+       transitions out to once superseded. Translate values are computed
+       relative to centre (the word's resting position). */
+    /* Slot 1: top-left  -- discover after beat 1 */
+    /* Slot 2: top-right -- compare after beat 2  */
+    /* Slot 3: top-left-inner / row position -- recommend after beat 3 */
+    /* In beat 4 outro: all three prior words sit in a row across the top. */
+
+    /* ----- OUTRO ----- */
+    .methodology-reveal .mr-outro {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+    }
+    .methodology-reveal .mr-outro-inner {
+      text-align: center;
+      width: 100%;
+      max-width: var(--max);
+      padding: 0 32px;
+    }
+    .methodology-reveal .mr-outro-line {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: clamp(12px, 2vw, 28px);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(32px, 5vw, 72px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-variation-settings: "opsz" 72;
+      position: relative;
+    }
+    .methodology-reveal .mr-outro-line span[data-stage="discover"]  { color: var(--discover); }
+    .methodology-reveal .mr-outro-line span[data-stage="compare"]   { color: var(--compare); }
+    .methodology-reveal .mr-outro-line span[data-stage="recommend"] { color: var(--recommend); }
+    .methodology-reveal .mr-outro-line span[data-stage="review"]    { color: var(--review); }
+    .methodology-reveal .mr-outro-underline {
+      display: block;
+      height: 3px;
+      width: 100%;
+      max-width: 880px;
+      margin: 18px auto 0;
+      background: var(--spectrum);
+      transform-origin: left center;
+      transform: scaleX(0);
+      will-change: transform;
+    }
+    .methodology-reveal .mr-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 38px;
+      padding: 14px 26px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--text-on-dark);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      background: transparent;
+      transition: background 320ms var(--mr-ease), border-color 320ms var(--mr-ease), transform 320ms var(--mr-ease);
+      opacity: 0;
+      will-change: opacity, transform;
+    }
+    .methodology-reveal .mr-cta:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.45);
+    }
+    .methodology-reveal .mr-cta .arrow {
+      display: inline-block;
+      transition: transform 320ms var(--mr-ease);
+    }
+    .methodology-reveal .mr-cta:hover .arrow { transform: translateX(4px); }
+
+    /* =============================================================
+       MODERN PATH — CSS scroll-driven animations.
+       Track sets the view-timeline; words/desc/outro animate against it.
+       Each beat occupies 20% of the track (5 beats total: 4 + outro).
+       ============================================================= */
+    @supports (animation-timeline: scroll()) {
+      .methodology-reveal .mr-track {
+        view-timeline-name: --mr-scroll;
+        view-timeline-axis: block;
+      }
+
+      /* DISCOVER: visible centre during 0-20%, shrinks to chip TL 20-40%,
+         stays as chip 40-100%. */
+      .methodology-reveal .mr-word[data-stage="discover"] {
+        animation: mr-discover linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-discover {
+        0%   { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.02); }
+        6%   { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        20%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        /* Beat 2: shrink and slide to top-left chip */
+        26%  { opacity: var(--mr-chip-opacity); transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1); }
+        80%  { opacity: var(--mr-chip-opacity); transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1); }
+        /* Outro: fade out — outro layer takes over */
+        86%  { opacity: 0; transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1); }
+        100% { opacity: 0; transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1); }
+      }
+
+      /* COMPARE: hidden 0-20%, centre 20-40%, chip TR 40-80%, fade out */
+      .methodology-reveal .mr-word[data-stage="compare"] {
+        animation: mr-compare linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-compare {
+        0%   { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.05); }
+        20%  { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.05); }
+        26%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        40%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        46%  { opacity: var(--mr-chip-opacity); transform: translate(calc(50vw - 100px - 100%), calc(-50vh + 60px)) scale(0.1); }
+        80%  { opacity: var(--mr-chip-opacity); transform: translate(calc(50vw - 100px - 100%), calc(-50vh + 60px)) scale(0.1); }
+        86%  { opacity: 0; transform: translate(calc(50vw - 100px - 100%), calc(-50vh + 60px)) scale(0.1); }
+        100% { opacity: 0; transform: translate(calc(50vw - 100px - 100%), calc(-50vh + 60px)) scale(0.1); }
+      }
+
+      /* RECOMMEND: hidden 0-40%, centre 40-60%, chip 60-80%, fade out */
+      .methodology-reveal .mr-word[data-stage="recommend"] {
+        animation: mr-recommend linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-recommend {
+        0%   { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.05); }
+        40%  { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.05); }
+        46%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        60%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        /* Slide to a middle-left position in beat 4's chip row */
+        66%  { opacity: var(--mr-chip-opacity); transform: translate(calc(-16vw - 50%), calc(-50vh + 60px)) scale(0.1); }
+        80%  { opacity: var(--mr-chip-opacity); transform: translate(calc(-16vw - 50%), calc(-50vh + 60px)) scale(0.1); }
+        86%  { opacity: 0; transform: translate(calc(-16vw - 50%), calc(-50vh + 60px)) scale(0.1); }
+        100% { opacity: 0; transform: translate(calc(-16vw - 50%), calc(-50vh + 60px)) scale(0.1); }
+      }
+
+      /* REVIEW: hidden 0-60%, centre 60-80%, fade out for outro */
+      .methodology-reveal .mr-word[data-stage="review"] {
+        animation: mr-review linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-review {
+        0%   { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.05); }
+        60%  { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(1.05); }
+        66%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        80%  { opacity: 1; transform: translate(-50%, calc(-50% - 0.08em)) scale(1); }
+        86%  { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(0.9); }
+        100% { opacity: 0; transform: translate(-50%, calc(-50% - 0.08em)) scale(0.9); }
+      }
+
+      /* Descriptions — each fades in/out alongside its word's centre beat */
+      .methodology-reveal .mr-desc[data-for="discover"]  { animation: mr-desc-1 linear both; animation-timeline: --mr-scroll; }
+      .methodology-reveal .mr-desc[data-for="compare"]   { animation: mr-desc-2 linear both; animation-timeline: --mr-scroll; }
+      .methodology-reveal .mr-desc[data-for="recommend"] { animation: mr-desc-3 linear both; animation-timeline: --mr-scroll; }
+      .methodology-reveal .mr-desc[data-for="review"]    { animation: mr-desc-4 linear both; animation-timeline: --mr-scroll; }
+      @keyframes mr-desc-1 { 0%,3%{opacity:0} 10%,18%{opacity:1} 22%,100%{opacity:0} }
+      @keyframes mr-desc-2 { 0%,23%{opacity:0} 30%,38%{opacity:1} 42%,100%{opacity:0} }
+      @keyframes mr-desc-3 { 0%,43%{opacity:0} 50%,58%{opacity:1} 62%,100%{opacity:0} }
+      @keyframes mr-desc-4 { 0%,63%{opacity:0} 70%,78%{opacity:1} 82%,100%{opacity:0} }
+
+      /* Outro layer */
+      .methodology-reveal .mr-outro {
+        animation: mr-outro-fade linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-outro-fade {
+        0%, 82% { opacity: 0; }
+        88%     { opacity: 1; }
+        100%    { opacity: 1; }
+      }
+      .methodology-reveal .mr-outro-underline {
+        animation: mr-underline linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-underline {
+        0%, 86%  { transform: scaleX(0); }
+        96%, 100%{ transform: scaleX(1); }
+      }
+      .methodology-reveal .mr-cta {
+        animation: mr-cta-in linear both;
+        animation-timeline: --mr-scroll;
+      }
+      @keyframes mr-cta-in {
+        0%, 92%   { opacity: 0; transform: translateY(8px); }
+        100%      { opacity: 1; transform: translateY(0); }
+      }
+    }
+
+    /* =============================================================
+       FALLBACK PATH — JS toggles data-active="1|2|3|4|outro" on .mr-stage.
+       Same transforms, transition-based instead of scroll-bound.
+       ============================================================= */
+    @supports not (animation-timeline: scroll()) {
+      .methodology-reveal .mr-word,
+      .methodology-reveal .mr-desc,
+      .methodology-reveal .mr-outro,
+      .methodology-reveal .mr-outro-underline,
+      .methodology-reveal .mr-cta {
+        transition: opacity 700ms var(--mr-ease), transform 900ms var(--mr-ease);
+      }
+
+      /* Default (active=1): discover centre, others hidden */
+      .methodology-reveal .mr-stage[data-active="1"] .mr-word[data-stage="discover"]  { opacity: 1; }
+      .methodology-reveal .mr-stage[data-active="1"] .mr-desc[data-for="discover"]    { opacity: 1; }
+
+      /* active=2: discover -> TL chip, compare centre */
+      .methodology-reveal .mr-stage[data-active="2"] .mr-word[data-stage="discover"]  {
+        opacity: var(--mr-chip-opacity);
+        transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1);
+      }
+      .methodology-reveal .mr-stage[data-active="2"] .mr-word[data-stage="compare"]   { opacity: 1; }
+      .methodology-reveal .mr-stage[data-active="2"] .mr-desc[data-for="compare"]     { opacity: 1; }
+
+      /* active=3: discover TL, compare TR, recommend centre */
+      .methodology-reveal .mr-stage[data-active="3"] .mr-word[data-stage="discover"]  {
+        opacity: var(--mr-chip-opacity);
+        transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1);
+      }
+      .methodology-reveal .mr-stage[data-active="3"] .mr-word[data-stage="compare"]   {
+        opacity: var(--mr-chip-opacity);
+        transform: translate(calc(50vw - 100px - 100%), calc(-50vh + 60px)) scale(0.1);
+      }
+      .methodology-reveal .mr-stage[data-active="3"] .mr-word[data-stage="recommend"] { opacity: 1; }
+      .methodology-reveal .mr-stage[data-active="3"] .mr-desc[data-for="recommend"]   { opacity: 1; }
+
+      /* active=4: three chips along top, review centre */
+      .methodology-reveal .mr-stage[data-active="4"] .mr-word[data-stage="discover"]  {
+        opacity: var(--mr-chip-opacity);
+        transform: translate(calc(-50vw + 100px), calc(-50vh + 60px)) scale(0.1);
+      }
+      .methodology-reveal .mr-stage[data-active="4"] .mr-word[data-stage="compare"]   {
+        opacity: var(--mr-chip-opacity);
+        transform: translate(calc(50vw - 100px - 100%), calc(-50vh + 60px)) scale(0.1);
+      }
+      .methodology-reveal .mr-stage[data-active="4"] .mr-word[data-stage="recommend"] {
+        opacity: var(--mr-chip-opacity);
+        transform: translate(calc(-16vw - 50%), calc(-50vh + 60px)) scale(0.1);
+      }
+      .methodology-reveal .mr-stage[data-active="4"] .mr-word[data-stage="review"]    { opacity: 1; }
+      .methodology-reveal .mr-stage[data-active="4"] .mr-desc[data-for="review"]      { opacity: 1; }
+
+      /* active=outro: outro layer up, words hidden */
+      .methodology-reveal .mr-stage[data-active="outro"] .mr-word { opacity: 0; }
+      .methodology-reveal .mr-stage[data-active="outro"] .mr-outro            { opacity: 1; }
+      .methodology-reveal .mr-stage[data-active="outro"] .mr-outro-underline  {
+        transform: scaleX(1);
+        transition-delay: 200ms;
+        transition-duration: 800ms;
+      }
+      .methodology-reveal .mr-stage[data-active="outro"] .mr-cta {
+        opacity: 1;
+        transition-delay: 600ms;
+      }
+    }
+
+    /* =============================================================
+       REDUCED MOTION — flat 2x2 grid, no scroll, no animation
+       ============================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      .methodology-reveal .mr-track { height: auto; }
+      .methodology-reveal .mr-stage {
+        position: relative;
+        height: auto;
+        min-height: auto;
+        padding: 96px 32px;
+        display: block;
+      }
+      .methodology-reveal .mr-stage::before { display: none; }
+      .methodology-reveal .mr-grid-rm {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px 48px;
+        max-width: var(--max);
+        margin: 0 auto;
+      }
+      .methodology-reveal .mr-word,
+      .methodology-reveal .mr-desc,
+      .methodology-reveal .mr-outro,
+      .methodology-reveal .mr-outro-underline,
+      .methodology-reveal .mr-cta {
+        animation: none !important;
+        transition: none !important;
+      }
+      .methodology-reveal .mr-word {
+        position: static;
+        opacity: 1;
+        transform: none;
+        font-size: clamp(56px, 9vw, 110px);
+        margin-bottom: 12px;
+        display: block;
+      }
+      .methodology-reveal .mr-desc {
+        position: static;
+        transform: none;
+        opacity: 1;
+        width: auto;
+        max-width: 42ch;
+        text-align: left;
+        margin: 0;
+      }
+      .methodology-reveal .mr-rm-cell { display: block; }
+      .methodology-reveal .mr-outro {
+        position: static;
+        opacity: 1;
+        margin-top: 72px;
+        padding-top: 56px;
+        border-top: 1px solid var(--line-dark);
+      }
+      .methodology-reveal .mr-outro-underline { transform: scaleX(1); }
+      .methodology-reveal .mr-cta { opacity: 1; transform: none; }
+    }
+
+    /* Hide the reduced-motion grid for everyone else */
+    @media not (prefers-reduced-motion: reduce) {
+      .methodology-reveal .mr-grid-rm { display: contents; }
+    }
+
+    /* =============================================================
+       RESPONSIVE — match the v3 breakpoints (991 / 767 / 479)
+       ============================================================= */
+    @media (max-width: 991px) {
+      .methodology-reveal .mr-desc { font-size: 17px; }
+    }
+
+    /* Mobile: vertical stack, no sticky */
+    @media (max-width: 767px) {
+      .methodology-reveal .mr-track {
+        height: auto;
+        scroll-snap-type: y proximity;
+      }
+      .methodology-reveal .mr-stage {
+        position: static;
+        height: auto;
+        display: block;
+        padding: 0;
+      }
+      .methodology-reveal .mr-stage::before {
+        position: absolute;
+        height: 100%;
+      }
+      .methodology-reveal .mr-word,
+      .methodology-reveal .mr-desc {
+        animation: none !important;
+        transition: none !important;
+      }
+      .methodology-reveal .mr-word {
+        position: relative;
+        left: auto; top: auto;
+        transform: none !important;
+        opacity: 1 !important;
+        font-size: clamp(64px, 16vw, 120px);
+        text-align: center;
+        display: block;
+        padding: 0 24px;
+      }
+      .methodology-reveal .mr-desc {
+        position: relative;
+        left: auto; top: auto;
+        transform: none !important;
+        opacity: 1 !important;
+        margin: 14px auto 0;
+        padding: 0 24px;
+        width: auto;
+        max-width: 38ch;
+      }
+      .methodology-reveal .mr-mobile-panel {
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 56px 0;
+        scroll-snap-align: start;
+        position: relative;
+      }
+      .methodology-reveal .mr-outro {
+        position: relative;
+        inset: auto;
+        opacity: 1 !important;
+        padding: 64px 24px 80px;
+        display: block;
+      }
+      .methodology-reveal .mr-outro-line {
+        font-size: clamp(28px, 7vw, 44px);
+      }
+      .methodology-reveal .mr-outro-underline {
+        transform: scaleX(1) !important;
+      }
+      .methodology-reveal .mr-cta { opacity: 1 !important; transform: none !important; }
+    }
+
+    @media (max-width: 479px) {
+      .methodology-reveal .mr-word { font-size: clamp(56px, 18vw, 96px); }
+      .methodology-reveal .mr-desc { font-size: 16px; }
+    }
+
+    /* Tighten reduced-motion 2x2 on small screens */
+    @media (prefers-reduced-motion: reduce) and (max-width: 767px) {
+      .methodology-reveal .mr-grid-rm { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+
+  <div class="mr-track">
+    <div class="mr-stage" data-active="1">
+
+      <!-- Reduced-motion / mobile wrapper. On desktop with motion it acts as
+           display:contents so absolute positioning works as expected. -->
+      <div class="mr-grid-rm">
+
+        <div class="mr-mobile-panel mr-rm-cell">
+          <div class="mr-word" data-stage="discover">Discover.</div>
+          <div class="mr-desc" data-for="discover">
+            We start by understanding the client. Goals, circumstances, risk profile, what success actually looks like.
+          </div>
+        </div>
+
+        <div class="mr-mobile-panel mr-rm-cell">
+          <div class="mr-word" data-stage="compare">Compare.</div>
+          <div class="mr-desc" data-for="compare">
+            We model alternatives side by side. Products, structures, scenarios — measured against the client's goals.
+          </div>
+        </div>
+
+        <div class="mr-mobile-panel mr-rm-cell">
+          <div class="mr-word" data-stage="recommend">Recommend.</div>
+          <div class="mr-desc" data-for="recommend">
+            A clear, defensible strategy. Documented, compliant, and built to be understood — not just delivered.
+          </div>
+        </div>
+
+        <div class="mr-mobile-panel mr-rm-cell">
+          <div class="mr-word" data-stage="review">Review.</div>
+          <div class="mr-desc" data-for="review">
+            Advice is a relationship, not a transaction. We review, refine, and keep the strategy current as life changes.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Outro -->
+      <div class="mr-outro" aria-hidden="false">
+        <div class="mr-outro-inner">
+          <div class="mr-outro-line">
+            <span data-stage="discover">Discover.</span>
+            <span data-stage="compare">Compare.</span>
+            <span data-stage="recommend">Recommend.</span>
+            <span data-stage="review">Review.</span>
+          </div>
+          <span class="mr-outro-underline" aria-hidden="true"></span>
+          <a class="mr-cta" href="/ready-set-go">
+            See how it works <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Fallback: only runs when CSS scroll-driven animations aren't supported
+    // (Safari, Firefox as of 2026). IntersectionObserver toggles
+    // data-active on .mr-stage at scroll positions matching each beat.
+    (function () {
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var isMobile = window.matchMedia('(max-width: 767px)').matches;
+      var supportsScrollTimeline = (typeof CSS !== 'undefined') &&
+        CSS.supports && CSS.supports('animation-timeline: scroll()');
+
+      if (prefersReduced || isMobile || supportsScrollTimeline) return;
+
+      var section = document.currentScript.closest('.methodology-reveal');
+      if (!section) return;
+      var track = section.querySelector('.mr-track');
+      var stage = section.querySelector('.mr-stage');
+      if (!track || !stage) return;
+
+      // 5 beats (1..4 + outro) over the track height. Compute thresholds
+      // from the track's progress through the viewport.
+      function update() {
+        var rect = track.getBoundingClientRect();
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        // Progress: 0 when track top hits viewport top, 1 when track bottom
+        // reaches viewport bottom (i.e., sticky stage has completed its run).
+        var total = rect.height - vh;
+        if (total <= 0) { stage.setAttribute('data-active', '1'); return; }
+        var scrolled = Math.min(Math.max(-rect.top, 0), total);
+        var p = scrolled / total; // 0..1
+
+        var active;
+        if      (p < 0.20) active = '1';
+        else if (p < 0.40) active = '2';
+        else if (p < 0.60) active = '3';
+        else if (p < 0.80) active = '4';
+        else               active = 'outro';
+
+        if (stage.getAttribute('data-active') !== active) {
+          stage.setAttribute('data-active', active);
+        }
+      }
+
+      var ticking = false;
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            update();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      update();
+    })();
+  </script>
 </section>
 
 <!-- =====================================================================
