@@ -24,6 +24,7 @@ const PADUA = {
   discover:  '#4a308c',
   compare:   '#ab2178',
   recommend: '#eb2e4d',
+  review:    '#f59436',
 
   // Cube-aesthetic palette
   faceBase:    '#1f1430',  // cool dark purple-blue base for every face
@@ -32,6 +33,17 @@ const PADUA = {
   edge:        '#ff88cc',  // edge highlight color
   ink:         '#0a0612',
 };
+
+// Orb color cycle: full Padua brand spectrum (purple → pink → red → orange).
+// The orb (and the inner point light) tween between adjacent colors with a
+// cycle period of ~12s, then wrap.
+const ORB_PALETTE = [
+  new THREE.Color(PADUA.discover),
+  new THREE.Color(PADUA.compare),
+  new THREE.Color(PADUA.recommend),
+  new THREE.Color(PADUA.review),
+];
+const ORB_CYCLE_PERIOD_SEC = 12;
 
 const FACE_ANGLE_OFFSET = -0.42;  // ~24° offset so hover lands a 3/4 view, not flat-on
 
@@ -360,10 +372,11 @@ async function init() {
   canvas.style.cursor = 'pointer';
   mount.appendChild(canvas);
 
-  // -- scene + camera — steeper top-down view, more "looking down at it" like the cube ref
+  // -- scene + camera — steeper top-down view + pulled back so the pyramid
+  //    sits comfortably inside the stage (corners weren't being clipped).
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-  camera.position.set(0, 3.8, 5.6);
+  camera.position.set(0, 4.4, 6.6);
   camera.lookAt(0, -0.4, 0);
 
   // Transparent clear so the section bg shows through the canvas
@@ -437,56 +450,50 @@ async function init() {
   root.add(pyramid);
   scene.add(root);
 
-  // Edge lines — brought back to bright. Brief #3: edges should be the
-  // brightest thing on the object, hot-pink, catching the CSS bloom.
+  // Edge lines — toned down so the inner orb is clearly THE light source,
+  // not the silhouette. Faint pink rim, just enough to define the facets.
   const edgeGeom = new THREE.EdgesGeometry(geom, 1);
   const edgeMat = new THREE.LineBasicMaterial({
     color: new THREE.Color(PADUA.edge),
     transparent: true,
-    opacity: 0.9,
+    opacity: 0.22,
   });
   const edgeLines = new THREE.LineSegments(edgeGeom, edgeMat);
   pyramid.add(edgeLines);
 
   /* --------------------------------------------------------------------------
-     Apex star — small bright sphere + soft glow halo at the top of the
-     pyramid. Brief #4: the apex should be a focal-point light, not a
-     terminating geometry point.
+     INNER ORB — the light source inside the form. A camera-facing Sprite
+     with a tight bright-white core fading through magenta. Rendered before
+     the pyramid (renderOrder -1, depthTest off) so the pyramid faces sit
+     in front of it; the faces' transmission picks up the orb color and
+     makes the light feel like it's emanating from within.
      -------------------------------------------------------------------------- */
-  const apexY = HEIGHT / 2;
+  const orbCv = document.createElement('canvas');
+  orbCv.width = orbCv.height = 256;
+  const octx = orbCv.getContext('2d');
+  const orbGrad = octx.createRadialGradient(128, 128, 0, 128, 128, 128);
+  orbGrad.addColorStop(0,    'rgba(255, 255, 255, 1.0)');
+  orbGrad.addColorStop(0.06, 'rgba(255, 230, 245, 0.95)');
+  orbGrad.addColorStop(0.18, 'rgba(255, 130, 195, 0.80)');
+  orbGrad.addColorStop(0.40, 'rgba(255, 61, 139, 0.50)');
+  orbGrad.addColorStop(0.75, 'rgba(170, 60, 180, 0.18)');
+  orbGrad.addColorStop(1,    'rgba(74, 48, 140, 0)');
+  octx.fillStyle = orbGrad;
+  octx.fillRect(0, 0, 256, 256);
+  const orbTex = new THREE.CanvasTexture(orbCv);
+  orbTex.colorSpace = THREE.SRGBColorSpace;
 
-  const apexCore = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.06, 2),
-    new THREE.MeshBasicMaterial({ color: 0xffffff }),
-  );
-  apexCore.position.set(0, apexY + 0.005, 0);
-  root.add(apexCore);
-
-  // Glow halo around the apex star
-  const apexGlowCv = document.createElement('canvas');
-  apexGlowCv.width = apexGlowCv.height = 128;
-  const agc = apexGlowCv.getContext('2d');
-  const apexGrad = agc.createRadialGradient(64, 64, 0, 64, 64, 64);
-  apexGrad.addColorStop(0,   'rgba(255, 255, 255, 0.95)');
-  apexGrad.addColorStop(0.1, 'rgba(255, 220, 240, 0.7)');
-  apexGrad.addColorStop(0.3, 'rgba(255, 105, 180, 0.45)');
-  apexGrad.addColorStop(1,   'rgba(255, 61, 139, 0)');
-  agc.fillStyle = apexGrad;
-  agc.fillRect(0, 0, 128, 128);
-  const apexGlowTex = new THREE.CanvasTexture(apexGlowCv);
-  apexGlowTex.colorSpace = THREE.SRGBColorSpace;
-
-  const apexGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: apexGlowTex,
+  const orb = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: orbTex,
     transparent: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
     depthTest: false,
   }));
-  apexGlow.scale.set(0.7, 0.7, 1);
-  apexGlow.position.set(0, apexY + 0.005, 0);
-  apexGlow.renderOrder = 2;
-  root.add(apexGlow);
+  orb.scale.set(1.4, 1.4, 1);
+  orb.position.set(0, 0, 0); // inside the pyramid at geometric center
+  orb.renderOrder = -1; // draw before pyramid so the transmissive faces overlay
+  root.add(orb);
 
   // (no cloud mesh — it was reading as a visible sphere inside the form.
   //  The bloom + emissive core + baked face wisps carry the "glow from
@@ -620,9 +627,19 @@ async function init() {
      occasionally getting stuck in the not-visible state on this layout).
      -------------------------------------------------------------------------- */
   const clock = new THREE.Clock();
+  const orbCyclingColor = new THREE.Color();
   function tick() {
     requestAnimationFrame(tick);
     const dt = Math.min(0.05, clock.getDelta());
+
+    // Orb spectrum cycle (Padua brand: discover → compare → recommend → review → wrap)
+    const cyclePos = (clock.elapsedTime % ORB_CYCLE_PERIOD_SEC) / ORB_CYCLE_PERIOD_SEC * ORB_PALETTE.length;
+    const cIdx = Math.floor(cyclePos) % ORB_PALETTE.length;
+    const cNext = (cIdx + 1) % ORB_PALETTE.length;
+    const cLocal = cyclePos - Math.floor(cyclePos);
+    orbCyclingColor.copy(ORB_PALETTE[cIdx]).lerp(ORB_PALETTE[cNext], cLocal);
+    orb.material.color.copy(orbCyclingColor);
+    coreLight.color.copy(orbCyclingColor);
 
     // Decay the click-flash and apply it to the point light
     flash *= 0.92;
