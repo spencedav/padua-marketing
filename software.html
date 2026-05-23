@@ -731,7 +731,8 @@ h2.section-title em {
 .product-recommend .product-stat-num { color: var(--recommend); }
 .product-recommend .product-visual-bg { background: var(--recommend); }
 
-/* Section index pill (1/4, 2/4 etc) */
+/* Section index pill — when inside .padua-product-rail it becomes a NODE on
+   the spectrum rail (see below); standalone it's still a small text label. */
 .product-index {
   position: absolute;
   top: 56px; left: 50%;
@@ -740,6 +741,110 @@ h2.section-title em {
   color: var(--text-light);
 }
 .product-discover .product-index { color: rgba(255,255,255,0.45); }
+
+/* =====================================================================
+   PRODUCT RAIL — vertical Padua spectrum threading the 4 product sections
+   Inspired by GitHub's "connected timeline" pattern.
+   ===================================================================== */
+.padua-product-rail { position: relative; }
+
+/* The rail itself — thin spectrum gradient line down the page center */
+.padua-product-rail::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    var(--yellow)    0%,
+    var(--discover) 28%,
+    var(--compare)  52%,
+    var(--recommend) 76%,
+    var(--review)   100%);
+  z-index: 4;
+  pointer-events: none;
+  border-radius: 1px;
+}
+
+/* Soft methodology-spectrum glow halo behind the rail */
+.padua-product-rail::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--yellow)    22%, transparent)  0%,
+    color-mix(in srgb, var(--discover) 22%, transparent) 28%,
+    color-mix(in srgb, var(--compare)  22%, transparent) 52%,
+    color-mix(in srgb, var(--recommend) 22%, transparent) 76%,
+    color-mix(in srgb, var(--review)   22%, transparent) 100%);
+  filter: blur(18px);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* The product-index pill becomes the section's NODE on the rail. Wrap the
+   text in a colored ring backdrop, with a glow. */
+.padua-product-rail .product .product-index {
+  z-index: 7;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--node-bg, var(--paper));
+  color: var(--node-text, var(--text-dark));
+  box-shadow:
+    0 0 0 2px var(--node-color, var(--text-dark)),
+    0 0 32px color-mix(in srgb, var(--node-color, var(--text-dark)) 60%, transparent);
+  transition: box-shadow .35s ease, transform .35s ease;
+}
+
+/* Per-section node colors */
+.padua-product-rail .product-home .product-index {
+  --node-color: var(--yellow);
+  --node-bg: var(--paper);
+  --node-text: var(--ink);
+}
+.padua-product-rail .product-discover .product-index {
+  --node-color: var(--discover);
+  --node-bg: rgba(22,18,31,0.92);
+  --node-text: white;
+  color: white;
+}
+.padua-product-rail .product-compare .product-index {
+  --node-color: var(--compare);
+  --node-bg: var(--paper);
+  --node-text: var(--ink);
+}
+.padua-product-rail .product-recommend .product-index {
+  --node-color: var(--recommend);
+  --node-bg: var(--paper);
+  --node-text: var(--ink);
+}
+
+/* Active state — set by JS when section enters viewport */
+.padua-product-rail .product.is-active .product-index {
+  transform: translateX(-50%) scale(1.06);
+  box-shadow:
+    0 0 0 2px var(--node-color),
+    0 0 60px color-mix(in srgb, var(--node-color) 80%, transparent);
+}
+
+/* Mobile: hide rail, restore plain pill */
+@media (max-width: 991px) {
+  .padua-product-rail::before,
+  .padua-product-rail::after { display: none; }
+  .padua-product-rail .product .product-index {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    color: var(--text-light);
+  }
+  .padua-product-rail .product-discover .product-index { color: rgba(255,255,255,0.45); }
+}
 
 /* =====================================================================
    TESTIMONIALS
@@ -1124,6 +1229,11 @@ h2.section-title em {
 
 
 <!-- =====================================================================
+     PRODUCT RAIL — connects the four products with a vertical spectrum rail
+     ===================================================================== -->
+<div class="padua-product-rail">
+
+<!-- =====================================================================
      PRODUCT 1 — PADUA HOME (neutral / paper)
      ===================================================================== -->
 <section class="product product-home" id="padua-home">
@@ -1252,6 +1362,8 @@ h2.section-title em {
     </div>
   </div>
 </section>
+
+</div><!-- /.padua-product-rail -->
 
 <!-- =====================================================================
      TESTIMONIALS
@@ -1385,6 +1497,21 @@ h2.section-title em {
     </p>
   </div>
 </footer>
+
+<!-- =====================================================================
+     PRODUCT-RAIL — light up each section's node as it scrolls into view
+     ===================================================================== -->
+<script>
+(function () {
+  const rail = document.querySelector('.padua-product-rail');
+  if (!rail || !window.IntersectionObserver) return;
+  const sections = rail.querySelectorAll('.product');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => e.target.classList.toggle('is-active', e.isIntersecting && e.intersectionRatio > 0.35));
+  }, { threshold: [0, 0.35, 0.7] });
+  sections.forEach((s) => io.observe(s));
+})();
+</script>
 
 <!-- =====================================================================
      3D TRIANGLE (Three.js + bloom postprocessing) — module script
