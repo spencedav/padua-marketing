@@ -253,24 +253,25 @@ function makeFaceTexture(spectrumHex, text, lightOffsetX = 0.5, lightOffsetY = 0
     fontPx -= 6;
   } while (fontPx > 60);
 
-  // Very broad outer halo (warm pink)
+  // Soft outer halo — wide, low contrast, warm pink
   ctx.shadowColor = '#ff66cc';
-  ctx.shadowBlur = 60;
-  ctx.fillStyle = 'rgba(255, 195, 225, 0.65)';
+  ctx.shadowBlur = 70;
+  ctx.fillStyle = 'rgba(255, 180, 210, 0.45)';
   ctx.fillText(upper, size / 2, targetY);
 
-  // Softer inner pass — pink-tinted, not pure white
-  ctx.shadowBlur = 26;
-  ctx.fillStyle = 'rgba(255, 220, 235, 0.85)';
+  // Inner pass — pink, not white. Less alpha so the label feels lit-from-
+  // behind through the face surface rather than painted on top.
+  ctx.shadowBlur = 30;
+  ctx.fillStyle = 'rgba(230, 170, 205, 0.78)';
   ctx.fillText(upper, size / 2, targetY);
   ctx.shadowBlur = 0;
 
-  // Brand dot — also pink-tinted now (was pure white)
+  // Brand dot — also softer and pinker
   ctx.shadowColor = '#ff66cc';
-  ctx.shadowBlur = 18;
+  ctx.shadowBlur = 14;
   ctx.beginPath();
-  ctx.arc(size / 2, targetY - fontPx - 32, 10, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255, 215, 235, 0.92)';
+  ctx.arc(size / 2, targetY - fontPx - 32, 9, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255, 200, 225, 0.75)';
   ctx.fill();
   ctx.shadowBlur = 0;
 
@@ -383,10 +384,11 @@ async function init() {
   }
 
   /* --------------------------------------------------------------------------
-     Pyramid
+     Pyramid — wider base (#6 in critique): less crystal-shard, more
+     tetrahedron when viewed from above.
      -------------------------------------------------------------------------- */
-  const BASE_RADIUS = 1.75;
-  const HEIGHT = 2.6;
+  const BASE_RADIUS = 2.2;
+  const HEIGHT = 2.45;
   const { geom, sides } = buildPyramidGeometry(BASE_RADIUS, HEIGHT);
 
   // Face materials. Higher transmission lets the back-glow sprite show
@@ -413,13 +415,16 @@ async function init() {
     side: THREE.DoubleSide,
   });
 
-  // Per-face asymmetry: each face has its inner light projected at a
-  // different position and brightness — gives the form a sense that the
-  // inner light is a real point in 3D space, not symmetrically painted on.
+  // Uniform brightness across faces — face-to-face asymmetry now comes from
+  // real 3D lighting (the key DirectionalLight below), not from baked texture
+  // differences. This way the brightest face is always the one facing the
+  // camera, regardless of which face that is at a given rotation. The
+  // lightOffset still varies a bit for "the inner light is positioned in
+  // 3D, not at face center" feel.
   const materials = [
-    makeFaceMat(PADUA.discover,  'Quality',    0.50, 0.62, 1.00), // brightest — "front" face
-    makeFaceMat(PADUA.compare,   'Value',      0.42, 0.58, 0.78), // dimmer, shifted left
-    makeFaceMat(PADUA.recommend, 'Turnaround', 0.58, 0.58, 0.72), // dimmest, shifted right
+    makeFaceMat(PADUA.discover,  'Quality',    0.50, 0.62, 1.0),
+    makeFaceMat(PADUA.compare,   'Value',      0.46, 0.60, 1.0),
+    makeFaceMat(PADUA.recommend, 'Turnaround', 0.54, 0.60, 1.0),
     new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.95, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
   ];
 
@@ -429,15 +434,56 @@ async function init() {
   root.add(pyramid);
   scene.add(root);
 
-  // Edge lines — dialed way down per feedback. Subtle rim, not neon outline.
+  // Edge lines — brought back to bright. Brief #3: edges should be the
+  // brightest thing on the object, hot-pink, catching the CSS bloom.
   const edgeGeom = new THREE.EdgesGeometry(geom, 1);
   const edgeMat = new THREE.LineBasicMaterial({
     color: new THREE.Color(PADUA.edge),
     transparent: true,
-    opacity: 0.24, // ~60% reduction — let the interior do the heavy lifting
+    opacity: 0.9,
   });
   const edgeLines = new THREE.LineSegments(edgeGeom, edgeMat);
   pyramid.add(edgeLines);
+
+  /* --------------------------------------------------------------------------
+     Apex star — small bright sphere + soft glow halo at the top of the
+     pyramid. Brief #4: the apex should be a focal-point light, not a
+     terminating geometry point.
+     -------------------------------------------------------------------------- */
+  const apexY = HEIGHT / 2;
+
+  const apexCore = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(0.06, 2),
+    new THREE.MeshBasicMaterial({ color: 0xffffff }),
+  );
+  apexCore.position.set(0, apexY + 0.005, 0);
+  root.add(apexCore);
+
+  // Glow halo around the apex star
+  const apexGlowCv = document.createElement('canvas');
+  apexGlowCv.width = apexGlowCv.height = 128;
+  const agc = apexGlowCv.getContext('2d');
+  const apexGrad = agc.createRadialGradient(64, 64, 0, 64, 64, 64);
+  apexGrad.addColorStop(0,   'rgba(255, 255, 255, 0.95)');
+  apexGrad.addColorStop(0.1, 'rgba(255, 220, 240, 0.7)');
+  apexGrad.addColorStop(0.3, 'rgba(255, 105, 180, 0.45)');
+  apexGrad.addColorStop(1,   'rgba(255, 61, 139, 0)');
+  agc.fillStyle = apexGrad;
+  agc.fillRect(0, 0, 128, 128);
+  const apexGlowTex = new THREE.CanvasTexture(apexGlowCv);
+  apexGlowTex.colorSpace = THREE.SRGBColorSpace;
+
+  const apexGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: apexGlowTex,
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    depthTest: false,
+  }));
+  apexGlow.scale.set(0.7, 0.7, 1);
+  apexGlow.position.set(0, apexY + 0.005, 0);
+  apexGlow.renderOrder = 2;
+  root.add(apexGlow);
 
   // (no cloud mesh — it was reading as a visible sphere inside the form.
   //  The bloom + emissive core + baked face wisps carry the "glow from
@@ -466,50 +512,26 @@ async function init() {
   );
 
   /* --------------------------------------------------------------------------
-     External lights — kept very dim. The inner emissive is the primary
-     light source; these only add a touch of definition.
+     External lights. Key light is now PROMINENT (intensity 2.8) and aimed
+     from the camera's general direction so the face facing the camera is
+     significantly brighter than the side faces — view-dependent contrast
+     instead of baked-into-textures. As the pyramid rotates or hovers a
+     face into view, that face naturally becomes the bright one.
      -------------------------------------------------------------------------- */
-  const key = new THREE.DirectionalLight(0xffffff, 0.4);
-  key.position.set(2.5, 4, 3);
+  const key = new THREE.DirectionalLight(0xffffff, 2.8);
+  key.position.set(0.8, 4.0, 5.5);
   scene.add(key);
 
-  const fill = new THREE.DirectionalLight(new THREE.Color('#8855dd'), 0.18);
+  const fill = new THREE.DirectionalLight(new THREE.Color('#8855dd'), 0.25);
   fill.position.set(-3, 1, 2);
   scene.add(fill);
 
-  scene.add(new THREE.AmbientLight(new THREE.Color('#3a2851'), 0.4));
+  scene.add(new THREE.AmbientLight(new THREE.Color('#1a0e2a'), 0.5));
 
-  /* --------------------------------------------------------------------------
-     Back glow sprite — large camera-facing magenta radial gradient behind
-     the pyramid. Creates the soft atmospheric halo bleeding into the
-     surrounding darkness AND, because the pyramid is translucent
-     (transmission), provides the "light passing through the form" feeling.
-     Bigger than the pyramid silhouette so it extends past the edges.
-     -------------------------------------------------------------------------- */
-  const backCv = document.createElement('canvas');
-  backCv.width = backCv.height = 512;
-  const bctx = backCv.getContext('2d');
-  const backGrad = bctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-  backGrad.addColorStop(0,    'rgba(255, 130, 200, 0.85)');
-  backGrad.addColorStop(0.12, 'rgba(255, 80, 170, 0.7)');
-  backGrad.addColorStop(0.3,  'rgba(220, 60, 160, 0.45)');
-  backGrad.addColorStop(0.55, 'rgba(140, 50, 180, 0.22)');
-  backGrad.addColorStop(1,    'rgba(74, 48, 140, 0)');
-  bctx.fillStyle = backGrad;
-  bctx.fillRect(0, 0, 512, 512);
-  const backTex = new THREE.CanvasTexture(backCv);
-  backTex.colorSpace = THREE.SRGBColorSpace;
-  const backGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: backTex,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    depthTest: false,
-  }));
-  backGlow.scale.set(8.5, 8.5, 1);
-  backGlow.position.set(0, 0, -1);
-  backGlow.renderOrder = -1; // render before pyramid so depth test doesn't cull
-  scene.add(backGlow);
+  // (No back-glow sprite — it was creating a pink fog around the panel,
+  //  making the pyramid look "stuck in a pink box". The CSS drop-shadow
+  //  filter on the canvas provides the soft halo around the silhouette
+  //  without flooding the surrounding area.)
 
   /* --------------------------------------------------------------------------
      No bloom postprocessing — UnrealBloomPass corrupts canvas alpha which
