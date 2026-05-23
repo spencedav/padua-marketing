@@ -1,42 +1,35 @@
 /* =============================================================================
-   PADUA TRIANGLE 3D — Spectrum pyramid with bloom + inner emissive core
+   PADUA TRIANGLE 3D — DolphinIQ-style emission shader port
    =============================================================================
-   A triangular pyramid sits flat on its base. Each side face is a methodology
-   spectrum color (Discover purple, Compare pink, Recommend red) with its
-   label baked in. Inside the pyramid sits a bright magenta emissive core
-   which UnrealBloomPass amplifies into a radiating halo — the "light from
-   inside" effect that gives the form its cube-like luminosity.
+   Approach inspired by https://github.com/DolphinIQ/Pyramid-Scene
+   We inject an animated noise-driven emission term into MeshPhysicalMaterial's
+   fragment shader via onBeforeCompile. The noise is sampled from two
+   procedurally-generated textures (perlin-ish and voronoi-ish), mixed with
+   time, color-ramped, and added as emissive light. Combined with
+   UnrealBloomPass this produces the volumetric "glowing form" look — the
+   form's surface emits light from within, bloomed into a halo.
 
-   Interactions:
-     - Slow Y-axis auto-spin when idle
-     - Hover any .triangle-panel__item to ease that face into a 3/4 view
-     - Click anywhere on the pyramid to pulse the inner glow (light burst)
+   Faces still carry per-face labels (Newsreader italic) baked into canvas
+   textures, so the labels glow as part of the surface emission.
 
-   Self-contained: imports Three.js + postprocessing addons via an importmap
-   in software.html. Bloom is wrapped in try/catch so any addon failure falls
-   back to plain rendering instead of breaking the scene.
+   Box-free: renderer uses alpha:false with clearColor matching the section
+   bg, so the canvas reads as continuous with the surrounding dark space.
    =========================================================================== */
 
 import * as THREE from 'three';
 
 const PADUA = {
-  // Methodology accents (still used by the inner light per-face if desired)
   discover:  '#4a308c',
   compare:   '#ab2178',
   recommend: '#eb2e4d',
   review:    '#f59436',
-
-  // Cube-aesthetic palette
-  faceBase:    '#1f1430',  // cool dark purple-blue base for every face
-  innerGlow:   '#ff3d8b',  // hot magenta-pink inner light
-  innerCore:   '#ffaadd',  // near-white pink core
-  edge:        '#ff88cc',  // edge highlight color
-  ink:         '#0a0612',
+  faceBase:  '#1f1430',
+  edge:      '#ff88cc',
+  ink:       '#0a0612',
 };
 
-// Orb color cycle: full Padua brand spectrum (purple → pink → red → orange).
-// The orb (and the inner point light) tween between adjacent colors with a
-// cycle period of ~12s, then wrap.
+const SECTION_BG = new THREE.Color('#0a0612');
+
 const ORB_PALETTE = [
   new THREE.Color(PADUA.discover),
   new THREE.Color(PADUA.compare),
@@ -45,33 +38,111 @@ const ORB_PALETTE = [
 ];
 const ORB_CYCLE_PERIOD_SEC = 12;
 
-const FACE_ANGLE_OFFSET = -0.42;  // ~24° offset so hover lands a 3/4 view, not flat-on
-
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ============================================================================
-   Helpers
+   Procedural noise textures (we don't bundle 3rd-party images)
    ========================================================================== */
 
-function buildEnvironment(renderer) {
-  const faces = ['#fffaf0','#eef2f7','#ffffff','#3a2f4e','#fdf5ec','#dfe5ee'];
-  const size = 16;
-  const imgs = faces.map((c) => {
-    const cv = document.createElement('canvas');
-    cv.width = cv.height = size;
-    const ctx = cv.getContext('2d');
-    ctx.fillStyle = c;
-    ctx.fillRect(0, 0, size, size);
-    return cv;
-  });
-  const cubeTex = new THREE.CubeTexture(imgs);
-  cubeTex.needsUpdate = true;
-  cubeTex.colorSpace = THREE.SRGBColorSpace;
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  const envTex = pmrem.fromCubemap(cubeTex).texture;
-  pmrem.dispose();
-  return envTex;
+function makeOrganicNoise(size = 256, octaves = 4) {
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#808080';
+  ctx.fillRect(0, 0, size, size);
+
+  for (let o = 0; o < octaves; o++) {
+    const blockSize = Math.max(2, Math.floor(size / Math.pow(2, o + 2)));
+    const opacity = 0.55 / (o + 1);
+
+    const temp = document.createElement('canvas');
+    temp.width = temp.height = size;
+    const tctx = temp.getContext('2d');
+
+    for (let y = 0; y < size; y += blockSize) {
+      for (let x = 0; x < size; x += blockSize) {
+        const v = Math.floor(Math.random() * 255);
+        tctx.fillStyle = `rgba(${v},${v},${v},${opacity.toFixed(3)})`;
+        tctx.fillRect(x, y, blockSize, blockSize);
+      }
+    }
+
+    const blurred = document.createElement('canvas');
+    blurred.width = blurred.height = size;
+    const bctx = blurred.getContext('2d');
+    bctx.filter = `blur(${Math.max(1, blockSize / 4)}px)`;
+    bctx.drawImage(temp, 0, 0);
+
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.drawImage(blurred, 0, 0);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+
+  const tex = new THREE.CanvasTexture(cv);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.needsUpdate = true;
+  return tex;
 }
+
+function makeCellularNoise(size = 256, dotCount = 28, blurPx = 22) {
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#000000';
+  ctx.fillRect(0, 0, size, size);
+
+  // Tile by replicating dots into 3x3 (so blur wraps cleanly)
+  const points = [];
+  for (let i = 0; i < dotCount; i++) {
+    points.push({ x: Math.random() * size, y: Math.random() * size, v: Math.random() });
+  }
+  for (const p of points) {
+    for (const dx of [-size, 0, size]) {
+      for (const dy of [-size, 0, size]) {
+        const r = 10 + Math.random() * 30;
+        const grad = ctx.createRadialGradient(p.x + dx, p.y + dy, 0, p.x + dx, p.y + dy, r);
+        const a = (0.6 + p.v * 0.4).toFixed(3);
+        grad.addColorStop(0, `rgba(255,255,255,${a})`);
+        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, size, size);
+      }
+    }
+  }
+
+  const blurred = document.createElement('canvas');
+  blurred.width = blurred.height = size;
+  const bctx = blurred.getContext('2d');
+  bctx.filter = `blur(${blurPx}px)`;
+  bctx.drawImage(cv, 0, 0);
+
+  const tex = new THREE.CanvasTexture(blurred);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+function makeSoftParticleTexture(size = 256) {
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  const ctx = cv.getContext('2d');
+  const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+  grad.addColorStop(0,    'rgba(255, 255, 255, 1.0)');
+  grad.addColorStop(0.18, 'rgba(255, 230, 245, 0.55)');
+  grad.addColorStop(0.45, 'rgba(255, 105, 180, 0.20)');
+  grad.addColorStop(1,    'rgba(74, 48, 140, 0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+/* ============================================================================
+   Geometry — triangular pyramid sitting on its base
+   ========================================================================== */
 
 function buildPyramidGeometry(baseRadius, height) {
   const half = height / 2;
@@ -80,21 +151,18 @@ function buildPyramidGeometry(baseRadius, height) {
   const b2 = [ baseRadius * Math.cos((4 * Math.PI) / 3),  -half, baseRadius * Math.sin((4 * Math.PI) / 3) ];
   const ap = [ 0,                                          half, 0 ];
 
-  // Winding CCW from outside: base_i, apex, base_{i+1}
   const positions = new Float32Array([
     ...b0, ...ap, ...b1, // side 0
     ...b1, ...ap, ...b2, // side 1
     ...b2, ...ap, ...b0, // side 2
-    ...b0, ...b1, ...b2, // base (CCW from below)
+    ...b0, ...b1, ...b2, // base
   ]);
 
-  // UVs: base_i takes u=1, base_{i+1} takes u=0 so screen orientation is
-  // not mirrored. Apex stays at top-center.
   const uvs = new Float32Array([
-    1, 0,   0.5, 1,   0, 0, // side 0
-    1, 0,   0.5, 1,   0, 0, // side 1
-    1, 0,   0.5, 1,   0, 0, // side 2
-    0, 0,   1, 0,   0.5, 1, // base
+    1, 0,   0.5, 1,   0, 0,
+    1, 0,   0.5, 1,   0, 0,
+    1, 0,   0.5, 1,   0, 0,
+    0, 0,   1, 0,    0.5, 1,
   ]);
 
   const geom = new THREE.BufferGeometry();
@@ -120,104 +188,34 @@ function buildPyramidGeometry(baseRadius, height) {
 
   return {
     geom,
-    sides: [
-      face(b0, ap, b1),
-      face(b1, ap, b2),
-      face(b2, ap, b0),
-    ],
+    sides: [ face(b0, ap, b1), face(b1, ap, b2), face(b2, ap, b0) ],
   };
 }
 
-/* -----------------------------------------------------------------------------
-   Mix a hex color toward black to create a darker base for each face.
-   --------------------------------------------------------------------------- */
-function darken(hex, factor = 0.45) {
+/* ============================================================================
+   Face label texture — dark base + Newsreader italic label (no glow here;
+   the shader injection handles the emission)
+   ========================================================================== */
+
+function darken(hex, factor) {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
-  const rd = Math.round(r * factor);
-  const gd = Math.round(g * factor);
-  const bd = Math.round(b * factor);
-  return `rgb(${rd}, ${gd}, ${bd})`;
+  return `rgb(${Math.round(r*factor)}, ${Math.round(g*factor)}, ${Math.round(b*factor)})`;
 }
 
-/* -----------------------------------------------------------------------------
-   Face texture — one big radial gradient acts as the "lightbulb projection"
-   on this face, off-center per face for asymmetry, with diffuse cloudy noise
-   on top instead of multiple discrete bright spots. Soft text in pink to feel
-   embedded and backlit rather than painted on white.
-
-   `lightOffsetX/Y`: where the inner light projects on this face (in 0..1).
-                    Off-center values create the asymmetric-lighting feel.
-   `brightness`:    overall intensity of the projected light (0..1).
-                    One face gets close to 1.0, others ~0.7 → uneven lighting.
-   --------------------------------------------------------------------------- */
-function makeFaceTexture(spectrumHex, text, lightOffsetX = 0.5, lightOffsetY = 0.62, brightness = 0.9) {
+function makeFaceTexture(spectrumHex, text) {
   const size = 1024;
   const cv = document.createElement('canvas');
   cv.width = cv.height = size;
   const ctx = cv.getContext('2d');
 
-  // 1. Very dark base — almost black with a faint spectrum hue
-  ctx.fillStyle = darken(spectrumHex, 0.13);
+  // Deep dark base
+  ctx.fillStyle = darken(spectrumHex, 0.15);
   ctx.fillRect(0, 0, size, size);
 
-  // 2. A handful of large soft DARK regions for surface unevenness (very
-  //    subtle — we don't want them competing with the inner light).
-  for (let i = 0; i < 8; i++) {
-    const x = Math.random() * size;
-    const y = Math.random() * size;
-    const r = 180 + Math.random() * 260;
-    ctx.globalAlpha = 0.16 + Math.random() * 0.18;
-    const blob = ctx.createRadialGradient(x, y, 0, x, y, r);
-    blob.addColorStop(0, '#000000');
-    blob.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = blob;
-    ctx.fillRect(0, 0, size, size);
-  }
-  ctx.globalAlpha = 1;
-
-  // 3. THE BIG INNER LIGHT — one huge soft radial gradient covering most
-  //    of the face. This is the lightbulb projecting onto the face. Off-
-  //    center via lightOffsetX/Y so the light feels positioned in 3D.
-  const cx = size * lightOffsetX;
-  const cy = size * lightOffsetY;
-  const cr = size * 0.78;
-  const inner = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
-  const a0 = Math.round(255 * brightness * 0.95);
-  const a1 = Math.round(255 * brightness * 0.55);
-  inner.addColorStop(0,    `rgba(255, 215, 235, ${(brightness * 0.95).toFixed(2)})`);
-  inner.addColorStop(0.1,  `rgba(255, 175, 215, ${(brightness * 0.85).toFixed(2)})`);
-  inner.addColorStop(0.25, `${spectrumHex}${a0.toString(16).padStart(2, '0')}`);
-  inner.addColorStop(0.55, `${spectrumHex}${a1.toString(16).padStart(2, '0')}`);
-  inner.addColorStop(1,    `${spectrumHex}00`);
-  ctx.globalCompositeOperation = 'screen';
-  ctx.fillStyle = inner;
-  ctx.fillRect(0, 0, size, size);
-  ctx.globalCompositeOperation = 'source-over';
-
-  // 4. Diffuse cloudy wisps — soft, blended into the inner light. NOT discrete
-  //    spots; the user noted those read as "stuck on". Lots of them, very low
-  //    opacity, large radii.
-  for (let i = 0; i < 24; i++) {
-    const x = Math.random() * size;
-    const y = Math.random() * size;
-    const r = 120 + Math.random() * 180;
-    ctx.globalAlpha = 0.04 + Math.random() * 0.07;
-    const wisp = ctx.createRadialGradient(x, y, 0, x, y, r);
-    const tint = Math.random();
-    const wispColor = tint > 0.55 ? '#ff88cc' : (tint > 0.25 ? '#cc55aa' : '#ffaadd');
-    wisp.addColorStop(0, wispColor);
-    wisp.addColorStop(1, wispColor + '00');
-    ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = wisp;
-    ctx.fillRect(0, 0, size, size);
-  }
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.globalAlpha = 1;
-
-  // 5. Vertical surface scratches — very subtle, faint vertical streaks
-  for (let i = 0; i < 70; i++) {
+  // Subtle vertical streaks for surface character
+  for (let i = 0; i < 50; i++) {
     const x = Math.random() * size;
     const h = 60 + Math.random() * 220;
     const y = Math.random() * (size - h);
@@ -228,93 +226,43 @@ function makeFaceTexture(spectrumHex, text, lightOffsetX = 0.5, lightOffsetY = 0
   }
   ctx.globalAlpha = 1;
 
-  // 6. Fine speckle grain
-  for (let i = 0; i < 3500; i++) {
+  // Fine grain
+  for (let i = 0; i < 2500; i++) {
     const x = Math.random() * size;
     const y = Math.random() * size;
     const v = Math.random();
-    ctx.globalAlpha = 0.05 + Math.random() * 0.08;
+    ctx.globalAlpha = 0.04 + Math.random() * 0.06;
     ctx.fillStyle = v > 0.6 ? '#ffaadd' : (v > 0.3 ? '#ffffff' : '#000000');
     ctx.fillRect(x, y, 1, 1);
   }
   ctx.globalAlpha = 1;
 
-  // 7. Vignette — but darken FROM THE LIGHT CENTER, not the canvas center.
-  //    This makes the edges of the face genuinely dim while keeping the
-  //    bright lit area centered on the projected light.
-  const vig = ctx.createRadialGradient(cx, cy, size * 0.28, cx, cy, size * 0.85);
-  vig.addColorStop(0,   'rgba(0, 0, 0, 0)');
-  vig.addColorStop(0.6, 'rgba(0, 0, 0, 0.30)');
-  vig.addColorStop(1,   'rgba(0, 0, 0, 0.78)');
-  ctx.fillStyle = vig;
-  ctx.fillRect(0, 0, size, size);
-
-  // 8. Label — Newsreader italic in Title Case. Serif italic is the brand
-  //    display voice (used on h1/h2 throughout the site) and reads as
-  //    editorial / refined / "stylish" rather than the previous uppercase
-  //    sans-serif chip-style. Soft pink tones keep it integrated with the
-  //    face surface.
-  const label = text;  // Title Case as given (Quality / Value / Turnaround)
-  const targetY = size * 0.79;
+  // Label — Newsreader italic, soft pink-tinted, embedded
+  const targetY = size * 0.78;
   const maxWidth = size * 0.78;
   let fontPx = 180;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px'; // serifs prefer tight tracking
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
   do {
     ctx.font = `italic 400 ${fontPx}px "Newsreader", "Quincy CF", Georgia, serif`;
-    if (ctx.measureText(label).width <= maxWidth) break;
+    if (ctx.measureText(text).width <= maxWidth) break;
     fontPx -= 8;
   } while (fontPx > 70);
 
-  // Soft outer halo — wide, low contrast, warm pink
   ctx.shadowColor = '#ff66cc';
   ctx.shadowBlur = 70;
   ctx.fillStyle = 'rgba(255, 180, 210, 0.4)';
-  ctx.fillText(label, size / 2, targetY);
+  ctx.fillText(text, size / 2, targetY);
 
-  // Inner pass — pink, soft
   ctx.shadowBlur = 22;
   ctx.fillStyle = 'rgba(235, 180, 215, 0.85)';
-  ctx.fillText(label, size / 2, targetY);
+  ctx.fillText(text, size / 2, targetY);
   ctx.shadowBlur = 0;
 
   const tex = new THREE.CanvasTexture(cv);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
-  tex.needsUpdate = true;
-  return tex;
-}
-
-/* -----------------------------------------------------------------------------
-   Build a cloudy noise canvas for the rotating interior wisp mesh.
-   --------------------------------------------------------------------------- */
-function makeCloudTexture() {
-  const size = 512;
-  const cv = document.createElement('canvas');
-  cv.width = cv.height = size;
-  const ctx = cv.getContext('2d');
-  ctx.clearRect(0, 0, size, size);
-
-  // Many soft magenta blobs at varying scale
-  for (let i = 0; i < 60; i++) {
-    const x = Math.random() * size;
-    const y = Math.random() * size;
-    const r = 30 + Math.random() * 110;
-    ctx.globalAlpha = 0.06 + Math.random() * 0.10;
-    const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
-    const tint = Math.random();
-    const color = tint > 0.6 ? '#ffaadd' : (tint > 0.3 ? '#ff66cc' : '#aa66ee');
-    grad.addColorStop(0, color);
-    grad.addColorStop(1, 'rgba(255, 102, 204, 0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, size, size);
-  }
-  ctx.globalAlpha = 1;
-
-  const tex = new THREE.CanvasTexture(cv);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 4;
   tex.needsUpdate = true;
   return tex;
 }
@@ -341,7 +289,7 @@ function shortestDelta(from, to) {
 }
 
 /* ============================================================================
-   Main init — async because we dynamically import the bloom addons.
+   Main init
    ========================================================================== */
 
 async function init() {
@@ -353,9 +301,11 @@ async function init() {
     return;
   }
 
+  // alpha:false so bloom can't corrupt transparency. clearColor matches the
+  // section bg so the canvas reads as continuous dark space.
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
   } catch (err) {
     showError(mount, 'WebGL not available');
     return;
@@ -364,6 +314,7 @@ async function init() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.setClearColor(SECTION_BG, 1.0);
 
   const canvas = renderer.domElement;
   canvas.style.display = 'block';
@@ -372,117 +323,125 @@ async function init() {
   canvas.style.cursor = 'pointer';
   mount.appendChild(canvas);
 
-  // -- scene + camera — steeper top-down view + pulled back so the pyramid
-  //    sits comfortably inside the stage (corners weren't being clipped).
   const scene = new THREE.Scene();
+  scene.background = SECTION_BG;
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   camera.position.set(0, 4.4, 6.6);
   camera.lookAt(0, -0.4, 0);
 
-  // Transparent clear so the section bg shows through the canvas
-  renderer.setClearColor(0x000000, 0);
-
-  try {
-    scene.environment = buildEnvironment(renderer);
-  } catch (err) {
-    console.warn('[padua-tri3d] env build failed', err);
-  }
-
-  // Make sure Newsreader (italic 400) is loaded before we rasterize text
-  // into the face textures — otherwise canvas falls back to generic serif.
+  // Wait for Newsreader before rasterizing labels
   if (document.fonts && document.fonts.load) {
-    try {
-      await Promise.all([
-        document.fonts.load('italic 400 180px "Newsreader"'),
-        document.fonts.load('italic 400 120px "Newsreader"'),
-      ]);
-    } catch (e) { /* fall through to canvas's font fallback chain */ }
+    try { await document.fonts.load('italic 400 180px "Newsreader"'); } catch (e) {}
   }
+
+  // Procedural noise textures for the emission shader
+  const noisePerlin   = makeOrganicNoise(256, 4);
+  const noiseCellular = makeCellularNoise(256, 28, 22);
 
   /* --------------------------------------------------------------------------
-     Pyramid — wider base (#6 in critique): less crystal-shard, more
-     tetrahedron when viewed from above.
+     Pyramid + DolphinIQ-style emission injection
      -------------------------------------------------------------------------- */
   const BASE_RADIUS = 2.2;
   const HEIGHT = 2.45;
   const { geom, sides } = buildPyramidGeometry(BASE_RADIUS, HEIGHT);
 
-  // Face materials. Higher transmission lets the back-glow sprite show
-  // through the form (so light feels like it's PASSING through the glass).
-  // transparent: true + opacity 0.94 adds a touch more see-through on top
-  // of the physical transmission effect.
-  const makeFaceMat = (spectrumHex, label, lightX, lightY, brightness) => new THREE.MeshPhysicalMaterial({
-    color: 0xffffff,
-    map: makeFaceTexture(spectrumHex, label, lightX, lightY, brightness),
-    metalness: 0.0,
-    roughness: 0.5,
-    transmission: 0.55,
-    thickness: 1.1,
-    ior: 1.45,
-    clearcoat: 0.55,
-    clearcoatRoughness: 0.35,
-    sheen: 0.6,
-    sheenRoughness: 0.55,
-    sheenColor: new THREE.Color(PADUA.edge),
-    envMapIntensity: 0.6,
-    flatShading: true,
-    transparent: true,
-    opacity: 0.94,
-    side: THREE.DoubleSide,
-  });
+  // Shared uniforms instance — all face materials use the SAME uniforms so a
+  // single update per frame drives uTime/uEmissive across all of them.
+  const sharedEmissionUniforms = {
+    uTime:          { value: 0 },
+    uNoisePerlin:   { value: noisePerlin },
+    uNoiseCellular: { value: noiseCellular },
+    uTxtMix:        { value: 0.5 },
+    uEmissionMin:   { value: 0.35 }, // color ramp lower edge
+    uEmissionMax:   { value: 0.75 }, // color ramp upper edge
+    uEmissionColor: { value: new THREE.Color(PADUA.compare) }, // cycles
+    uEmissionStrength: { value: 4.5 }, // multiplier on the color ramp result
+  };
 
-  // Uniform brightness across faces — face-to-face asymmetry now comes from
-  // real 3D lighting (the key DirectionalLight below), not from baked texture
-  // differences. This way the brightest face is always the one facing the
-  // camera, regardless of which face that is at a given rotation. The
-  // lightOffset still varies a bit for "the inner light is positioned in
-  // 3D, not at face center" feel.
+  const allFaceMaterials = [];
+
+  const makeFaceMat = (spectrumHex, label) => {
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      map: makeFaceTexture(spectrumHex, label),
+      metalness: 0.0,
+      roughness: 0.55,
+      transmission: 0.0,
+      clearcoat: 0.4,
+      clearcoatRoughness: 0.4,
+      sheen: 0.5,
+      sheenRoughness: 0.6,
+      sheenColor: new THREE.Color(PADUA.edge),
+      flatShading: true,
+      side: THREE.DoubleSide,
+    });
+
+    mat.onBeforeCompile = (shader) => {
+      Object.assign(shader.uniforms, sharedEmissionUniforms);
+
+      shader.fragmentShader = `
+        uniform float uTime;
+        uniform sampler2D uNoisePerlin;
+        uniform sampler2D uNoiseCellular;
+        uniform float uTxtMix;
+        uniform float uEmissionMin;
+        uniform float uEmissionMax;
+        uniform vec3 uEmissionColor;
+        uniform float uEmissionStrength;
+      ` + shader.fragmentShader;
+
+      // Inject the DolphinIQ-style noise emission after the standard
+      // emissive_fragment chunk. Stretches UVs for repeating noise tiles,
+      // animates over time, color-ramps via min/max, multiplies by colored
+      // emission, adds to totalEmissiveRadiance.
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <emissivemap_fragment>',
+        `
+          #include <emissivemap_fragment>
+          {
+            vec2 noiseUv = vec2(vMapUv.x * 6.0, vMapUv.y * 3.5 + uTime * 0.18);
+            float nP = texture2D(uNoisePerlin, noiseUv).r;
+            float nC = texture2D(uNoiseCellular, noiseUv).r;
+            float mixFactor = clamp(uTxtMix + sin(uTime * 0.8) * 0.18, 0.0, 1.0);
+            float n = mix(nP, nC, mixFactor);
+            n = clamp((n - uEmissionMin) / (uEmissionMax - uEmissionMin), 0.0, 1.0);
+            totalEmissiveRadiance += n * uEmissionColor * uEmissionStrength;
+          }
+        `
+      );
+
+      mat.userData.shader = shader;
+    };
+
+    allFaceMaterials.push(mat);
+    return mat;
+  };
+
   const materials = [
-    makeFaceMat(PADUA.discover,  'Quality',    0.50, 0.62, 1.0),
-    makeFaceMat(PADUA.compare,   'Value',      0.46, 0.60, 1.0),
-    makeFaceMat(PADUA.recommend, 'Turnaround', 0.54, 0.60, 1.0),
+    makeFaceMat(PADUA.discover,  'Quality'),
+    makeFaceMat(PADUA.compare,   'Value'),
+    makeFaceMat(PADUA.recommend, 'Turnaround'),
     new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.95, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
   ];
 
   const pyramid = new THREE.Mesh(geom, materials);
-
   const root = new THREE.Group();
   root.add(pyramid);
   scene.add(root);
 
-  // Edge lines — toned down so the inner orb is clearly THE light source,
-  // not the silhouette. Faint pink rim, just enough to define the facets.
+  // Subtle edge lines — defines the silhouette without dominating
   const edgeGeom = new THREE.EdgesGeometry(geom, 1);
   const edgeMat = new THREE.LineBasicMaterial({
     color: new THREE.Color(PADUA.edge),
     transparent: true,
-    opacity: 0.22,
+    opacity: 0.25,
   });
-  const edgeLines = new THREE.LineSegments(edgeGeom, edgeMat);
-  pyramid.add(edgeLines);
+  pyramid.add(new THREE.LineSegments(edgeGeom, edgeMat));
 
   /* --------------------------------------------------------------------------
-     INNER ORB — the light source inside the form. A camera-facing Sprite
-     with a tight bright-white core fading through magenta. Rendered before
-     the pyramid (renderOrder -1, depthTest off) so the pyramid faces sit
-     in front of it; the faces' transmission picks up the orb color and
-     makes the light feel like it's emanating from within.
+     Inner orb — sprite at the center, additive, visible as a small light core
      -------------------------------------------------------------------------- */
-  const orbCv = document.createElement('canvas');
-  orbCv.width = orbCv.height = 256;
-  const octx = orbCv.getContext('2d');
-  const orbGrad = octx.createRadialGradient(128, 128, 0, 128, 128, 128);
-  orbGrad.addColorStop(0,    'rgba(255, 255, 255, 1.0)');
-  orbGrad.addColorStop(0.06, 'rgba(255, 230, 245, 0.95)');
-  orbGrad.addColorStop(0.18, 'rgba(255, 130, 195, 0.80)');
-  orbGrad.addColorStop(0.40, 'rgba(255, 61, 139, 0.50)');
-  orbGrad.addColorStop(0.75, 'rgba(170, 60, 180, 0.18)');
-  orbGrad.addColorStop(1,    'rgba(74, 48, 140, 0)');
-  octx.fillStyle = orbGrad;
-  octx.fillRect(0, 0, 256, 256);
-  const orbTex = new THREE.CanvasTexture(orbCv);
-  orbTex.colorSpace = THREE.SRGBColorSpace;
-
+  const orbTex = makeSoftParticleTexture(256);
   const orb = new THREE.Sprite(new THREE.SpriteMaterial({
     map: orbTex,
     transparent: true,
@@ -490,77 +449,87 @@ async function init() {
     depthWrite: false,
     depthTest: false,
   }));
-  orb.scale.set(1.4, 1.4, 1);
-  orb.position.set(0, 0, 0); // inside the pyramid at geometric center
-  orb.renderOrder = -1; // draw before pyramid so the transmissive faces overlay
+  orb.scale.set(0.9, 0.9, 1);
+  orb.position.set(0, 0, 0);
+  orb.renderOrder = -1;
   root.add(orb);
 
-  // (no cloud mesh — it was reading as a visible sphere inside the form.
-  //  The bloom + emissive core + baked face wisps carry the "glow from
-  //  within" feel without showing a discrete inner object.)
-
-  /* --------------------------------------------------------------------------
-     Inner emissive core — VERY small + VERY bright. Reads as a point source
-     of light rather than a visible sphere inside the form. The bloom turns
-     it into a diffuse halo. Sits inside the geometry where faces hide its
-     literal shape; only its LIGHT bleeds through.
-     -------------------------------------------------------------------------- */
-  // No visible inner mesh — the user saw the small icosahedron as a "dot"
-  // showing through the glass. The inner-glow effect is now done entirely
-  // through the concentrated bright spot baked into each face's canvas
-  // texture, plus a point light that illuminates the faces from inside.
-  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 30, 8, 1.5);
+  // Inner point light (illuminates faces from inside)
+  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.compare), 18, 8, 1.6);
   coreLight.position.set(0, 0, 0);
   root.add(coreLight);
 
   /* --------------------------------------------------------------------------
-     Per-face target rotations — offset by FACE_ANGLE_OFFSET so the hover
-     state lands a 3/4 view instead of looking straight at the face.
+     Large background glow sprite — soft atmospheric halo (DolphinIQ trick)
      -------------------------------------------------------------------------- */
-  const faceTargets = sides.map((side) =>
-    Math.atan2(-side.normal.x, side.normal.z) + FACE_ANGLE_OFFSET
+  const bgGlowTex = makeSoftParticleTexture(512);
+  const bgGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: bgGlowTex,
+    color: new THREE.Color(PADUA.compare),
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+    opacity: 0.45,
+    depthWrite: false,
+    depthTest: false,
+  }));
+  bgGlow.scale.set(10, 10, 1);
+  bgGlow.position.set(0, 0.5, -2);
+  bgGlow.renderOrder = -2;
+  scene.add(bgGlow);
+
+  /* --------------------------------------------------------------------------
+     Lighting (kept dim — the emission shader carries the visual mass)
+     -------------------------------------------------------------------------- */
+  const key = new THREE.DirectionalLight(0xffffff, 0.6);
+  key.position.set(0.8, 4, 5.5);
+  scene.add(key);
+  scene.add(new THREE.AmbientLight(new THREE.Color('#1a0e2a'), 0.6));
+
+  /* --------------------------------------------------------------------------
+     Per-face hover target rotations
+     -------------------------------------------------------------------------- */
+  const FACE_ANGLE_OFFSET = -0.42;
+  const faceTargets = sides.map((s) =>
+    Math.atan2(-s.normal.x, s.normal.z) + FACE_ANGLE_OFFSET
   );
 
   /* --------------------------------------------------------------------------
-     External lights. Key light is now PROMINENT (intensity 2.8) and aimed
-     from the camera's general direction so the face facing the camera is
-     significantly brighter than the side faces — view-dependent contrast
-     instead of baked-into-textures. As the pyramid rotates or hovers a
-     face into view, that face naturally becomes the bright one.
+     EffectComposer + UnrealBloomPass — the look depends on this. opaque
+     canvas (alpha:false) + clearColor matching section bg → no box.
      -------------------------------------------------------------------------- */
-  const key = new THREE.DirectionalLight(0xffffff, 2.8);
-  key.position.set(0.8, 4.0, 5.5);
-  scene.add(key);
+  let composer = null;
+  let bloomPass = null;
+  try {
+    const [
+      { EffectComposer },
+      { RenderPass },
+      { UnrealBloomPass },
+      { OutputPass },
+    ] = await Promise.all([
+      import('three/addons/postprocessing/EffectComposer.js'),
+      import('three/addons/postprocessing/RenderPass.js'),
+      import('three/addons/postprocessing/UnrealBloomPass.js'),
+      import('three/addons/postprocessing/OutputPass.js'),
+    ]);
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(mount.clientWidth || 320, mount.clientHeight || 320),
+      1.4,   // strength
+      0.85,  // radius
+      0.30,  // threshold — only bright bits glow
+    );
+    composer.addPass(bloomPass);
+    composer.addPass(new OutputPass());
+  } catch (err) {
+    console.warn('[padua-tri3d] bloom unavailable, falling back to plain render', err);
+  }
 
-  const fill = new THREE.DirectionalLight(new THREE.Color('#8855dd'), 0.25);
-  fill.position.set(-3, 1, 2);
-  scene.add(fill);
-
-  scene.add(new THREE.AmbientLight(new THREE.Color('#1a0e2a'), 0.5));
-
-  // (No back-glow sprite — it was creating a pink fog around the panel,
-  //  making the pyramid look "stuck in a pink box". The CSS drop-shadow
-  //  filter on the canvas provides the soft halo around the silhouette
-  //  without flooding the surrounding area.)
-
-  /* --------------------------------------------------------------------------
-     No bloom postprocessing — UnrealBloomPass corrupts canvas alpha which
-     produces a visible dark rectangle ("box") around the pyramid. Instead we
-     use a CSS filter: drop-shadow on the canvas element (see CSS in
-     software.html). Drop-shadow follows the alpha-defined pyramid silhouette
-     rather than the canvas rectangle, so the halo appears around the form
-     itself and the canvas is fully transparent everywhere else.
-     -------------------------------------------------------------------------- */
-  const composer = null;
-  const bloomPass = null;
-
-  /* --------------------------------------------------------------------------
-     Sizing
-     -------------------------------------------------------------------------- */
   function resize() {
     const w = mount.clientWidth || 320;
     const h = mount.clientHeight || 320;
     renderer.setSize(w, h, false);
+    if (composer) composer.setSize(w, h);
     camera.aspect = w / Math.max(1, h);
     camera.updateProjectionMatrix();
   }
@@ -569,7 +538,7 @@ async function init() {
   else window.addEventListener('resize', resize);
 
   /* --------------------------------------------------------------------------
-     Hover-to-face panel interaction
+     Panel hover → rotate-to-face + click-to-flash
      -------------------------------------------------------------------------- */
   let targetY = null;
   let flash = 0;
@@ -585,8 +554,7 @@ async function init() {
     document.querySelectorAll('.triangle-panel__item').forEach((el) => el.classList.remove('is-active'));
   }
 
-  const items = document.querySelectorAll('.triangle-panel__item');
-  items.forEach((el) => {
+  document.querySelectorAll('.triangle-panel__item').forEach((el) => {
     const idx = parseInt(el.getAttribute('data-face'), 10);
     if (Number.isNaN(idx)) return;
     el.addEventListener('mouseenter', () => setActiveFace(idx));
@@ -599,12 +567,8 @@ async function init() {
     panel.addEventListener('focusout', clearActiveFace);
   }
 
-  /* --------------------------------------------------------------------------
-     Click-on-pyramid -> burst of light
-     -------------------------------------------------------------------------- */
   const raycaster = new THREE.Raycaster();
   const pointerNDC = new THREE.Vector2();
-
   function onPress(e) {
     const r = canvas.getBoundingClientRect();
     const isTouch = e.touches && e.touches[0];
@@ -623,40 +587,46 @@ async function init() {
   canvas.addEventListener('pointerdown', onPress);
 
   /* --------------------------------------------------------------------------
-     Animation (always runs — removed IntersectionObserver because it was
-     occasionally getting stuck in the not-visible state on this layout).
+     Animation
      -------------------------------------------------------------------------- */
   const clock = new THREE.Clock();
   const orbCyclingColor = new THREE.Color();
+
   function tick() {
     requestAnimationFrame(tick);
     const dt = Math.min(0.05, clock.getDelta());
+    const t = clock.elapsedTime;
 
-    // Orb spectrum cycle (Padua brand: discover → compare → recommend → review → wrap)
-    const cyclePos = (clock.elapsedTime % ORB_CYCLE_PERIOD_SEC) / ORB_CYCLE_PERIOD_SEC * ORB_PALETTE.length;
+    // Spectrum color cycle
+    const cyclePos = (t % ORB_CYCLE_PERIOD_SEC) / ORB_CYCLE_PERIOD_SEC * ORB_PALETTE.length;
     const cIdx = Math.floor(cyclePos) % ORB_PALETTE.length;
     const cNext = (cIdx + 1) % ORB_PALETTE.length;
     const cLocal = cyclePos - Math.floor(cyclePos);
     orbCyclingColor.copy(ORB_PALETTE[cIdx]).lerp(ORB_PALETTE[cNext], cLocal);
+
     orb.material.color.copy(orbCyclingColor);
     coreLight.color.copy(orbCyclingColor);
+    bgGlow.material.color.copy(orbCyclingColor);
 
-    // Decay the click-flash and apply it to the point light
+    // Drive the shared emission uniforms (all face materials use this object)
+    sharedEmissionUniforms.uTime.value = t;
+    sharedEmissionUniforms.uEmissionColor.value.copy(orbCyclingColor);
+
+    // Click flash
     flash *= 0.92;
     if (flash < 0.001) flash = 0;
-    const breathe = !reduceMotion ? (Math.sin(clock.elapsedTime * 1.2) * 0.08 + 1) : 1;
-    coreLight.intensity = 30 * breathe * (1 + flash * 1.6);
+    const breathe = !reduceMotion ? (Math.sin(t * 1.2) * 0.08 + 1) : 1;
+    coreLight.intensity = 18 * breathe * (1 + flash * 1.6);
+    sharedEmissionUniforms.uEmissionStrength.value = 4.5 * breathe + flash * 2.0;
 
     if (targetY !== null) {
-      const delta = shortestDelta(root.rotation.y, targetY);
-      root.rotation.y += delta * 0.12;
+      root.rotation.y += shortestDelta(root.rotation.y, targetY) * 0.12;
     } else if (!reduceMotion) {
-      root.rotation.y += dt * 0.38;
+      root.rotation.y += dt * 0.32;
     }
 
-    // (no core mesh to counter-spin anymore)
-
-    renderer.render(scene, camera);
+    if (composer) composer.render();
+    else renderer.render(scene, camera);
   }
   tick();
 }

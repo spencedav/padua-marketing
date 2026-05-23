@@ -536,12 +536,8 @@ h2.section-title em {
 #padua-tri3d canvas {
   width: 100% !important;
   height: 100% !important;
-  /* CSS only does the tight close-in halo now — the in-scene back-glow
-     sprite handles the wide atmospheric falloff that bleeds into the
-     section background. */
-  filter:
-    drop-shadow(0 0 4px rgba(255, 200, 230, 0.6))
-    drop-shadow(0 0 14px rgba(255, 105, 180, 0.4));
+  /* UnrealBloomPass now handles the glow. canvas clearColor matches the
+     section bg (#0a0612) so the canvas reads as continuous dark space. */
 }
 
 @media (max-width: 900px) {
