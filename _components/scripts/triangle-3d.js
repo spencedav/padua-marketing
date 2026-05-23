@@ -301,11 +301,12 @@ async function init() {
     return;
   }
 
-  // alpha:false so bloom can't corrupt transparency. clearColor matches the
-  // section bg so the canvas reads as continuous dark space.
+  // alpha:true + transparent clear → canvas is truly transparent. The bloom
+  // pass's materialCopy is patched below to preserve alpha so the halo doesn't
+  // turn transparent pixels opaque.
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: false, powerPreference: 'high-performance' });
   } catch (err) {
     showError(mount, 'WebGL not available');
     return;
@@ -314,7 +315,7 @@ async function init() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.setClearColor(SECTION_BG, 1.0);
+  renderer.setClearColor(0x000000, 0); // fully transparent
 
   const canvas = renderer.domElement;
   canvas.style.display = 'block';
@@ -324,7 +325,7 @@ async function init() {
   mount.appendChild(canvas);
 
   const scene = new THREE.Scene();
-  scene.background = SECTION_BG;
+  // scene.background intentionally left unset → renderer's transparent clear takes effect
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   camera.position.set(0, 4.4, 6.6);
   camera.lookAt(0, -0.4, 0);
@@ -494,8 +495,14 @@ async function init() {
   );
 
   /* --------------------------------------------------------------------------
-     EffectComposer + UnrealBloomPass — the look depends on this. opaque
-     canvas (alpha:false) + clearColor matching section bg → no box.
+     EffectComposer + UnrealBloomPass — with alpha preservation. Two fixes
+     versus the default setup so the canvas stays transparent:
+       1. Render target uses RGBAFormat + HalfFloatType (so alpha survives
+          across passes at high precision).
+       2. The bloom pass's internal materialCopy (the additive composite
+          that combines bloom into the readBuffer) is patched to use a
+          custom blend equation: RGB additive, alpha = destination
+          (preserves the original scene's transparency).
      -------------------------------------------------------------------------- */
   let composer = null;
   let bloomPass = null;
@@ -511,14 +518,35 @@ async function init() {
       import('three/addons/postprocessing/UnrealBloomPass.js'),
       import('three/addons/postprocessing/OutputPass.js'),
     ]);
-    composer = new EffectComposer(renderer);
+
+    const w0 = mount.clientWidth || 320;
+    const h0 = mount.clientHeight || 320;
+    const rt = new THREE.WebGLRenderTarget(w0, h0, {
+      type: THREE.HalfFloatType,
+      format: THREE.RGBAFormat,
+    });
+    composer = new EffectComposer(renderer, rt);
     composer.addPass(new RenderPass(scene, camera));
+
     bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(mount.clientWidth || 320, mount.clientHeight || 320),
+      new THREE.Vector2(w0, h0),
       1.4,   // strength
       0.85,  // radius
       0.30,  // threshold — only bright bits glow
     );
+
+    // ALPHA-PRESERVING blend: additive on RGB, keep destination alpha
+    if (bloomPass.materialCopy) {
+      bloomPass.materialCopy.blending = THREE.CustomBlending;
+      bloomPass.materialCopy.blendEquation = THREE.AddEquation;
+      bloomPass.materialCopy.blendSrc = THREE.OneFactor;
+      bloomPass.materialCopy.blendDst = THREE.OneFactor;
+      bloomPass.materialCopy.blendEquationAlpha = THREE.AddEquation;
+      bloomPass.materialCopy.blendSrcAlpha = THREE.ZeroFactor;
+      bloomPass.materialCopy.blendDstAlpha = THREE.OneFactor;
+      bloomPass.materialCopy.needsUpdate = true;
+    }
+
     composer.addPass(bloomPass);
     composer.addPass(new OutputPass());
   } catch (err) {
