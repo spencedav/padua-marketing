@@ -439,44 +439,21 @@ async function init() {
   });
   pyramid.add(new THREE.LineSegments(edgeGeom, edgeMat));
 
-  /* --------------------------------------------------------------------------
-     Inner orb — sprite at the center, additive, visible as a small light core
-     -------------------------------------------------------------------------- */
-  const orbTex = makeSoftParticleTexture(256);
-  const orb = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: orbTex,
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    depthTest: false,
-  }));
-  orb.scale.set(0.9, 0.9, 1);
-  orb.position.set(0, 0, 0);
-  orb.renderOrder = -1;
-  root.add(orb);
-
-  // Inner point light (illuminates faces from inside)
+  // No inner orb sprite — the emission shader on the surface IS the
+  // "light from within" effect (DolphinIQ approach). The orb was occluded
+  // by the opaque faces anyway, and additive sprites contaminate alpha
+  // outside the pyramid silhouette which creates the visible box.
+  // The core point light is kept for subtle internal warmth.
   const coreLight = new THREE.PointLight(new THREE.Color(PADUA.compare), 18, 8, 1.6);
   coreLight.position.set(0, 0, 0);
   root.add(coreLight);
+  const orb = { material: { color: new THREE.Color() } }; // stub so tick code still works
 
-  /* --------------------------------------------------------------------------
-     Large background glow sprite — soft atmospheric halo (DolphinIQ trick)
-     -------------------------------------------------------------------------- */
-  const bgGlowTex = makeSoftParticleTexture(512);
-  const bgGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: bgGlowTex,
-    color: new THREE.Color(PADUA.compare),
-    transparent: true,
-    blending: THREE.AdditiveBlending,
-    opacity: 0.45,
-    depthWrite: false,
-    depthTest: false,
-  }));
-  bgGlow.scale.set(10, 10, 1);
-  bgGlow.position.set(0, 0.5, -2);
-  bgGlow.renderOrder = -2;
-  scene.add(bgGlow);
+  // (No background glow sprite. Additive sprites fill alpha across their
+  //  full area in non-premultiplied mode — that contaminates the canvas
+  //  alpha and creates the visible "box." The bloom halo around the
+  //  pyramid handles the atmospheric glow on its own.)
+  const bgGlow = null;
 
   /* --------------------------------------------------------------------------
      Lighting (kept dim — the emission shader carries the visual mass)
@@ -634,7 +611,7 @@ async function init() {
 
     orb.material.color.copy(orbCyclingColor);
     coreLight.color.copy(orbCyclingColor);
-    bgGlow.material.color.copy(orbCyclingColor);
+    if (bgGlow) bgGlow.material.color.copy(orbCyclingColor);
 
     // Drive the shared emission uniforms (all face materials use this object)
     sharedEmissionUniforms.uTime.value = t;
