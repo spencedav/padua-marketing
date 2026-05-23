@@ -237,42 +237,34 @@ function makeFaceTexture(spectrumHex, text, lightOffsetX = 0.5, lightOffsetY = 0
   ctx.fillStyle = vig;
   ctx.fillRect(0, 0, size, size);
 
-  // 8. Label — pink-tinted, soft-focused, embedded. Heavier blur + lower
-  //    contrast than before so it reads as "lit through" the face rather
-  //    than printed on top.
-  const upper = text.toUpperCase();
-  const targetY = size * 0.78;
+  // 8. Label — Newsreader italic in Title Case. Serif italic is the brand
+  //    display voice (used on h1/h2 throughout the site) and reads as
+  //    editorial / refined / "stylish" rather than the previous uppercase
+  //    sans-serif chip-style. Soft pink tones keep it integrated with the
+  //    face surface.
+  const label = text;  // Title Case as given (Quality / Value / Turnaround)
+  const targetY = size * 0.79;
   const maxWidth = size * 0.78;
-  let fontPx = 150;
+  let fontPx = 180;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) ctx.letterSpacing = '5px';
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px'; // serifs prefer tight tracking
   do {
-    ctx.font = `400 ${fontPx}px "Geist", "Inter", system-ui, -apple-system, sans-serif`;
-    if (ctx.measureText(upper).width <= maxWidth) break;
-    fontPx -= 6;
-  } while (fontPx > 60);
+    ctx.font = `italic 400 ${fontPx}px "Newsreader", "Quincy CF", Georgia, serif`;
+    if (ctx.measureText(label).width <= maxWidth) break;
+    fontPx -= 8;
+  } while (fontPx > 70);
 
   // Soft outer halo — wide, low contrast, warm pink
   ctx.shadowColor = '#ff66cc';
   ctx.shadowBlur = 70;
-  ctx.fillStyle = 'rgba(255, 180, 210, 0.45)';
-  ctx.fillText(upper, size / 2, targetY);
+  ctx.fillStyle = 'rgba(255, 180, 210, 0.4)';
+  ctx.fillText(label, size / 2, targetY);
 
-  // Inner pass — pink, not white. Less alpha so the label feels lit-from-
-  // behind through the face surface rather than painted on top.
-  ctx.shadowBlur = 30;
-  ctx.fillStyle = 'rgba(230, 170, 205, 0.78)';
-  ctx.fillText(upper, size / 2, targetY);
-  ctx.shadowBlur = 0;
-
-  // Brand dot — also softer and pinker
-  ctx.shadowColor = '#ff66cc';
-  ctx.shadowBlur = 14;
-  ctx.beginPath();
-  ctx.arc(size / 2, targetY - fontPx - 32, 9, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255, 200, 225, 0.75)';
-  ctx.fill();
+  // Inner pass — pink, soft
+  ctx.shadowBlur = 22;
+  ctx.fillStyle = 'rgba(235, 180, 215, 0.85)';
+  ctx.fillText(label, size / 2, targetY);
   ctx.shadowBlur = 0;
 
   const tex = new THREE.CanvasTexture(cv);
@@ -381,6 +373,17 @@ async function init() {
     scene.environment = buildEnvironment(renderer);
   } catch (err) {
     console.warn('[padua-tri3d] env build failed', err);
+  }
+
+  // Make sure Newsreader (italic 400) is loaded before we rasterize text
+  // into the face textures — otherwise canvas falls back to generic serif.
+  if (document.fonts && document.fonts.load) {
+    try {
+      await Promise.all([
+        document.fonts.load('italic 400 180px "Newsreader"'),
+        document.fonts.load('italic 400 120px "Newsreader"'),
+      ]);
+    } catch (e) { /* fall through to canvas's font fallback chain */ }
   }
 
   /* --------------------------------------------------------------------------
