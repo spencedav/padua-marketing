@@ -1,0 +1,1393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- ============ SEO ============ -->
+<title>For Mortgage Brokers — Padua WealthX Open Banking | Padua Solutions</title>
+<meta name="description" content="Padua WealthX is a secure open-banking experience for mortgage brokers — clear insights into client income, expenses, assets and liabilities, plus referral opportunities back to advice firms.">
+<link rel="canonical" href="https://paduasolutions.com/mortgage-brokers">
+
+<!-- Open Graph -->
+<meta property="og:title" content="For Mortgage Brokers — Padua WealthX Open Banking">
+<meta property="og:description" content="Open-banking insights for mortgage brokers. See the complete client financial picture in minutes, and unlock referral opportunities back to advice firms.">
+<meta property="og:image" content="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+<meta property="og:url" content="https://paduasolutions.com/mortgage-brokers">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Padua Solutions">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="For Mortgage Brokers — Padua WealthX Open Banking">
+<meta name="twitter:description" content="Open-banking insights for mortgage brokers. The fastest way to build a complete client financial picture.">
+<meta name="twitter:image" content="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
+
+<style>
+/* =====================================================================
+   v3 PROTOTYPE TOKENS — match index.html exactly
+   ===================================================================== */
+:root {
+  /* Brand palette */
+  --discover:  #4a308c;
+  --compare:   #ab2178;
+  --recommend: #eb2e4d;
+  --review:    #f59436;
+  --yellow:    #f5d534;
+  --teal:      #007282;
+
+  /* WealthX sub-brand (featured on this page) */
+  --wealthx:        #ff6f2c;
+  --wealthx-dark:   #f5611c;
+  --wealthx-soft:   #fff8f4;
+  --wealthx-border: #ff9a6b;
+  --wealthx-accent: #ffd4c0;
+
+  --spectrum: linear-gradient(135deg, #4a308c 0%, #ab2178 28%, #eb2e4d 52%, #f59436 78%, #f5d534 100%);
+
+  /* WealthX-themed hero gradient: warmer, orange-led, drawn from the spectrum but biased toward Review/WealthX */
+  --hero-gradient:
+    radial-gradient(ellipse 95% 65% at 78% 110%, rgba(255,153,68,0.55), transparent 60%),
+    radial-gradient(ellipse 85% 55% at 22% 120%, rgba(235,46,77,0.45), transparent 60%),
+    radial-gradient(ellipse 80% 55% at 50% 130%, rgba(171,33,120,0.55), transparent 70%),
+    linear-gradient(180deg, #1a0d2e 0%, #2a1240 28%, #4a1a4a 52%, #8a2a3a 72%, #c45a20 90%, #ff8f3e 100%);
+
+  /* Surfaces */
+  --ink:        #16121f;
+  --ink-soft:   #1f1b2a;
+  --paper:      #faf8f4;
+  --paper-warm: #f1ede4;
+  --line:       rgba(22,18,31,0.08);
+  --line-dark:  rgba(255,255,255,0.12);
+
+  /* Text */
+  --text-dark:  #1a1525;
+  --text-mid:   #555560;
+  --text-light: #80808c;
+  --text-on-dark: #ffffff;
+  --text-on-dark-mid: rgba(255,255,255,0.7);
+  --text-on-dark-soft: rgba(255,255,255,0.5);
+
+  /* Type */
+  --font-display: 'Newsreader', 'Quincy CF', Georgia, serif;
+  --font-body: 'Geist', system-ui, -apple-system, sans-serif;
+
+  --radius: 14px;
+  --radius-lg: 22px;
+  --max: 1240px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--text-dark); background: var(--paper); }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
+
+/* =====================================================================
+   LOGO
+   ===================================================================== */
+.padua-logo { display: inline-flex; align-items: center; gap: 9px; }
+.padua-logo-mark { width: 28px; height: auto; flex-shrink: 0; display: block; }
+.padua-logo-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  font-variation-settings: "opsz" 32;
+}
+.padua-logo-tm { font-size: 0.42em; vertical-align: super; opacity: 0.55; font-weight: 400; margin-left: 1px; }
+
+/* =====================================================================
+   NAV — canonical
+   ===================================================================== */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(22,18,31,0.88);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--line-dark);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 32px; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  color: var(--text-on-dark);
+}
+.nav .padua-logo-text { color: var(--text-on-dark); }
+.nav-links { display: flex; align-items: center; gap: 0; }
+.nav-item { position: relative; }
+.nav-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 14px; height: 72px;
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text-on-dark-mid); white-space: nowrap;
+  transition: color .18s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--text-on-dark); }
+.nav-link.active::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: 2px;
+  background: var(--spectrum); border-radius: 2px;
+}
+.nav-caret { width: 9px; height: 9px; opacity: .55; }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-size: 13.5px; font-weight: 500; border-radius: 999px; transition: all .18s ease; white-space: nowrap; }
+.btn-ghost-dark { color: var(--text-on-dark); border: 1px solid rgba(255,255,255,0.22); }
+.btn-ghost-dark:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+.btn-spectrum {
+  color: white; font-weight: 600;
+  background: var(--spectrum);
+  background-size: 200% 100%; background-position: 0% 50%;
+}
+.btn-spectrum:hover { background-position: 100% 50%; transform: translateY(-1px); box-shadow: 0 10px 26px -10px rgba(235,46,77,0.55); }
+.btn-outline { border: 1px solid var(--ink); color: var(--ink); padding: 12px 22px; }
+.btn-outline:hover { background: var(--ink); color: white; }
+
+/* WealthX accent button (sub-brand) */
+.btn-wealthx {
+  color: white; font-weight: 600;
+  background: linear-gradient(135deg, var(--wealthx) 0%, var(--wealthx-dark) 100%);
+  padding: 12px 24px;
+}
+.btn-wealthx:hover { transform: translateY(-1px); box-shadow: 0 10px 26px -10px rgba(255,111,44,0.55); }
+
+/* Dropdown */
+.dropdown {
+  position: absolute; top: 72px; left: 50%; transform: translateX(-50%) translateY(-6px);
+  background: white; color: var(--text-dark);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px; min-width: 260px;
+  box-shadow: 0 24px 50px -12px rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+}
+.nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.dropdown-section {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+  padding: 4px 12px;
+  margin: 14px 0 4px;
+}
+.dropdown-section:first-of-type { margin-top: 0; }
+.dropdown a { display: block; padding: 9px 12px; font-size: 14px; color: var(--text-mid); border-radius: 8px; }
+.dropdown a:hover { background: var(--paper-warm); color: var(--text-dark); }
+.dropdown-divider { height: 1px; background: var(--line); margin: 10px 12px; }
+.dropdown a small { display: block; font-size: 11.5px; color: var(--text-light); margin-top: 2px; font-weight: 400; }
+
+/* Mega menu */
+.dropdown-mega { min-width: 760px; padding: 28px; }
+.mega-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--compare);
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--line);
+  margin: 0 0 22px;
+}
+.mega-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-bottom: 22px; }
+.mega-col h5 {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  letter-spacing: -0.01em; color: var(--text-dark);
+  margin-bottom: 10px;
+}
+.mega-col a { display: block; padding: 8px 10px; font-size: 13.5px; color: var(--text-mid); border-radius: 8px; margin: 0 -10px; }
+.mega-col a:hover { background: var(--paper-warm); color: var(--text-dark); }
+.mega-featured {
+  background: linear-gradient(135deg, #2a1240 0%, #4a1a4a 50%, #d97d20 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex; align-items: center; gap: 16px;
+}
+.mega-featured-play {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.mega-featured-play::after {
+  content: ""; width: 0; height: 0;
+  border-left: 10px solid #1a1a1a;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  margin-left: 2px;
+}
+.mega-featured-text { flex: 1; line-height: 1.3; }
+.mega-featured-text .eb { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+.mega-featured-text h6 { font-family: var(--font-display); font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0; color: white; }
+.mega-featured-arrow { font-size: 20px; color: white; opacity: 0.9; transition: transform .18s ease; }
+.mega-featured:hover .mega-featured-arrow { opacity: 1; transform: translateX(3px); }
+.mega-featured:hover { color: white; }
+.nav-item.has-mega .dropdown { left: 0; transform: translateX(0) translateY(-6px); }
+.nav-item.has-mega:hover .dropdown { transform: translateX(0) translateY(0); }
+
+/* =====================================================================
+   HERO — split layout (H1 variant), WealthX-themed gradient + abstract visual
+   ===================================================================== */
+.hero {
+  position: relative;
+  background: var(--hero-gradient);
+  background-size: cover;
+  background-position: center;
+  color: var(--text-on-dark);
+  overflow: hidden;
+  padding: 80px 32px 96px;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 75% 18%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 45% 12%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 90% 38%, rgba(255,255,255,0.3), transparent);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: var(--max); margin: 0 auto;
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: 64px; align-items: center;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #ffd6a3;
+  margin-bottom: 22px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(38px, 5vw, 66px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 14ch;
+  margin-bottom: 24px;
+  font-variation-settings: "opsz" 72;
+}
+.hero h1 em { font-style: italic; font-weight: 400; color: #ffb47a; }
+.hero-sub {
+  font-size: 18px; line-height: 1.6;
+  color: var(--text-on-dark-mid);
+  max-width: 520px;
+  margin-bottom: 36px;
+}
+.hero-cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.hero-link {
+  font-size: 14px;
+  color: var(--text-on-dark);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 2px;
+}
+.hero-link:hover { border-color: white; }
+
+/* Hero visual — WealthX abstract panel (gradient block with subtle UI motif) */
+.hero-visual {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  max-width: 520px;
+  margin-left: auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(245,213,52,0.35), transparent 50%),
+    radial-gradient(circle at 80% 75%, rgba(255,111,44,0.55), transparent 55%),
+    linear-gradient(140deg, #2a1240 0%, #4a1a4a 38%, #ab2178 65%, #ff6f2c 100%);
+  box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+}
+.hero-visual::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 55%);
+}
+/* Inner panel: glassmorphic glance card representing an open-banking summary */
+.hero-visual-card {
+  position: absolute;
+  left: 8%; right: 8%; bottom: 9%;
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 16px;
+  padding: 18px 20px;
+  color: white;
+}
+.hero-visual-card-eb { font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+.hero-visual-card-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12px;
+}
+.hero-visual-card-cell {
+  border-left: 2px solid rgba(255,255,255,0.4);
+  padding-left: 10px;
+}
+.hero-visual-card-cell:first-child { border-left-color: var(--yellow); }
+.hero-visual-card-cell:nth-child(2) { border-left-color: var(--recommend); }
+.hero-visual-card-cell:nth-child(3) { border-left-color: var(--wealthx); }
+.hero-visual-card-cell:nth-child(4) { border-left-color: var(--compare); }
+.hero-visual-card-label { font-size: 9.5px; font-weight: 500; color: rgba(255,255,255,0.7); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 4px; }
+.hero-visual-card-val {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 500;
+  letter-spacing: -0.015em;
+}
+/* Top floating chip on hero visual */
+.hero-visual-chip {
+  position: absolute;
+  top: 22px; left: 22px;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: white;
+  background: rgba(0,0,0,0.32);
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.hero-visual-chip::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--wealthx);
+  box-shadow: 0 0 12px rgba(255,111,44,0.85);
+}
+
+/* =====================================================================
+   SECTIONS
+   ===================================================================== */
+.section { padding: 100px 32px; }
+.section-tight { padding: 76px 32px; }
+.section-paper { background: var(--paper); }
+.section-warm { background: var(--paper-warm); }
+.section-ink { background: var(--ink); color: var(--text-on-dark); }
+.container { max-width: var(--max); margin: 0 auto; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--compare);
+  margin-bottom: 16px;
+}
+.eyebrow-wealthx { color: var(--wealthx-dark); }
+h2.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 3.6vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  max-width: 760px;
+  margin-bottom: 20px;
+  font-variation-settings: "opsz" 72;
+}
+.section-lede {
+  font-size: 17px; line-height: 1.65;
+  color: var(--text-mid);
+  max-width: 620px;
+}
+
+/* =====================================================================
+   FEATURED WEALTHX SECTION — centerpiece of the page
+   Layout: left = mock UI panel, right = copy + capabilities + CTA
+   ===================================================================== */
+.featured {
+  background: var(--paper);
+  padding: 110px 32px 100px;
+  position: relative;
+  overflow: hidden;
+}
+.featured::before {
+  content: "";
+  position: absolute;
+  top: -180px; right: -180px;
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(255,111,44,0.10), transparent 65%);
+  pointer-events: none;
+}
+.featured-inner {
+  max-width: var(--max); margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 72px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* WealthX product mock — gradient panel with bank-data UI */
+.wx-mock {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 540px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255,213,165,0.25), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(74,26,74,0.55), transparent 55%),
+    linear-gradient(140deg, #2a1240 0%, #4a1a4a 38%, #b54a2a 78%, #ff8a4a 100%);
+  box-shadow: 0 30px 70px -25px rgba(74,48,140,0.45);
+  padding: 28px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.wx-mock-window {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  padding: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.wx-mock-header {
+  display: flex; align-items: center; gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+  margin-bottom: 16px;
+}
+.wx-mock-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+.wx-mock-title {
+  font-family: var(--font-display);
+  font-size: 13px; color: white; margin-left: auto;
+  letter-spacing: -0.01em; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.wx-mock-title::before {
+  content: "WealthX"; font-family: var(--font-body); font-weight: 600;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--wealthx);
+  background: rgba(255,111,44,0.15);
+  border: 1px solid rgba(255,111,44,0.35);
+  padding: 3px 8px; border-radius: 999px;
+}
+.wx-mock-section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin: 14px 0 8px;
+}
+.wx-mock-section-label:first-of-type { margin-top: 0; }
+.wx-mock-bar-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.wx-mock-bar {
+  height: 10px;
+  background: rgba(255,255,255,0.16);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+.wx-mock-bar::after {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--bar-color, var(--wealthx));
+  width: var(--bar-pct, 60%);
+  border-radius: 4px;
+}
+.wx-mock-bar.b1 { --bar-pct: 78%; --bar-color: #f5d534; }
+.wx-mock-bar.b2 { --bar-pct: 52%; --bar-color: #ff6f2c; }
+.wx-mock-bar.b3 { --bar-pct: 68%; --bar-color: #eb2e4d; }
+.wx-mock-bar.b4 { --bar-pct: 42%; --bar-color: #ab2178; }
+.wx-mock-bar-labels {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 6px;
+  font-size: 9.5px; color: rgba(255,255,255,0.65);
+  margin-bottom: 12px;
+}
+
+.wx-mock-rows { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.wx-mock-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.88);
+}
+.wx-mock-row-label { display: inline-flex; align-items: center; gap: 8px; }
+.wx-mock-row-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--wealthx); }
+.wx-mock-row:nth-child(1) .wx-mock-row-dot { background: var(--yellow); }
+.wx-mock-row:nth-child(2) .wx-mock-row-dot { background: var(--recommend); }
+.wx-mock-row:nth-child(3) .wx-mock-row-dot { background: var(--compare); }
+.wx-mock-row-val { font-family: var(--font-display); font-weight: 500; font-size: 13px; letter-spacing: -0.01em; }
+
+.wx-mock-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  font-size: 10.5px; color: rgba(255,255,255,0.6);
+}
+.wx-mock-foot-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.wx-mock-foot-tag::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: #6dd58c; box-shadow: 0 0 8px rgba(109,213,140,0.7);
+}
+
+/* Featured copy + capability list */
+.featured-copy h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 3.8vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+  color: var(--text-dark);
+  margin-bottom: 18px;
+  font-variation-settings: "opsz" 72;
+}
+.featured-copy h2 em {
+  font-style: italic;
+  color: var(--wealthx-dark);
+  font-weight: 400;
+}
+.featured-copy > p {
+  font-size: 17px; line-height: 1.65;
+  color: var(--text-mid);
+  margin-bottom: 28px;
+  max-width: 520px;
+}
+
+.cap-list {
+  list-style: none;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  margin: 28px 0 36px;
+  max-width: 540px;
+}
+.cap-item {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  padding: 14px 18px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  align-items: start;
+}
+.cap-item-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--wealthx-soft);
+  border: 1px solid var(--wealthx-border);
+  color: var(--wealthx-dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.cap-item-icon svg { width: 14px; height: 14px; }
+.cap-item-body strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+  display: block;
+  margin-bottom: 2px;
+}
+.cap-item-body span {
+  font-size: 13.5px;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.featured-cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.featured-cta-row .hero-link { color: var(--text-dark); border-bottom-color: rgba(22,18,31,0.3); }
+.featured-cta-row .hero-link:hover { border-bottom-color: var(--text-dark); }
+
+/* =====================================================================
+   PILLARS — three-pillar overview (condensed version of /product-providers framing)
+   ===================================================================== */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 48px;
+}
+.pillar {
+  position: relative;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px 28px;
+  transition: transform .25s ease, box-shadow .25s ease;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.pillar::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--pillar-accent, var(--discover));
+  transform: translateY(-100%); transition: transform .25s ease;
+}
+.pillar:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(0,0,0,0.15); }
+.pillar:hover::before { transform: translateY(0); }
+
+/* WealthX pillar = featured, "currently viewing" treatment */
+.pillar-wealthx {
+  background: var(--ink);
+  color: var(--text-on-dark);
+  border-color: var(--ink);
+}
+.pillar-wealthx::before {
+  transform: translateY(0);
+  background: linear-gradient(90deg, var(--wealthx) 0%, var(--review) 50%, var(--recommend) 100%);
+  height: 6px;
+}
+.pillar-software { --pillar-accent: var(--discover); }
+.pillar-products { --pillar-accent: var(--teal); }
+
+.pillar-tag {
+  display: inline-block;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+.pillar-wealthx .pillar-tag { background: rgba(255,111,44,0.18); color: #ffb47a; }
+.pillar-software .pillar-tag { background: rgba(74,48,140,0.10); color: var(--discover); }
+.pillar-products .pillar-tag { background: rgba(0,114,130,0.10); color: var(--teal); }
+
+.pillar h3 {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 500;
+  line-height: 1.15; letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.pillar p { font-size: 14px; line-height: 1.6; color: var(--text-mid); margin-bottom: 24px; flex: 1; }
+.pillar-wealthx p { color: var(--text-on-dark-mid); }
+.pillar-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text-dark);
+  border-bottom: 1px solid currentColor; padding-bottom: 2px;
+  align-self: flex-start;
+}
+.pillar-wealthx .pillar-link { color: var(--text-on-dark); }
+.pillar-link::after { content: "→"; transition: transform .2s ease; }
+.pillar:hover .pillar-link::after { transform: translateX(4px); }
+
+/* =====================================================================
+   SUB-AUDIENCE STREAMS — compact 2-up row for adjacent segments
+   ===================================================================== */
+.subaud-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 40px;
+}
+.subaud-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 30px;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.subaud-card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--subaud-accent, var(--compare));
+}
+.subaud-card-1 { --subaud-accent: linear-gradient(90deg, var(--discover), var(--compare)); }
+.subaud-card-2 { --subaud-accent: linear-gradient(90deg, var(--review), var(--yellow)); }
+.subaud-card:hover { transform: translateY(-3px); box-shadow: 0 20px 50px -25px rgba(0,0,0,0.18); }
+.subaud-card .eyebrow { margin-bottom: 10px; }
+.subaud-card-1 .eyebrow { color: var(--compare); }
+.subaud-card-2 .eyebrow { color: var(--review); }
+.subaud-card h4 {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1.2;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+.subaud-card p { font-size: 14px; line-height: 1.6; color: var(--text-mid); margin-bottom: 18px; flex: 1; }
+.subaud-card-cta {
+  font-size: 13.5px; font-weight: 500; color: var(--text-dark);
+  border-bottom: 1px solid var(--text-dark); padding-bottom: 2px;
+  align-self: flex-start;
+}
+
+/* =====================================================================
+   PARTNERS GRID — real logos
+   ===================================================================== */
+.partners-section { padding: 80px 32px; background: var(--paper-warm); }
+.partners-head { text-align: center; max-width: 620px; margin: 0 auto 44px; }
+.partners-head h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 2.8vw, 36px);
+  line-height: 1.15; letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  color: var(--text-dark);
+}
+.partners-head p { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
+.partners-logos {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  align-items: center;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.partner-logo {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 18px;
+  height: 96px;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.partner-logo:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -18px rgba(0,0,0,0.18); }
+.partner-logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto; height: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.78;
+  transition: filter .2s ease, opacity .2s ease;
+}
+.partner-logo:hover img { filter: grayscale(0%); opacity: 1; }
+/* Lifewealth logo is white — needs a dark backing card */
+.partner-logo.partner-on-dark { background: var(--ink); border-color: var(--ink); }
+.partner-logo.partner-on-dark img { filter: none; opacity: 0.92; }
+.partner-logo.partner-on-dark:hover img { opacity: 1; }
+
+/* =====================================================================
+   TRUST STRIP — 100% Onshore + ISO 27001
+   ===================================================================== */
+.trust-strip {
+  padding: 56px 32px;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.trust-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 18px;
+}
+.trust-iso-badge { width: 92px; height: 92px; flex-shrink: 0; }
+.trust-mark {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: var(--paper-warm);
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--discover);
+}
+.trust-mark svg { width: 32px; height: 32px; }
+.trust-item-title {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.trust-item-sub { font-size: 13.5px; color: var(--text-mid); line-height: 1.5; }
+.trust-divider { width: 1px; height: 76px; background: var(--line); }
+
+/* =====================================================================
+   CTA BANNER (S8) — spectrum
+   ===================================================================== */
+.cta-section { padding: 0 32px 100px; background: var(--paper); }
+.cta-banner {
+  padding: 56px;
+  background: var(--spectrum);
+  border-radius: 28px;
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 48px; align-items: center;
+  max-width: var(--max); margin: 0 auto;
+}
+.cta-banner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 400; line-height: 1.05;
+  letter-spacing: -0.025em; color: white;
+  font-variation-settings: "opsz" 72;
+}
+.cta-banner h2 em { font-style: italic; color: rgba(255,255,255,0.78); }
+.cta-banner p { color: rgba(255,255,255,0.85); font-size: 15.5px; line-height: 1.6; margin-top: 14px; max-width: 480px; }
+.cta-banner-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.btn-on-spectrum { background: white; color: var(--ink); padding: 13px 24px; font-weight: 500; }
+.btn-on-spectrum:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -10px rgba(0,0,0,0.25); }
+.btn-on-spectrum-ghost { color: white; border: 1px solid rgba(255,255,255,0.55); padding: 13px 24px; }
+.btn-on-spectrum-ghost:hover { background: rgba(255,255,255,0.12); }
+
+/* =====================================================================
+   FOOTER — canonical
+   ===================================================================== */
+.footer { background: var(--ink); color: var(--text-on-dark); padding: 76px 32px 32px; }
+.footer .padua-logo-text { color: var(--text-on-dark); }
+.footer-inner { max-width: var(--max); margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 44px; border-bottom: 1px solid var(--line-dark); }
+.footer-brand p { font-size: 13.5px; color: var(--text-on-dark-mid); line-height: 1.6; max-width: 340px; margin-top: 16px; }
+.footer-col h4 { font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 14px; text-transform: uppercase; color: white; }
+.footer-col a { display: block; font-size: 13.5px; color: var(--text-on-dark-mid); padding: 5px 0; }
+.footer-col a:hover { color: white; }
+.footer-bottom { margin-top: 26px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--text-on-dark-soft); }
+.footer-bottom-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.footer-cert-pill { padding: 5px 11px; border: 1px solid var(--line-dark); border-radius: 999px; }
+.acknowledgement { max-width: 700px; font-size: 12px; line-height: 1.6; color: var(--text-on-dark-soft); margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line-dark); }
+
+/* =====================================================================
+   RESPONSIVE — Webflow-compatible breakpoints
+   ===================================================================== */
+@media (max-width: 991px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-visual { max-width: 480px; margin: 0 auto; }
+  .featured-grid { grid-template-columns: 1fr; gap: 48px; }
+  .wx-mock { max-width: 540px; margin: 0 auto; }
+  .pillars-grid { grid-template-columns: 1fr 1fr; }
+  .subaud-grid { grid-template-columns: 1fr; }
+  .partners-logos { grid-template-columns: repeat(3, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .trust-inner { grid-template-columns: 1fr; gap: 28px; text-align: left; }
+  .trust-divider { display: none; }
+  .cta-banner { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 767px) {
+  .nav-links { display: none; }
+  .section, .featured { padding: 64px 24px; }
+  .hero { padding: 56px 24px 72px; }
+  .pillars-grid { grid-template-columns: 1fr; }
+  .partners-logos { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .partner-logo { height: 84px; padding: 18px 14px; }
+  .partners-section { padding: 64px 24px; }
+  .trust-strip { padding: 44px 24px; }
+  .cta-section { padding: 0 24px 72px; }
+  .cta-banner { padding: 36px 28px; }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer { padding: 56px 24px 28px; }
+}
+@media (max-width: 479px) {
+  .hero { padding: 48px 20px 60px; }
+  .hero h1 { font-size: clamp(32px, 9vw, 44px); }
+  .hero-sub { font-size: 16px; }
+  .hero-cta-row { flex-direction: column; align-items: stretch; }
+  .hero-cta-row .btn { justify-content: center; }
+  .hero-visual-card-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .section, .featured { padding: 56px 20px; }
+  .featured-copy h2 { font-size: clamp(28px, 8vw, 38px); }
+  h2.section-title { font-size: clamp(28px, 8vw, 38px); }
+  .pillar { padding: 28px 24px 24px; }
+  .subaud-card { padding: 24px 22px; }
+  .wx-mock { padding: 20px; }
+  .wx-mock-window { padding: 16px; }
+  .partners-section { padding: 48px 20px; }
+  .partners-head h2 { font-size: clamp(24px, 7vw, 30px); }
+  .cta-banner { padding: 28px 22px; border-radius: 22px; }
+  .cta-banner h2 { font-size: clamp(24px, 7vw, 32px); }
+  .trust-item { gap: 14px; }
+  .trust-iso-badge { width: 72px; height: 72px; }
+  .footer { padding: 48px 20px 24px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     NAVIGATION (canonical — Advisers & Licensees active)
+     ===================================================================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="padua-logo">
+      <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
+      <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
+    </a>
+
+    <div class="nav-links">
+
+      <!-- ADVISERS & LICENSEES (mega) — ACTIVE -->
+      <div class="nav-item has-mega">
+        <a class="nav-link active" href="/advisers-licensees">Advisers &amp; Licensees
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown dropdown-mega">
+          <div class="mega-eyebrow">Our Solutions  ·  for advisers &amp; licensees</div>
+          <div class="mega-cols">
+            <div class="mega-col">
+              <h5>The Padua Portal</h5>
+              <a href="/advisers-licensees">Portal overview</a>
+              <a href="#watch">See the workflow in action</a>
+            </div>
+            <div class="mega-col">
+              <h5>Services</h5>
+              <a href="/services">Tech-enabled paraplanning<small>The fastest path to scale</small></a>
+              <a href="/services#transition">Transition management<small>End-to-end implementation</small></a>
+            </div>
+            <div class="mega-col">
+              <h5>Software</h5>
+              <a href="/software/wealthx">WealthX<small>Open banking</small></a>
+              <a href="/software/wealthreview">WealthReview<small>Client dashboard</small></a>
+              <a href="/software/steveai">SteveAI<small>AI advice assistant</small></a>
+              <a href="/software/wealthai">WealthAI<small>Video &amp; statements</small></a>
+              <a href="/software/wealthdata">Wealth Data<small>Adviser insights</small></a>
+            </div>
+          </div>
+          <a class="mega-featured" href="#watch">
+            <div class="mega-featured-play"></div>
+            <div class="mega-featured-text">
+              <div class="eb">2 min video</div>
+              <h6>See the Padua Portal in action</h6>
+            </div>
+            <div class="mega-featured-arrow">→</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- PLATFORMS & SUPER FUNDS -->
+      <div class="nav-item">
+        <a class="nav-link" href="/platforms-super-funds">Platforms &amp; Super Funds
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="mega-eyebrow">Our Solutions  ·  for platforms &amp; super funds</div>
+          <div class="dropdown-section">Solutions overview</div>
+          <a href="/platforms-super-funds">For platforms &amp; super funds</a>
+          <div class="dropdown-section">Services</div>
+          <a href="/services">Tech-enabled paraplanning</a>
+          <a href="/services#transition">Transition management</a>
+          <div class="dropdown-section">Software</div>
+          <a href="/software/wealthai">WealthAI<small>Member video &amp; statements</small></a>
+          <a href="/software/wealthx">WealthX<small>Open banking integration</small></a>
+          <a href="/software/wealthdata">Wealth Data<small>Superannuation insights</small></a>
+        </div>
+      </div>
+
+      <!-- INVESTMENT MANAGERS -->
+      <div class="nav-item">
+        <a class="nav-link" href="/investment-managers">Investment Managers
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="mega-eyebrow">Our Solutions  ·  for investment managers</div>
+          <div class="dropdown-section">Solutions overview</div>
+          <a href="/investment-managers">For investment managers &amp; fund administrators</a>
+          <div class="dropdown-section">Software &amp; Data</div>
+          <a href="/software/wealthdata">Wealth Data<small>Adviser &amp; market insights</small></a>
+          <a href="/software/fund-administration">Fund administration tools</a>
+          <div class="dropdown-section">Distribution</div>
+          <a href="/media-advertising">Media &amp; Advertising<small>Reach Australian advisers</small></a>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="nav-item">
+        <a class="nav-link" href="/about/who-we-are">About
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="dropdown-section">Company</div>
+          <a href="/about/who-we-are">Who we are<small>Our mission, values, Advice Guides</small></a>
+          <a href="/about/our-people">Our people</a>
+          <a href="/about/careers">Careers</a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section">Content</div>
+          <a href="/news-insights">News &amp; insights</a>
+          <a href="/events">Events &amp; webinars</a>
+          <a href="/resources">Resources<small>Whitepapers &amp; reports</small></a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section">Trust</div>
+          <a href="/security">Security &amp; compliance<small>ISO 27001 certified</small></a>
+        </div>
+      </div>
+
+      <a class="nav-link" href="/contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn btn-ghost-dark" href="https://home.paduasolutions.com/">Log in</a>
+      <a class="btn btn-spectrum" href="/book-a-demo">Book a demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- =====================================================================
+     HERO (H1 split — text + WealthX-themed gradient visual)
+     ===================================================================== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-eyebrow">For Mortgage Brokers</div>
+      <h1>Open-banking insights, built for <em>brokers</em>.</h1>
+      <p class="hero-sub">Padua WealthX provides a secure open-banking experience that gives clients clear insights into their income, expenses, assets and liabilities — and generates valuable referral opportunities back to advice firms.</p>
+      <div class="hero-cta-row">
+        <a class="btn btn-wealthx" href="/book-a-demo">Sign up to Padua WealthX</a>
+        <a class="hero-link" href="/contact-us">Contact us</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual-chip">WealthX · Live data</div>
+      <div class="hero-visual-card">
+        <div class="hero-visual-card-eb">Client snapshot</div>
+        <div class="hero-visual-card-row">
+          <div class="hero-visual-card-cell">
+            <div class="hero-visual-card-label">Income</div>
+            <div class="hero-visual-card-val">$11,400</div>
+          </div>
+          <div class="hero-visual-card-cell">
+            <div class="hero-visual-card-label">Expenses</div>
+            <div class="hero-visual-card-val">$6,820</div>
+          </div>
+          <div class="hero-visual-card-cell">
+            <div class="hero-visual-card-label">Assets</div>
+            <div class="hero-visual-card-val">$842k</div>
+          </div>
+          <div class="hero-visual-card-cell">
+            <div class="hero-visual-card-label">Liabilities</div>
+            <div class="hero-visual-card-val">$394k</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FEATURED — WealthX product centerpiece (~40% of page weight)
+     Layout: WealthX mock UI panel + copy with capability list
+     ===================================================================== -->
+<section class="featured" id="wealthx">
+  <div class="featured-inner">
+    <div class="eyebrow eyebrow-wealthx">Featured product</div>
+    <h2 class="section-title">The complete financial picture, in <em style="font-style:italic; color: var(--wealthx-dark);">minutes</em>.</h2>
+
+    <div class="featured-grid">
+
+      <!-- WealthX product mock (left) -->
+      <div class="wx-mock" aria-hidden="true">
+        <div class="wx-mock-window">
+          <div class="wx-mock-header">
+            <span class="wx-mock-dot"></span>
+            <span class="wx-mock-dot"></span>
+            <span class="wx-mock-dot"></span>
+            <span class="wx-mock-title">Open banking summary</span>
+          </div>
+
+          <div class="wx-mock-section-label">Cashflow · last 90 days</div>
+          <div class="wx-mock-bar-row">
+            <div class="wx-mock-bar b1"></div>
+            <div class="wx-mock-bar b2"></div>
+            <div class="wx-mock-bar b3"></div>
+            <div class="wx-mock-bar b4"></div>
+          </div>
+          <div class="wx-mock-bar-labels">
+            <span>Salary</span><span>Living</span><span>Loan</span><span>Other</span>
+          </div>
+
+          <div class="wx-mock-section-label">Position</div>
+          <div class="wx-mock-rows">
+            <div class="wx-mock-row">
+              <span class="wx-mock-row-label"><span class="wx-mock-row-dot"></span>Total assets</span>
+              <span class="wx-mock-row-val">$842,000</span>
+            </div>
+            <div class="wx-mock-row">
+              <span class="wx-mock-row-label"><span class="wx-mock-row-dot"></span>Total liabilities</span>
+              <span class="wx-mock-row-val">$394,200</span>
+            </div>
+            <div class="wx-mock-row">
+              <span class="wx-mock-row-label"><span class="wx-mock-row-dot"></span>Surplus / month</span>
+              <span class="wx-mock-row-val">$4,580</span>
+            </div>
+          </div>
+
+          <div class="wx-mock-foot">
+            <span class="wx-mock-foot-tag">Securely connected</span>
+            <span>Refreshed today</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copy + capabilities (right) -->
+      <div class="featured-copy">
+        <h2>Padua <em>WealthX</em></h2>
+        <p>Secure open-banking that gives clients clear insights into their income, expenses, assets and liabilities — and generates referral opportunities back to advice firms. The fastest way to build a complete client financial picture.</p>
+
+        <ul class="cap-list">
+          <li class="cap-item">
+            <span class="cap-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <span class="cap-item-body">
+              <strong>Secure open-banking connection</strong>
+              <span>Bank-grade, consent-based data sharing. Clients link their accounts in minutes.</span>
+            </span>
+          </li>
+          <li class="cap-item">
+            <span class="cap-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            </span>
+            <span class="cap-item-body">
+              <strong>Income &amp; expense insights</strong>
+              <span>Categorised cashflow with the patterns and trends you need to assess serviceability.</span>
+            </span>
+          </li>
+          <li class="cap-item">
+            <span class="cap-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
+            </span>
+            <span class="cap-item-body">
+              <strong>Assets &amp; liabilities at a glance</strong>
+              <span>A full position summary pulled directly from the source — no manual data entry.</span>
+            </span>
+          </li>
+          <li class="cap-item">
+            <span class="cap-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="3"/><circle cx="17" cy="6" r="3"/><circle cx="17" cy="18" r="3"/><path d="M11.5 10.5L14.5 7.5"/><path d="M11.5 13.5L14.5 16.5"/></svg>
+            </span>
+            <span class="cap-item-body">
+              <strong>Referral opportunities to advice firms</strong>
+              <span>Surface clients who would benefit from financial advice and route them to a partner firm.</span>
+            </span>
+          </li>
+          <li class="cap-item">
+            <span class="cap-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </span>
+            <span class="cap-item-body">
+              <strong>Faster client onboarding</strong>
+              <span>Replace stacks of statements with a single, accurate financial snapshot.</span>
+            </span>
+          </li>
+          <li class="cap-item">
+            <span class="cap-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <span class="cap-item-body">
+              <strong>100% Australian, ISO 27001 certified</strong>
+              <span>Client data is handled onshore by an ISO 27001 certified team. It never leaves Australia.</span>
+            </span>
+          </li>
+        </ul>
+
+        <div class="featured-cta-row">
+          <a class="btn btn-wealthx" href="/book-a-demo">Sign up to Padua WealthX</a>
+          <a class="hero-link" href="/software/wealthx">Learn more about WealthX</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PILLARS — three-pillar overview (WealthX featured, Software + Products briefer)
+     ===================================================================== -->
+<section class="section section-warm">
+  <div class="container">
+    <div class="eyebrow">How we work with brokers</div>
+    <h2 class="section-title">One platform. Three ways to add value to your broking business.</h2>
+    <p class="section-lede">WealthX is the headline product for mortgage brokers — but we also offer the software and product solutions that sit behind Australia's leading advice firms.</p>
+
+    <div class="pillars-grid">
+
+      <!-- WealthX pillar — featured -->
+      <article class="pillar pillar-wealthx">
+        <span class="pillar-tag">Featured · WealthX</span>
+        <h3>Padua WealthX</h3>
+        <p>Secure open-banking that gives clients clear insights into their income, expenses, assets and liabilities — and generates referral opportunities back to advice firms. The fastest way to build a complete client financial picture.</p>
+        <a class="pillar-link" href="#wealthx">Sign up to Padua WealthX</a>
+      </article>
+
+      <!-- Software pillar -->
+      <article class="pillar pillar-software">
+        <span class="pillar-tag">Software</span>
+        <h3>Software</h3>
+        <p>Experience a streamlined advice process with our software, empowering you to focus on meaningful client interactions.</p>
+        <a class="pillar-link" href="/software">Explore the software suite</a>
+      </article>
+
+      <!-- Product Solutions pillar -->
+      <article class="pillar pillar-products">
+        <span class="pillar-tag">Product Solutions</span>
+        <h3>Product Solutions</h3>
+        <p>Providing the product solutions of tomorrow with today's innovation.</p>
+        <a class="pillar-link" href="/contact-us">Talk to us</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SUB-AUDIENCE STREAMS — adjacent segments, compact
+     ===================================================================== -->
+<section class="section section-paper">
+  <div class="container">
+    <div class="eyebrow">Adjacent solutions</div>
+    <h2 class="section-title">Our positioning extends beyond brokers.</h2>
+    <p class="section-lede">If you sit alongside a broking business — running a platform, super fund, investment mandate or compliance practice — there's a Padua stream built for you too.</p>
+
+    <div class="subaud-grid">
+      <div class="subaud-card subaud-card-1">
+        <div class="eyebrow">Platforms &amp; Investment Management</div>
+        <h4>Platform &amp; investment management solutions</h4>
+        <p>Data integration, modelling tools, member engagement video and open-banking technology for platform operators, super funds and investment managers.</p>
+        <a class="subaud-card-cta" href="/platforms-super-funds">Explore solutions →</a>
+      </div>
+      <div class="subaud-card subaud-card-2">
+        <div class="eyebrow">Business &amp; Compliance</div>
+        <h4>Business &amp; compliance consultant solutions</h4>
+        <p>Operational, technology and compliance support for consultants and licensees who work with advice and broking businesses.</p>
+        <a class="subaud-card-cta" href="/contact-us">Get in touch →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PARTNERS GRID — real logos
+     ===================================================================== -->
+<section class="partners-section">
+  <div class="partners-head">
+    <div class="eyebrow">Our trusted partners</div>
+    <h2>Working with leading Australian advice businesses.</h2>
+    <p>We partner with licensees, advice firms and broking businesses across the country.</p>
+  </div>
+  <div class="partners-logos">
+    <div class="partner-logo">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue" loading="lazy">
+    </div>
+    <div class="partner-logo">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432967106c4a51312feed5_count-logo.svg" alt="Count Group" loading="lazy">
+    </div>
+    <div class="partner-logo">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b303137cb430dca61eb_Fitzpatricks.png" alt="Fitzpatricks" loading="lazy">
+    </div>
+    <div class="partner-logo">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b57c2c6513093627772_findex.jpeg" alt="Findex" loading="lazy">
+    </div>
+    <div class="partner-logo">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bf4453f23c395598081_emerge-paper.png" alt="Emerge Paper" loading="lazy">
+    </div>
+    <div class="partner-logo partner-on-dark">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65668e6b3b36a4ccecb4100c_lifewealth-white.png" alt="Lifewealth" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     TRUST STRIP — 100% Onshore + ISO 27001
+     ===================================================================== -->
+<section class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="trust-item-title">100% Australian onshore</div>
+        <div class="trust-item-sub">Your client data is stored, processed and handled in Australia — never offshore.</div>
+      </div>
+    </div>
+
+    <div class="trust-divider"></div>
+
+    <div class="trust-item">
+      <img class="trust-iso-badge" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d1202b1681fafb47acb27d_ISO%2027001%20Certified%20Badge.svg" alt="ISO 27001 Certified" loading="lazy">
+      <div>
+        <div class="trust-item-title">ISO 27001 certified</div>
+        <div class="trust-item-sub">Independently audited information-security management — applied to every product and process.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     CTA BANNER (S8 — spectrum)
+     ===================================================================== -->
+<div class="cta-section">
+  <div class="cta-banner">
+    <div>
+      <h2>Ready to give your clients a <em>complete financial picture</em>?</h2>
+      <p>Book a walkthrough of Padua WealthX, or talk to us about how we work with broking businesses.</p>
+    </div>
+    <div class="cta-banner-actions">
+      <a class="btn btn-on-spectrum" href="/book-a-demo">Sign up to Padua WealthX</a>
+      <a class="btn btn-on-spectrum-ghost" href="/contact-us">Contact us</a>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     FOOTER (canonical — verbatim)
+     ===================================================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="padua-logo">
+          <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
+          <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
+        </a>
+        <p>Padua Solutions is Australia's tech-enabled financial advice infrastructure. Combining experienced onshore advice professionals, intelligent workflow and AI to help advisers help more Australians.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Advisers &amp; Licensees</h4>
+        <a href="/advisers-licensees">Padua Advice Portal</a>
+        <a href="/advice-guides">Advice Guides</a>
+        <a href="/services">Paraplanning services</a>
+        <a href="/services#transition">Transition management</a>
+        <a href="/rafa">RAFA &amp; cold storage</a>
+      </div>
+      <div class="footer-col">
+        <h4>Other streams</h4>
+        <a href="/platforms-super-funds">Platforms &amp; Super Funds</a>
+        <a href="/investment-managers">Investment Managers</a>
+        <a href="/fund-administrators">Fund Administrators</a>
+        <a href="/media-advertising">Media &amp; Advertising</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about/who-we-are">About Padua</a>
+        <a href="/about/our-people">Our people</a>
+        <a href="/news-insights">News &amp; insights</a>
+        <a href="/about/careers">Careers</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Padua Solutions Pty Ltd. ABN 93 167 243 745. All rights reserved.</p>
+      <div class="footer-bottom-right">
+        <div class="footer-cert-pill">ISO 27001 Certified</div>
+        <div class="footer-cert-pill">100% Onshore</div>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+
+    <p class="acknowledgement">
+      Padua acknowledges the Traditional Owners of the lands on which we work, the Wodi Wodi people on Dharawal country and the Gadigal people of the Eora Nation. We acknowledge their continuing connection to land, waters, and community. We pay our respects to the people, the cultures, and the Elders past and present.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
