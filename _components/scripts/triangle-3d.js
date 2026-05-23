@@ -62,21 +62,26 @@ function buildPyramidGeometry(baseRadius, height) {
   const b2 = [ baseRadius * Math.cos((4 * Math.PI) / 3),  -half, baseRadius * Math.sin((4 * Math.PI) / 3) ];
   const ap = [ 0,                                          half, 0 ];
 
+  // Winding order matters: vertex order is CCW when viewed from OUTSIDE the
+  // pyramid, so the visible side is Three.js's "front face" and the texture
+  // maps in normal (non-mirrored) orientation. Wrong winding here = text
+  // appears mirrored on the faces. Order is: base_i, apex, base_{i+1}.
   const positions = new Float32Array([
-    ...b0, ...b1, ...ap, // side 0
-    ...b1, ...b2, ...ap, // side 1
-    ...b2, ...b0, ...ap, // side 2
-    ...b0, ...b2, ...b1, // base
+    ...b0, ...ap, ...b1, // side 0 (between b0 and b1)
+    ...b1, ...ap, ...b2, // side 1 (between b1 and b2)
+    ...b2, ...ap, ...b0, // side 2 (between b2 and b0)
+    ...b0, ...b1, ...b2, // base (outward = -Y; CCW viewed from below)
   ]);
 
-  // UVs: for each triangle, the two base verts go to the bottom corners of the
-  // texture and the apex maps to the top center. This puts the canvas's
-  // bottom-center area (where we'll paint text) inside the visible triangle.
+  // UVs aligned to the position order above:
+  //   base_i -> (0, 0)  bottom-left of canvas
+  //   apex   -> (0.5, 1) top-center of canvas
+  //   base_{i+1} -> (1, 0) bottom-right of canvas
   const uvs = new Float32Array([
-    0, 0,  1, 0,  0.5, 1, // side 0
-    0, 0,  1, 0,  0.5, 1, // side 1
-    0, 0,  1, 0,  0.5, 1, // side 2
-    0, 0,  1, 0,  0.5, 1, // base (unused — base material has no map)
+    0, 0,   0.5, 1,   1, 0, // side 0
+    0, 0,   0.5, 1,   1, 0, // side 1
+    0, 0,   0.5, 1,   1, 0, // side 2
+    0, 0,   1, 0,     0.5, 1, // base (unused — base material has no map)
   ]);
 
   const geom = new THREE.BufferGeometry();
@@ -107,9 +112,9 @@ function buildPyramidGeometry(baseRadius, height) {
   }
 
   const sides = [
-    face(b0, b1, ap),
-    face(b1, b2, ap),
-    face(b2, b0, ap),
+    face(b0, ap, b1),
+    face(b1, ap, b2),
+    face(b2, ap, b0),
   ];
 
   return { geom, sides };
@@ -255,7 +260,7 @@ function init() {
 
   const materials = [
     makeFaceMat(PADUA.discover,  'Quality'),
-    makeFaceMat(PADUA.compare,   'Cost'),
+    makeFaceMat(PADUA.compare,   'Value'),
     makeFaceMat(PADUA.recommend, 'Turnaround'),
     new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.8, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
   ];
