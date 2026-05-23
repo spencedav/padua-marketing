@@ -433,6 +433,64 @@ h2.section-title em {
   filter: drop-shadow(0 30px 50px rgba(74,48,140,0.18));
 }
 
+/* ---- 3D triangle stage (Three.js mount + floating labels) ---- */
+.triangle-3d-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 520px;
+  margin: 0 auto;
+}
+#padua-tri3d {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 40px 60px rgba(74,48,140,0.22));
+}
+#padua-tri3d canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.triangle-3d-label {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--glass-bg-paper, rgba(250,248,244,0.72));
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--m-color, var(--discover));
+  border-color: color-mix(in srgb, var(--m-color, var(--discover)) 40%, transparent);
+  color: var(--m-color, var(--discover));
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}
+.triangle-3d-label::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--m-color, var(--discover));
+}
+.triangle-3d-label[data-stage="discover"]  { --m-color: var(--discover); }
+.triangle-3d-label[data-stage="compare"]   { --m-color: var(--compare); }
+.triangle-3d-label[data-stage="recommend"] { --m-color: var(--recommend); }
+.triangle-3d-label--top   { top: 2%;    left: 50%;  transform: translateX(-50%); }
+.triangle-3d-label--left  { bottom: 6%; left: 4%; }
+.triangle-3d-label--right { bottom: 6%; right: 4%; }
+
+@media (max-width: 540px) {
+  .triangle-3d-label { font-size: 10.5px; padding: 5px 10px; }
+}
+
 /* =====================================================================
    DIFFERENTIATOR CARDS (matches v3 .diff-card pattern)
    ===================================================================== */
@@ -967,7 +1025,15 @@ h2.section-title em {
     <h2 class="section-title">The unattainable triangle is <em>attainable</em> with Padua.</h2>
     <p class="triangle-lede">Quality, cost, turnaround — pick two? Not with us. We've spent a decade building software and an onshore team that solves for all three at once.</p>
     <div class="triangle-figure">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111929108642818ba2d22_unattainable-triangle-final.svg" alt="The unattainable triangle — Quality, Cost and Turnaround — made attainable with Padua">
+      <div class="triangle-3d-stage">
+        <div id="padua-tri3d" aria-hidden="true"></div>
+        <span class="triangle-3d-label triangle-3d-label--top"    data-stage="discover">Quality</span>
+        <span class="triangle-3d-label triangle-3d-label--left"   data-stage="compare">Cost</span>
+        <span class="triangle-3d-label triangle-3d-label--right"  data-stage="recommend">Turnaround</span>
+      </div>
+      <noscript>
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111929108642818ba2d22_unattainable-triangle-final.svg" alt="The unattainable triangle — Quality, Cost and Turnaround — made attainable with Padua">
+      </noscript>
     </div>
   </div>
 </section>
@@ -1276,6 +1342,19 @@ h2.section-title em {
     </p>
   </div>
 </footer>
+
+<!-- =====================================================================
+     3D TRIANGLE (Three.js glass tetrahedron) — module script
+     ===================================================================== -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="/_components/scripts/triangle-3d.js"></script>
 
 </body>
 </html>
