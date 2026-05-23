@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terms &amp; Conditions | Padua Solutions</title>
+<meta name="description" content="Padua's Terms & Conditions are being finalised. Contact Padua to request the current engagement terms.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://paduasolutions.com/terms">
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* Brand spectrum (used only on nav underline / spectrum CTA) */
+  --discover:  #4a308c;
+  --compare:   #ab2178;
+  --recommend: #eb2e4d;
+  --review:    #f59436;
+  --yellow:    #f5d534;
+  --teal:      #007282;
+  --spectrum: linear-gradient(135deg, #4a308c 0%, #ab2178 28%, #eb2e4d 52%, #f59436 78%, #f5d534 100%);
+
+  /* Surfaces */
+  --ink:        #16121f;
+  --ink-soft:   #1f1b2a;
+  --paper:      #faf8f4;
+  --paper-warm: #f1ede4;
+  --line:       rgba(22,18,31,0.08);
+  --line-dark:  rgba(255,255,255,0.12);
+
+  /* Text */
+  --text-dark:  #1a1525;
+  --text-mid:   #555560;
+  --text-light: #80808c;
+  --text-on-dark: #ffffff;
+  --text-on-dark-mid: rgba(255,255,255,0.7);
+  --text-on-dark-soft: rgba(255,255,255,0.5);
+
+  --font-display: 'Newsreader', 'Quincy CF', Georgia, serif;
+  --font-body: 'Geist', system-ui, -apple-system, sans-serif;
+
+  --radius: 14px;
+  --radius-lg: 22px;
+  --max: 1240px;
+  --doc-max: 720px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--text-dark); background: var(--paper); }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
+
+/* =====================================================================
+   LOGO
+   ===================================================================== */
+.padua-logo { display: inline-flex; align-items: center; gap: 9px; }
+.padua-logo-mark { width: 28px; height: auto; flex-shrink: 0; display: block; }
+.padua-logo-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  font-variation-settings: "opsz" 32;
+}
+.padua-logo-tm { font-size: 0.42em; vertical-align: super; opacity: 0.55; font-weight: 400; margin-left: 1px; }
+
+/* =====================================================================
+   NAV
+   ===================================================================== */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(22,18,31,0.88);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--line-dark);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 32px; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  color: var(--text-on-dark);
+}
+.nav .padua-logo-text { color: var(--text-on-dark); }
+.nav-links { display: flex; align-items: center; gap: 0; }
+.nav-item { position: relative; }
+.nav-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 14px; height: 72px;
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text-on-dark-mid); white-space: nowrap;
+  transition: color .18s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--text-on-dark); }
+.nav-link.active::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: 2px;
+  background: var(--spectrum); border-radius: 2px;
+}
+.nav-caret { width: 9px; height: 9px; opacity: .55; }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-size: 13.5px; font-weight: 500; border-radius: 999px; transition: all .18s ease; white-space: nowrap; }
+.btn-ghost-dark { color: var(--text-on-dark); border: 1px solid rgba(255,255,255,0.22); }
+.btn-ghost-dark:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+.btn-spectrum {
+  color: white; font-weight: 600;
+  background: var(--spectrum);
+  background-size: 200% 100%; background-position: 0% 50%;
+}
+.btn-spectrum:hover { background-position: 100% 50%; transform: translateY(-1px); box-shadow: 0 10px 26px -10px rgba(235,46,77,0.55); }
+.btn-outline { border: 1px solid var(--ink); color: var(--ink); padding: 12px 22px; }
+.btn-outline:hover { background: var(--ink); color: white; }
+
+/* Dropdown */
+.dropdown {
+  position: absolute; top: 72px; left: 50%; transform: translateX(-50%) translateY(-6px);
+  background: white; color: var(--text-dark);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px; min-width: 260px;
+  box-shadow: 0 24px 50px -12px rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+}
+.nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.dropdown-section {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+  padding: 4px 12px;
+  margin: 14px 0 4px;
+  text-transform: none;
+}
+.dropdown-section:first-of-type { margin-top: 0; }
+.dropdown a { display: block; padding: 9px 12px; font-size: 14px; color: var(--text-mid); border-radius: 8px; }
+.dropdown a:hover { background: var(--paper-warm); color: var(--text-dark); }
+.dropdown-divider { height: 1px; background: var(--line); margin: 10px 12px; }
+.dropdown a small { display: block; font-size: 11.5px; color: var(--text-light); margin-top: 2px; font-weight: 400; }
+
+/* Mega menu */
+.dropdown-mega { min-width: 760px; padding: 28px; }
+.mega-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--compare);
+  padding: 0 12px 12px;
+  border-bottom: 1px solid var(--line);
+  margin: 0 -4px 14px;
+}
+.dropdown-mega .mega-eyebrow { padding: 0 0 14px; margin: 0 0 22px; }
+.mega-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-bottom: 22px; }
+.mega-col h5 { font-family: var(--font-display); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; color: var(--text-dark); margin-bottom: 10px; }
+.mega-col a { display: block; padding: 8px 10px; font-size: 13.5px; color: var(--text-mid); border-radius: 8px; margin: 0 -10px; }
+.mega-col a:hover { background: var(--paper-warm); color: var(--text-dark); }
+.mega-featured {
+  background: linear-gradient(135deg, #2a1240 0%, #4a1a4a 50%, #d97d20 100%);
+  color: white; border-radius: 14px; padding: 18px 22px;
+  display: flex; align-items: center; gap: 16px;
+}
+.mega-featured-play {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mega-featured-play::after {
+  content: ""; width: 0; height: 0;
+  border-left: 10px solid #1a1a1a;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  margin-left: 2px;
+}
+.mega-featured-text { flex: 1; line-height: 1.3; }
+.mega-featured-text .eb { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+.mega-featured-text h6 { font-family: var(--font-display); font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0; color: white; }
+.mega-featured-arrow { font-size: 20px; color: white; opacity: 0.9; transition: transform .18s ease; }
+.mega-featured:hover .mega-featured-arrow { opacity: 1; transform: translateX(3px); }
+.mega-featured:hover { color: white; }
+.nav-item.has-mega .dropdown { left: 0; transform: translateX(0) translateY(-6px); }
+.nav-item.has-mega:hover .dropdown { transform: translateX(0) translateY(0); }
+
+/* =====================================================================
+   LEGAL DOCUMENT HERO (H2 — centered, document-style, paper bg)
+   ===================================================================== */
+.legal-hero {
+  background: var(--paper);
+  padding: 96px 32px 56px;
+  border-bottom: 1px solid var(--line);
+}
+.legal-hero-inner {
+  max-width: var(--doc-max);
+  margin: 0 auto;
+  text-align: left;
+}
+.legal-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--compare);
+  margin-bottom: 18px;
+}
+.legal-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+  margin-bottom: 18px;
+  font-variation-settings: "opsz" 48;
+}
+.legal-hero p.sub {
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: var(--text-mid);
+  max-width: 620px;
+}
+
+/* =====================================================================
+   LEGAL DOCUMENT BODY
+   ===================================================================== */
+.legal-body {
+  padding: 56px 32px 40px;
+}
+.legal-body-inner {
+  max-width: var(--doc-max);
+  margin: 0 auto;
+}
+.legal-body p {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 22px;
+}
+.legal-body p.muted {
+  color: var(--text-mid);
+}
+.legal-body h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text-dark);
+  margin: 40px 0 14px;
+  font-variation-settings: "opsz" 24;
+}
+.legal-list {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+}
+.legal-list li {
+  position: relative;
+  padding: 10px 0 10px 26px;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--line);
+}
+.legal-list li:last-child { border-bottom: none; }
+.legal-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 19px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--compare);
+  opacity: 0.7;
+}
+.legal-list li small {
+  display: block;
+  font-size: 13.5px;
+  color: var(--text-light);
+  margin-top: 3px;
+}
+.legal-list li a {
+  color: var(--teal);
+  border-bottom: 1px solid rgba(0,114,130,0.25);
+}
+.legal-list li a:hover { border-bottom-color: var(--teal); }
+
+/* =====================================================================
+   CONTACT CALLOUT
+   ===================================================================== */
+.legal-callout-wrap {
+  padding: 16px 32px 96px;
+}
+.legal-callout {
+  max-width: var(--doc-max);
+  margin: 0 auto;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 36px 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  box-shadow: 0 1px 0 rgba(22,18,31,0.02), 0 18px 40px -28px rgba(22,18,31,0.18);
+}
+.legal-callout-text { flex: 1; min-width: 0; }
+.legal-callout-eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--review);
+  margin-bottom: 10px;
+}
+.legal-callout h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  font-variation-settings: "opsz" 24;
+}
+.legal-callout p {
+  font-size: 0.95rem;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+.legal-callout .btn-outline {
+  flex-shrink: 0;
+}
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+.footer { background: var(--ink); color: var(--text-on-dark); padding: 76px 32px 32px; margin-top: 0; }
+.footer .padua-logo-text { color: var(--text-on-dark); }
+.footer-inner { max-width: var(--max); margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 44px; border-bottom: 1px solid var(--line-dark); }
+.footer-brand p { font-size: 13.5px; color: var(--text-on-dark-mid); line-height: 1.6; max-width: 340px; margin-top: 16px; }
+.footer-col h4 { font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 14px; text-transform: uppercase; color: white; }
+.footer-col a { display: block; font-size: 13.5px; color: var(--text-on-dark-mid); padding: 5px 0; }
+.footer-col a:hover { color: white; }
+.footer-bottom { margin-top: 26px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--text-on-dark-soft); }
+.footer-bottom-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.footer-cert-pill { padding: 5px 11px; border: 1px solid var(--line-dark); border-radius: 999px; }
+.footer .acknowledgement {
+  margin-top: 28px;
+  font-size: 12px;
+  color: var(--text-on-dark-soft);
+  line-height: 1.6;
+  max-width: 900px;
+}
+
+/* =====================================================================
+   RESPONSIVE (Webflow-compatible breakpoints: 991, 767, 479)
+   ===================================================================== */
+@media (max-width: 991px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .legal-hero h1 { font-size: 2.5rem; }
+  .legal-callout { padding: 30px; }
+}
+@media (max-width: 767px) {
+  .nav-links { display: none; }
+  .nav-inner { padding: 0 22px; }
+  .legal-hero { padding: 72px 22px 44px; }
+  .legal-hero h1 { font-size: 2.125rem; }
+  .legal-hero p.sub { font-size: 1.0625rem; }
+  .legal-body { padding: 44px 22px 32px; }
+  .legal-callout-wrap { padding: 16px 22px 72px; }
+  .legal-callout { flex-direction: column; align-items: flex-start; padding: 26px 24px; gap: 18px; }
+  .legal-callout .btn-outline { width: 100%; justify-content: center; }
+  .footer { padding: 56px 22px 28px; }
+  .footer-top { grid-template-columns: 1fr; gap: 28px; }
+  .footer-bottom { font-size: 11.5px; }
+}
+@media (max-width: 479px) {
+  .legal-hero h1 { font-size: 1.875rem; }
+  .legal-body p, .legal-list li { font-size: 1rem; }
+  .legal-body h2 { font-size: 1.25rem; }
+  .legal-callout h3 { font-size: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     NAVIGATION (canonical, no active state — Terms is a footer link only)
+     ===================================================================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="padua-logo">
+      <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
+      <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
+    </a>
+
+    <div class="nav-links">
+
+      <!-- ADVISERS & LICENSEES (mega) -->
+      <div class="nav-item has-mega">
+        <a class="nav-link" href="/advisers-licensees">Advisers &amp; Licensees
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown dropdown-mega">
+          <div class="mega-eyebrow">Our Solutions  ·  for advisers &amp; licensees</div>
+          <div class="mega-cols">
+            <div class="mega-col">
+              <h5>The Padua Portal</h5>
+              <a href="/advisers-licensees">Portal overview</a>
+              <a href="#watch">See the workflow in action</a>
+            </div>
+            <div class="mega-col">
+              <h5>Services</h5>
+              <a href="/services">Tech-enabled paraplanning<small>The fastest path to scale</small></a>
+              <a href="/services#transition">Transition management<small>End-to-end implementation</small></a>
+            </div>
+            <div class="mega-col">
+              <h5>Software</h5>
+              <a href="/software">WealthX<small>Open banking</small></a>
+              <a href="/software">WealthReview<small>Client dashboard</small></a>
+              <a href="/software">SteveAI<small>AI advice assistant</small></a>
+              <a href="/software">WealthAI<small>Video &amp; statements</small></a>
+              <a href="/software">Wealth Data<small>Adviser insights</small></a>
+            </div>
+          </div>
+          <a class="mega-featured" href="/#watch">
+            <div class="mega-featured-play"></div>
+            <div class="mega-featured-text">
+              <div class="eb">2 min video</div>
+              <h6>See the Padua Portal in action</h6>
+            </div>
+            <div class="mega-featured-arrow">→</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- PLATFORMS & SUPER FUNDS -->
+      <div class="nav-item">
+        <a class="nav-link" href="/product-providers">Platforms &amp; Super Funds
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="mega-eyebrow">Our Solutions  ·  for platforms &amp; super funds</div>
+          <div class="dropdown-section">Solutions overview</div>
+          <a href="/product-providers">For platforms &amp; super funds</a>
+          <div class="dropdown-section">Services</div>
+          <a href="/services">Tech-enabled paraplanning</a>
+          <a href="/services#transition">Transition management</a>
+          <div class="dropdown-section">Software</div>
+          <a href="/software">WealthAI<small>Member video &amp; statements</small></a>
+          <a href="/software">WealthX<small>Open banking integration</small></a>
+          <a href="/software">Wealth Data<small>Superannuation insights</small></a>
+        </div>
+      </div>
+
+      <!-- INVESTMENT MANAGERS -->
+      <div class="nav-item">
+        <a class="nav-link" href="/product-providers">Investment Managers
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="mega-eyebrow">Our Solutions  ·  for investment managers</div>
+          <div class="dropdown-section">Solutions overview</div>
+          <a href="/product-providers">For investment managers &amp; fund administrators</a>
+          <div class="dropdown-section">Software &amp; Data</div>
+          <a href="/software">Wealth Data<small>Adviser &amp; market insights</small></a>
+          <a href="/software">Fund administration tools</a>
+          <div class="dropdown-section">Distribution</div>
+          <a href="/product-providers">Media &amp; Advertising<small>Reach Australian advisers</small></a>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="nav-item">
+        <a class="nav-link" href="/about/who-we-are">About
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="dropdown-section">Company</div>
+          <a href="/about/who-we-are">Who we are<small>Our mission, values, Advice Guides</small></a>
+          <a href="/about/our-people">Our people</a>
+          <a href="/about/careers">Careers</a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section">Content</div>
+          <a href="/news-insights">News &amp; insights</a>
+          <a href="/events">Events &amp; webinars</a>
+          <a href="/resources">Resources<small>Whitepapers &amp; reports</small></a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section">Trust</div>
+          <a href="/security">Security &amp; compliance<small>ISO 27001 certified</small></a>
+        </div>
+      </div>
+
+      <a class="nav-link" href="/contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn btn-ghost-dark" href="https://home.paduasolutions.com/">Log in</a>
+      <a class="btn btn-spectrum" href="/book-a-demo">Book a demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- =====================================================================
+     HERO (H2 — document-style, paper background)
+     ===================================================================== -->
+<section class="legal-hero">
+  <div class="legal-hero-inner">
+    <div class="legal-eyebrow">Legal</div>
+    <h1>Terms &amp; Conditions</h1>
+    <p class="sub">Our terms are being finalised by Padua's legal team. In the meantime, get in touch if you need the current draft.</p>
+  </div>
+</section>
+
+<!-- =====================================================================
+     BODY
+     ===================================================================== -->
+<section class="legal-body">
+  <div class="legal-body-inner">
+    <p>Padua Solutions Pty Ltd (ABN 93 167 243 745) is an Australian-owned financial technology company. Our services are provided in accordance with our standard engagement terms, which can be requested by contacting us directly.</p>
+    <p class="muted">This page is a placeholder. The full Terms &amp; Conditions will be published here once finalised by Padua's legal team.</p>
+
+    <h2>What our Terms will cover</h2>
+    <ul class="legal-list">
+      <li>Acceptance of terms</li>
+      <li>Services Padua provides</li>
+      <li>Confidentiality of client data<small>Also covered in our <a href="/privacy-policy">Privacy Policy</a>.</small></li>
+      <li>Limitation of liability</li>
+      <li>Governing law<small>New South Wales, Australia.</small></li>
+      <li>Changes to terms</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =====================================================================
+     CONTACT CALLOUT
+     ===================================================================== -->
+<section class="legal-callout-wrap">
+  <div class="legal-callout">
+    <div class="legal-callout-text">
+      <div class="legal-callout-eyebrow">Need our terms now?</div>
+      <h3>Request our current engagement terms</h3>
+      <p>Get in touch and we'll send through the current draft of our engagement terms.</p>
+    </div>
+    <a class="btn btn-outline" href="/contact">Contact us
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FOOTER (canonical, verbatim)
+     ===================================================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="padua-logo">
+          <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
+          <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
+        </a>
+        <p>Padua Solutions is Australia's tech-enabled financial advice infrastructure. Combining experienced onshore advice professionals, intelligent workflow and AI to help advisers help more Australians.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Advisers &amp; Licensees</h4>
+        <a href="/advisers-licensees">Padua Advice Portal</a>
+        <a href="/advice-guides">Advice Guides</a>
+        <a href="/services">Paraplanning services</a>
+        <a href="/services#transition">Transition management</a>
+        <a href="/rafa">RAFA &amp; cold storage</a>
+      </div>
+      <div class="footer-col">
+        <h4>Other streams</h4>
+        <a href="/product-providers">Platforms &amp; Super Funds</a>
+        <a href="/product-providers">Investment Managers</a>
+        <a href="/fund-administrators">Fund Administrators</a>
+        <a href="/product-providers">Media &amp; Advertising</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about/who-we-are">About Padua</a>
+        <a href="/about/our-people">Our people</a>
+        <a href="/news-insights">News &amp; insights</a>
+        <a href="/about/careers">Careers</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Padua Solutions Pty Ltd. ABN 93 167 243 745. All rights reserved.</p>
+      <div class="footer-bottom-right">
+        <div class="footer-cert-pill">ISO 27001 Certified</div>
+        <div class="footer-cert-pill">100% Onshore</div>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+
+    <p class="acknowledgement">
+      Padua acknowledges the Traditional Owners of the lands on which we work, the Wodi Wodi people on Dharawal country and the Gadigal people of the Eora Nation. We acknowledge their continuing connection to land, waters, and community. We pay our respects to the people, the cultures, and the Elders past and present.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
