@@ -47,6 +47,21 @@
      /advisers-licensees sub-page so the homepage stays scannable.
 -->
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
+
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
 <style>
 :root {
   /* ===== BRAND PALETTE ===== */
@@ -1252,6 +1267,15 @@ body.diff-option-b .diff-card-stat-row { display: none; }
   <div class="hero-inner">
     <h1>The <em>better way</em> to deliver financial advice.</h1>
     <p class="hero-sub">Padua is the operational and technology partner empowering Australian advisers to build stronger futures for more people.</p>
+    <div class="padua-methodology-pill-set" style="margin: 20px 0 28px;">
+      <a class="padua-methodology-pill" data-stage="discover" href="/software#discover">Discover</a>
+      <span class="padua-methodology-pill-set__arrow">→</span>
+      <a class="padua-methodology-pill" data-stage="compare" href="/software#compare">Compare</a>
+      <span class="padua-methodology-pill-set__arrow">→</span>
+      <a class="padua-methodology-pill" data-stage="recommend" href="/software#recommend">Recommend</a>
+      <span class="padua-methodology-pill-set__arrow">→</span>
+      <a class="padua-methodology-pill" data-stage="review" href="/services">Review</a>
+    </div>
     <div class="hero-cta-row">
       <a class="btn btn-spectrum" href="#contact">Book a demo</a>
       <a class="hero-link" href="#watch">Watch the 2-minute video</a>
@@ -2158,11 +2182,11 @@ body.diff-option-b .diff-card-stat-row { display: none; }
     <h2 class="section-title">What you get when you work with us.</h2>
     <p class="section-lede">Three promises that show up on every plan, every transition, every interaction.</p>
 
-    <div class="diff-grid">
+    <div class="padua-feature-grid" style="margin-top: 48px;">
 
       <!-- Better Quality -->
-      <div class="diff-card">
-        <div class="diff-card-triangle">
+      <article class="padua-feature-card" data-stage="discover">
+        <span class="padua-feature-card__icon">
           <svg viewBox="0 0 200 174" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="triPurple" x1="0" y1="0" x2="1" y2="1">
@@ -2176,16 +2200,16 @@ body.diff-option-b .diff-card-stat-row { display: none; }
               <path d="M-9 0 L-2 7 L10 -6" stroke="#4a308c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
           </svg>
-        </div>
-        <h4>Better Quality</h4>
-        <p>Onshore advice professionals tailor every deliverable to your clients' specific needs. ISO 27001 certified. No data ever leaves Australia.</p>
+        </span>
+        <h3 class="padua-feature-card__title">Better Quality</h3>
+        <p class="padua-feature-card__body">Onshore advice professionals tailor every deliverable to your clients' specific needs. ISO 27001 certified. No data ever leaves Australia.</p>
         <div class="diff-card-stat-row"><div class="diff-card-stat">100%</div>
         <div class="diff-card-stat-label">Onshore delivery</div></div>
-      </div>
+      </article>
 
       <!-- Better Value -->
-      <div class="diff-card">
-        <div class="diff-card-triangle">
+      <article class="padua-feature-card" data-stage="compare">
+        <span class="padua-feature-card__icon">
           <svg viewBox="0 0 200 174" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="triOrange" x1="0" y1="0" x2="1" y2="1">
@@ -2199,16 +2223,16 @@ body.diff-option-b .diff-card-stat-row { display: none; }
               <text x="0" y="7" text-anchor="middle" font-family="Newsreader, Georgia, serif" font-size="26" font-weight="500" fill="#d97d20">$</text>
             </g>
           </svg>
-        </div>
-        <h4>Better Value</h4>
-        <p>Software-led processes mean exceptional value without compromising quality. Pay for what you use, scale up or down as your business needs change.</p>
+        </span>
+        <h3 class="padua-feature-card__title">Better Value</h3>
+        <p class="padua-feature-card__body">Software-led processes mean exceptional value without compromising quality. Pay for what you use, scale up or down as your business needs change.</p>
         <div class="diff-card-stat-row"><div class="diff-card-stat">No fixed</div>
         <div class="diff-card-stat-label">Paraplanning costs</div></div>
-      </div>
+      </article>
 
       <!-- Better Turnaround -->
-      <div class="diff-card">
-        <div class="diff-card-triangle">
+      <article class="padua-feature-card" data-stage="recommend">
+        <span class="padua-feature-card__icon">
           <svg viewBox="0 0 200 174" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="triMagenta" x1="0" y1="0" x2="1" y2="1">
@@ -2223,12 +2247,12 @@ body.diff-option-b .diff-card-stat-row { display: none; }
               <path d="M0 -9 L0 0 L7 5" stroke="#ab2178" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
           </svg>
-        </div>
-        <h4>Better Turnaround</h4>
-        <p>Time saved is money saved. SLA-backed delivery keeps your business moving and your clients in the loop.</p>
+        </span>
+        <h3 class="padua-feature-card__title">Better Turnaround</h3>
+        <p class="padua-feature-card__body">Time saved is money saved. SLA-backed delivery keeps your business moving and your clients in the loop.</p>
         <div class="diff-card-stat-row"><div class="diff-card-stat">5 days</div>
         <div class="diff-card-stat-label">Average turnaround</div></div>
-      </div>
+      </article>
 
     </div>
   </div>
@@ -2315,13 +2339,16 @@ body.diff-option-b .diff-card-stat-row { display: none; }
 <!-- =====================================================================
      CTA BANNER
      ===================================================================== -->
-<div class="cta-banner">
-  <h2>Ready to see <em>the better way</em>?</h2>
-  <div class="cta-banner-actions">
-    <a class="btn btn-on-spectrum" href="#contact">Book a demo</a>
-    <a class="btn btn-on-spectrum-ghost" href="#watch">Watch the 2-min video</a>
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Ready to see <em>the better way</em>?</h2>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="#contact">Book a demo</a>
+      <a class="padua-btn padua-btn--ghost" href="#watch">Watch the 2-min video</a>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- =====================================================================
      FOOTER

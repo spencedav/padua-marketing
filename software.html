@@ -34,6 +34,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
 
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY (pilot)
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
 <style>
 /* =====================================================================
    TOKENS (mirrors v3 prototype)
@@ -917,6 +931,17 @@ h2.section-title em {
       <div class="hero-eyebrow">Tech-Enabled Paraplanning</div>
       <h1>An <em>unlimited</em> tech stack for advisers and support staff.</h1>
       <p class="hero-sub">Four products across the four stages of advice — Home, Discover, Compare and Recommend. Use them together to reduce your tech stack, lift quality, and turn advice around faster.</p>
+
+      <div class="padua-methodology-pill-set" style="margin: 20px 0 28px;">
+        <a class="padua-methodology-pill" data-stage="discover" href="#discover">Discover</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="compare" href="#compare">Compare</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="recommend" href="#recommend">Recommend</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="review" href="/services">Review</a>
+      </div>
+
       <div class="hero-cta-row">
         <a class="btn btn-spectrum" href="/book-a-demo">Book a demo</a>
         <a class="hero-link" href="/contact-us">Contact us</a>
@@ -948,40 +973,43 @@ h2.section-title em {
 </section>
 
 <!-- =====================================================================
-     DIFFERENTIATOR CARDS (matches v3 .diff-card pattern)
+     DIFFERENTIATOR CARDS — rebuilt with padua-feature-card
      ===================================================================== -->
-<section class="section diff-section">
+<section class="section diff-section padua-glow padua-glow--teal padua-glow--subtle">
   <div class="container">
     <div style="max-width: 760px;">
-      <div class="eyebrow">How we solve it</div>
-      <h2 class="section-title">Three things, all at once — not two out of three.</h2>
+      <span class="padua-chip" data-stage="teal">How we solve it</span>
+      <h2 class="section-title" style="margin-top: 12px;">Three things, all at once — not two out of three.</h2>
       <p class="section-lede">Software does the repeatable work. Our onshore advice professionals do the judgement work. The combination is what makes the triangle attainable.</p>
     </div>
 
-    <div class="diff-grid">
-      <div class="diff-card">
-        <div class="diff-card-triangle">
-          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66c42b290ae0a979bf19ffba_quality-triangle.svg" alt="">
-        </div>
-        <h4>Better Quality</h4>
-        <p>Our team of experts uses our technology to help you generate high quality advice — each advice output generated to meet your client's unique needs.</p>
-      </div>
+    <div class="padua-feature-grid" style="margin-top: 48px;">
+      <article class="padua-feature-card" data-stage="discover">
+        <span class="padua-feature-card__icon">
+          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66c42b290ae0a979bf19ffba_quality-triangle.svg" alt="" style="width:24px;height:24px;">
+        </span>
+        <p class="padua-feature-card__eyebrow">Quality</p>
+        <h3 class="padua-feature-card__title">Better Quality</h3>
+        <p class="padua-feature-card__body">Our team of experts uses our technology to help you generate high quality advice — each advice output generated to meet your client's unique needs.</p>
+      </article>
 
-      <div class="diff-card">
-        <div class="diff-card-triangle">
-          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111ac0f8cf11f3b8cfefd_cost-triangle.svg" alt="">
-        </div>
-        <h4>Better Value</h4>
-        <p>By leveraging our Software, we pass the savings on to you, ensuring you get the best value across every advice document we produce.</p>
-      </div>
+      <article class="padua-feature-card" data-stage="compare">
+        <span class="padua-feature-card__icon">
+          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111ac0f8cf11f3b8cfefd_cost-triangle.svg" alt="" style="width:24px;height:24px;">
+        </span>
+        <p class="padua-feature-card__eyebrow">Value</p>
+        <h3 class="padua-feature-card__title">Better Value</h3>
+        <p class="padua-feature-card__body">By leveraging our Software, we pass the savings on to you, ensuring you get the best value across every advice document we produce.</p>
+      </article>
 
-      <div class="diff-card">
-        <div class="diff-card-triangle">
-          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111acb727c54a0d1e85e5_turnaround-triangle.svg" alt="">
-        </div>
-        <h4>Better Turnaround</h4>
-        <p>We understand that saving time means saving money. Our dedicated team ensure your plans are turned around quickly, every time.</p>
-      </div>
+      <article class="padua-feature-card" data-stage="recommend">
+        <span class="padua-feature-card__icon">
+          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111acb727c54a0d1e85e5_turnaround-triangle.svg" alt="" style="width:24px;height:24px;">
+        </span>
+        <p class="padua-feature-card__eyebrow">Turnaround</p>
+        <h3 class="padua-feature-card__title">Better Turnaround</h3>
+        <p class="padua-feature-card__body">We understand that saving time means saving money. Our dedicated team ensure your plans are turned around quickly, every time.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -1054,14 +1082,14 @@ h2.section-title em {
       <h3 class="product-name">Side-by-side comparison across the Australian market.</h3>
       <p class="product-desc">Easily compare your clients' platforms and investments against recommended and alternative positions. Compare reads from the broadest dataset in Australian advice — so your recommendation is always defensible.</p>
 
-      <div class="product-stats">
-        <div>
-          <div class="product-stat-num">1.8k+</div>
-          <div class="product-stat-label">Platforms</div>
+      <div class="padua-stat-grid" style="grid-template-columns: 1fr 1fr; max-width: 380px; margin: 8px 0 24px;">
+        <div class="padua-stat-card" data-stage="compare">
+          <p class="padua-stat-card__number">1.8k+</p>
+          <p class="padua-stat-card__label">Platforms</p>
         </div>
-        <div>
-          <div class="product-stat-num">22k+</div>
-          <div class="product-stat-label">Investments</div>
+        <div class="padua-stat-card" data-stage="compare">
+          <p class="padua-stat-card__number">22k+</p>
+          <p class="padua-stat-card__label">Investments</p>
         </div>
       </div>
 
@@ -1094,10 +1122,10 @@ h2.section-title em {
       <h3 class="product-name">Strategy at scale — without losing the strategic edge.</h3>
       <p class="product-desc">Recommend lets you make strategy recommendations across the breadth of technical advice. It's the engine behind every advice document we produce — and it's available to your team too.</p>
 
-      <div class="product-stats">
-        <div>
-          <div class="product-stat-num">850+</div>
-          <div class="product-stat-label">Technical strategies</div>
+      <div class="padua-stat-grid" style="grid-template-columns: 1fr; max-width: 220px; margin: 8px 0 24px;">
+        <div class="padua-stat-card" data-stage="recommend">
+          <p class="padua-stat-card__number">850+</p>
+          <p class="padua-stat-card__label">Technical strategies</p>
         </div>
       </div>
 
@@ -1153,36 +1181,47 @@ h2.section-title em {
 </section>
 
 <!-- =====================================================================
-     TRUST STRIP
+     TRUST STRIP — rebuilt with padua-partner-grid
      ===================================================================== -->
-<section class="trust-section">
-  <div class="trust-inner">
-    <div>
-      <div class="trust-label">Trusted by Australian advice firms</div>
-      <div class="trust-row">
-        <div class="trust-partner"><img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue"></div>
-        <div class="trust-partner"><img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b57c2c6513093627772_findex.jpeg" alt="Findex"></div>
+<section class="padua-partner-grid">
+  <div class="container" style="max-width: var(--max); margin: 0 auto; padding: 0 24px;">
+    <header class="padua-partner-grid__head">
+      <span class="padua-partner-grid__eyebrow">Trust &amp; security</span>
+      <h2 class="padua-partner-grid__title">Trusted by Australian advice firms.</h2>
+      <p class="padua-partner-grid__sub">ISO 27001 certified, 100% Australian onshore — the partners who run their practice on Padua.</p>
+    </header>
+
+    <div class="padua-partner-grid__items">
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue">
       </div>
-    </div>
-    <div class="trust-side">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d1202b1681fafb47acb27d_ISO%2027001%20Certified%20Badge.svg" alt="ISO 27001 Certified">
-      <div class="trust-pill">100% Australian onshore</div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b57c2c6513093627772_findex.jpeg" alt="Findex">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d1202b1681fafb47acb27d_ISO%2027001%20Certified%20Badge.svg" alt="ISO 27001 Certified" style="max-height:60px;">
+      </div>
+      <div class="padua-partner-grid__item">
+        <span class="padua-chip padua-chip--bg" data-stage="teal" style="font-size: 12px;">100% Australian onshore</span>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- =====================================================================
-     CTA BANNER (S8 — spectrum)
+     CTA BANNER — rebuilt with padua-cta--spectrum
      ===================================================================== -->
-<div class="cta-wrap">
-  <div class="cta-banner">
-    <h2>Ready to <em>reduce your tech stack?</em></h2>
-    <div class="cta-banner-actions">
-      <a class="btn btn-on-spectrum" href="/book-a-demo">Book a demo</a>
-      <a class="btn btn-on-spectrum-ghost" href="/contact-us">Talk to us</a>
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Ready to <em>reduce your tech stack?</em></h2>
+    <p class="padua-cta__sub">Book a 20-minute demo and see Home, Discover, Compare and Recommend in action — or talk to one of our strategists about how Padua can fit into your practice.</p>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="/book-a-demo">Book a demo</a>
+      <a class="padua-btn padua-btn--ghost" href="/contact-us">Talk to us</a>
     </div>
   </div>
-</div>
+</section>
 
 <!-- =====================================================================
      FOOTER (canonical — verbatim)

@@ -32,6 +32,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
 
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
 <style>
 :root {
   /* ===== BRAND PALETTE (v3 tokens) ===== */
@@ -855,39 +869,39 @@ h2.section-title {
       <p class="section-lede">These aren't posters on a wall. They show up in how we triage a brief, how we respond to an adviser at 4pm on a Friday, and how we treat each other on a tough day.</p>
     </div>
 
-    <div class="about-values">
-      <div class="about-value">
-        <div class="about-value-icon">
+    <div class="padua-feature-grid" style="margin-top: 48px;">
+      <article class="padua-feature-card" data-stage="discover">
+        <span class="padua-feature-card__icon">
           <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6584cf2a64ff299ccd4f74e9_values-icon-01.png" alt="">
-        </div>
-        <div class="about-value-letter">E</div>
-        <div class="about-value-name">Empathy</div>
-        <div class="about-value-desc">Listen first. Understand the adviser, the client, and the context — before doing the work.</div>
-      </div>
-      <div class="about-value">
-        <div class="about-value-icon">
+        </span>
+        <p class="padua-feature-card__eyebrow">E</p>
+        <h3 class="padua-feature-card__title">Empathy</h3>
+        <p class="padua-feature-card__body">Listen first. Understand the adviser, the client, and the context — before doing the work.</p>
+      </article>
+      <article class="padua-feature-card" data-stage="compare">
+        <span class="padua-feature-card__icon">
           <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6584cf2b3991da6913c1eb88_values-icon-02.png" alt="">
-        </div>
-        <div class="about-value-letter">A</div>
-        <div class="about-value-name">Agility</div>
-        <div class="about-value-desc">Move with you. Adapt to changing briefs, platforms and timelines without losing the thread.</div>
-      </div>
-      <div class="about-value">
-        <div class="about-value-icon">
+        </span>
+        <p class="padua-feature-card__eyebrow">A</p>
+        <h3 class="padua-feature-card__title">Agility</h3>
+        <p class="padua-feature-card__body">Move with you. Adapt to changing briefs, platforms and timelines without losing the thread.</p>
+      </article>
+      <article class="padua-feature-card" data-stage="recommend">
+        <span class="padua-feature-card__icon">
           <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6584cf2a10076d8fcc006d2a_values-icon-03.png" alt="">
-        </div>
-        <div class="about-value-letter">R</div>
-        <div class="about-value-name">Reliability</div>
-        <div class="about-value-desc">SLAs met. When we say a draft will be back on Wednesday, it's back on Wednesday.</div>
-      </div>
-      <div class="about-value">
-        <div class="about-value-icon">
+        </span>
+        <p class="padua-feature-card__eyebrow">R</p>
+        <h3 class="padua-feature-card__title">Reliability</h3>
+        <p class="padua-feature-card__body">SLAs met. When we say a draft will be back on Wednesday, it's back on Wednesday.</p>
+      </article>
+      <article class="padua-feature-card" data-stage="review">
+        <span class="padua-feature-card__icon">
           <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6584cf2b4da896bdb1e485d4_values-icon-04.png" alt="">
-        </div>
-        <div class="about-value-letter">S</div>
-        <div class="about-value-name">Simplicity</div>
-        <div class="about-value-desc">Cut complexity. Strip the work back to what's clear, defensible and useful — every time.</div>
-      </div>
+        </span>
+        <p class="padua-feature-card__eyebrow">S</p>
+        <h3 class="padua-feature-card__title">Simplicity</h3>
+        <p class="padua-feature-card__body">Cut complexity. Strip the work back to what's clear, defensible and useful — every time.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -1056,16 +1070,17 @@ h2.section-title {
 <!-- =====================================================================
      CTA BANNER — spectrum
      ===================================================================== -->
-<div class="cta-banner">
-  <div>
-    <h2>Have a <em>question first</em>?</h2>
-    <p>If you'd rather talk it through before applying, we'd love to hear from you — or read more about how we got here.</p>
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Have a <em>question first</em>?</h2>
+    <p class="padua-cta__sub">If you'd rather talk it through before applying, we'd love to hear from you — or read more about how we got here.</p>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="/contact">Get in touch</a>
+      <a class="padua-btn padua-btn--ghost" href="/about/who-we-are">Read our story</a>
+    </div>
   </div>
-  <div class="cta-banner-actions">
-    <a class="btn btn-on-spectrum" href="/contact">Get in touch</a>
-    <a class="btn btn-on-spectrum-ghost" href="/about/who-we-are">Read our story</a>
-  </div>
-</div>
+</section>
 
 <!-- =====================================================================
      FOOTER (canonical-footer.html — verbatim)

@@ -31,6 +31,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
 
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
 <style>
 /* =====================================================================
    v3 PROTOTYPE TOKENS — match index.html exactly
@@ -1260,32 +1274,34 @@ h2.section-title {
 </section>
 
 <!-- =====================================================================
-     PARTNERS GRID — real logos
+     PARTNERS — rebuilt with padua-partner-grid
      ===================================================================== -->
-<section class="partners-section">
-  <div class="partners-head">
-    <div class="eyebrow">Our trusted partners</div>
-    <h2>Working with leading Australian advice businesses.</h2>
-    <p>We partner with licensees, advice firms and broking businesses across the country.</p>
-  </div>
-  <div class="partners-logos">
-    <div class="partner-logo">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue" loading="lazy">
-    </div>
-    <div class="partner-logo">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432967106c4a51312feed5_count-logo.svg" alt="Count Group" loading="lazy">
-    </div>
-    <div class="partner-logo">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b303137cb430dca61eb_Fitzpatricks.png" alt="Fitzpatricks" loading="lazy">
-    </div>
-    <div class="partner-logo">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b57c2c6513093627772_findex.jpeg" alt="Findex" loading="lazy">
-    </div>
-    <div class="partner-logo">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bf4453f23c395598081_emerge-paper.png" alt="Emerge Paper" loading="lazy">
-    </div>
-    <div class="partner-logo partner-on-dark">
-      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65668e6b3b36a4ccecb4100c_lifewealth-white.png" alt="Lifewealth" loading="lazy">
+<section class="padua-partner-grid">
+  <div class="container" style="max-width: var(--max); margin: 0 auto; padding: 0 24px;">
+    <header class="padua-partner-grid__head">
+      <span class="padua-partner-grid__eyebrow">Our trusted partners</span>
+      <h2 class="padua-partner-grid__title">Working with leading Australian advice businesses.</h2>
+      <p class="padua-partner-grid__sub">We partner with licensees, advice firms and broking businesses across the country.</p>
+    </header>
+    <div class="padua-partner-grid__items">
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue" loading="lazy">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432967106c4a51312feed5_count-logo.svg" alt="Count Group" loading="lazy">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b303137cb430dca61eb_Fitzpatricks.png" alt="Fitzpatricks" loading="lazy">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b57c2c6513093627772_findex.jpeg" alt="Findex" loading="lazy">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bf4453f23c395598081_emerge-paper.png" alt="Emerge Paper" loading="lazy">
+      </div>
+      <div class="padua-partner-grid__item padua-partner-grid__item--invert">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65668e6b3b36a4ccecb4100c_lifewealth-white.png" alt="Lifewealth" loading="lazy">
+      </div>
     </div>
   </div>
 </section>
@@ -1324,18 +1340,17 @@ h2.section-title {
 <!-- =====================================================================
      CTA BANNER (S8 — spectrum)
      ===================================================================== -->
-<div class="cta-section">
-  <div class="cta-banner">
-    <div>
-      <h2>Ready to give your clients a <em>complete financial picture</em>?</h2>
-      <p>Book a walkthrough of Padua WealthX, or talk to us about how we work with broking businesses.</p>
-    </div>
-    <div class="cta-banner-actions">
-      <a class="btn btn-on-spectrum" href="/book-a-demo">Sign up to Padua WealthX</a>
-      <a class="btn btn-on-spectrum-ghost" href="/contact-us">Contact us</a>
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Ready to give your clients a <em>complete financial picture</em>?</h2>
+    <p class="padua-cta__sub">Book a walkthrough of Padua WealthX, or talk to us about how we work with broking businesses.</p>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="/book-a-demo">Sign up to Padua WealthX</a>
+      <a class="padua-btn padua-btn--ghost" href="/contact-us">Contact us</a>
     </div>
   </div>
-</div>
+</section>
 
 <!-- =====================================================================
      FOOTER (canonical — verbatim)

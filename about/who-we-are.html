@@ -32,6 +32,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
 
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
 <style>
 /* =====================================================================
    DESIGN TOKENS (v3 prototype)
@@ -998,27 +1012,27 @@ h2.section-title {
       <p>EARS isn't a poster on a wall. It's how we hire, how we build, and how we show up for the advisers who trust us with their clients.</p>
     </div>
 
-    <div class="values-grid">
-      <div class="value-card empathy">
-        <div class="value-letter">E</div>
-        <div class="value-name">Empathy</div>
-        <div class="value-desc">Listen first. Understand the adviser's reality before suggesting anything.</div>
-      </div>
-      <div class="value-card agility">
-        <div class="value-letter">A</div>
-        <div class="value-name">Agility</div>
-        <div class="value-desc">Move with you. Adapt to how your practice actually works, not how a template says it should.</div>
-      </div>
-      <div class="value-card reliability">
-        <div class="value-letter">R</div>
-        <div class="value-name">Reliability</div>
-        <div class="value-desc">SLAs met. Every plan, every review, every time &mdash; on the day we said.</div>
-      </div>
-      <div class="value-card simplicity">
-        <div class="value-letter">S</div>
-        <div class="value-name">Simplicity</div>
-        <div class="value-desc">Cut complexity. Make hard things workable, repeatable and clear.</div>
-      </div>
+    <div class="padua-feature-grid" style="margin-top: 48px;">
+      <article class="padua-feature-card" data-stage="discover">
+        <p class="padua-feature-card__eyebrow">E</p>
+        <h3 class="padua-feature-card__title">Empathy</h3>
+        <p class="padua-feature-card__body">Listen first. Understand the adviser's reality before suggesting anything.</p>
+      </article>
+      <article class="padua-feature-card" data-stage="compare">
+        <p class="padua-feature-card__eyebrow">A</p>
+        <h3 class="padua-feature-card__title">Agility</h3>
+        <p class="padua-feature-card__body">Move with you. Adapt to how your practice actually works, not how a template says it should.</p>
+      </article>
+      <article class="padua-feature-card" data-stage="recommend">
+        <p class="padua-feature-card__eyebrow">R</p>
+        <h3 class="padua-feature-card__title">Reliability</h3>
+        <p class="padua-feature-card__body">SLAs met. Every plan, every review, every time &mdash; on the day we said.</p>
+      </article>
+      <article class="padua-feature-card" data-stage="review">
+        <p class="padua-feature-card__eyebrow">S</p>
+        <h3 class="padua-feature-card__title">Simplicity</h3>
+        <p class="padua-feature-card__body">Cut complexity. Make hard things workable, repeatable and clear.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -1065,18 +1079,17 @@ h2.section-title {
 <!-- =====================================================================
      CTA BANNER (S8 spectrum)
      ===================================================================== -->
-<div class="cta-wrap">
-  <div class="cta-banner">
-    <div class="cta-banner-content">
-      <h2>Ready to <em>build something</em> with us?</h2>
-      <p>Whether you're an adviser, a licensee, a platform or a super fund &mdash; we'd love to hear what you're working on.</p>
-    </div>
-    <div class="cta-banner-actions">
-      <a class="btn btn-on-spectrum" href="/book-a-demo">Book a demo</a>
-      <a class="btn btn-on-spectrum-ghost" href="/contact">Get in touch</a>
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Ready to <em>build something</em> with us?</h2>
+    <p class="padua-cta__sub">Whether you're an adviser, a licensee, a platform or a super fund &mdash; we'd love to hear what you're working on.</p>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="/book-a-demo">Book a demo</a>
+      <a class="padua-btn padua-btn--ghost" href="/contact">Get in touch</a>
     </div>
   </div>
-</div>
+</section>
 
 <!-- =====================================================================
      FOOTER (canonical)

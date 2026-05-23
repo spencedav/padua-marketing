@@ -126,6 +126,25 @@
   filter: grayscale(0) opacity(1) brightness(1);
 }
 
+/* Item modifier: --invert — for white logos that need a dark item background */
+.padua-partner-grid__item--invert {
+  background: var(--ink);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.padua-partner-grid__item--invert img {
+  filter: opacity(0.85);
+}
+
+.padua-partner-grid__item--invert:hover {
+  background: var(--ink-soft);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.padua-partner-grid__item--invert:hover img {
+  filter: opacity(1);
+}
+
 @media (max-width: 767px) {
   .padua-partner-grid__items { grid-template-columns: repeat(2, 1fr); }
   .padua-partner-grid__item { min-height: 70px; padding: var(--space-3); }

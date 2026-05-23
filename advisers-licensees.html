@@ -30,6 +30,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
 
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
 <style>
 :root {
   /* ===== BRAND PALETTE (v3) ===== */
@@ -939,6 +953,15 @@ h2.section-title {
       <span class="hero-eyebrow">For Advisers &amp; Licensees</span>
       <h1>Building <em>lasting partnerships</em> with advice firms and licensees.</h1>
       <p class="hero-sub">Tech-enabled solutions and onshore paraplanning that simplify your advice production. Unlimited technology access. Expert support. Designed to drive business growth.</p>
+      <div class="padua-methodology-pill-set" style="margin: 20px 0 28px;">
+        <a class="padua-methodology-pill" data-stage="discover" href="/software#discover">Discover</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="compare" href="/software#compare">Compare</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="recommend" href="/software#recommend">Recommend</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="review" href="/services">Review</a>
+      </div>
       <div class="hero-cta-row">
         <a class="btn btn-spectrum" href="/book-a-demo">Book a demo</a>
         <a class="hero-link" href="#watch">Watch the 2-min video →</a>
@@ -1182,37 +1205,39 @@ h2.section-title {
 </section>
 
 <!-- =====================================================================
-     PARTNERS (C2 — 4-col grid, greyscale → full color on hover)
+     PARTNERS — rebuilt with padua-partner-grid
      ===================================================================== -->
-<section class="section-tight section-paper">
-  <div class="container">
-    <div class="eyebrow">Our trusted partners</div>
-    <h2 class="section-title">A growing network of advice firms and licensees.</h2>
-    <p class="section-lede">We work with a broad range of Australian advice businesses — from independent practices to national licensee networks. Every partnership is built around how the team actually works.</p>
+<section class="padua-partner-grid">
+  <div class="container" style="max-width: var(--max); margin: 0 auto; padding: 0 24px;">
+    <header class="padua-partner-grid__head">
+      <span class="padua-partner-grid__eyebrow">Our trusted partners</span>
+      <h2 class="padua-partner-grid__title">A growing network of advice firms and licensees.</h2>
+      <p class="padua-partner-grid__sub">We work with a broad range of Australian advice businesses — from independent practices to national licensee networks. Every partnership is built around how the team actually works.</p>
+    </header>
 
-    <div class="partners-grid">
-      <div class="partner-cell">
+    <div class="padua-partner-grid__items">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue">
       </div>
-      <div class="partner-cell">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432967106c4a51312feed5_count-logo.svg" alt="Count Group">
       </div>
-      <div class="partner-cell">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b303137cb430dca61eb_Fitzpatricks.png" alt="Fitzpatricks">
       </div>
-      <div class="partner-cell">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/656fe30d79afcd6c258603aa_findex-logo.svg" alt="Findex">
       </div>
-      <div class="partner-cell">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bf4453f23c395598081_emerge-paper.png" alt="Emerge Paper">
       </div>
-      <div class="partner-cell invert">
+      <div class="padua-partner-grid__item padua-partner-grid__item--invert">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65668e6b3b36a4ccecb4100c_lifewealth-white.png" alt="Lifewealth">
       </div>
-      <div class="partner-cell">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/67e60ac854180ce450ef9d0d_Finchley_Kent_Logo%20copy.png" alt="Finchley Kent">
       </div>
-      <div class="partner-cell">
+      <div class="padua-partner-grid__item">
         <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/67e60b13efcc5d785d51f02a_LFG-Transparent.png" alt="LFG">
       </div>
     </div>
@@ -1253,12 +1278,13 @@ h2.section-title {
 <!-- =====================================================================
      CTA BANNER (S8)
      ===================================================================== -->
-<section class="section-tight">
-  <div class="cta-banner">
-    <h2>Ready to <em>partner</em> with Padua?</h2>
-    <div class="cta-banner-actions">
-      <a class="btn btn-on-spectrum" href="/book-a-demo">Book a demo</a>
-      <a class="btn btn-on-spectrum-ghost" href="#watch">Watch the 2-min video</a>
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Ready to <em>partner</em> with Padua?</h2>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="/book-a-demo">Book a demo</a>
+      <a class="padua-btn padua-btn--ghost" href="#watch">Watch the 2-min video</a>
     </div>
   </div>
 </section>
