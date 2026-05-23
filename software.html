@@ -526,20 +526,7 @@ h2.section-title em {
   max-width: 540px;
   margin: 0 auto;
 }
-.triangle-3d-stage::before {
-  content: "";
-  position: absolute;
-  inset: -15%;
-  z-index: 0;
-  background: radial-gradient(circle at 50% 50%,
-    rgba(255, 61, 139, 0.14) 0%,
-    rgba(255, 61, 139, 0.05) 30%,
-    rgba(74, 48, 140, 0.02) 60%,
-    transparent 80%);
-  pointer-events: none;
-  border-radius: 50%;
-  filter: blur(24px);
-}
+/* Stage is fully transparent — pyramid floats directly in the section bg */
 .triangle-3d-stage > * { position: relative; z-index: 1; }
 #padua-tri3d {
   position: absolute;

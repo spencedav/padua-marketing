@@ -116,25 +116,42 @@ function buildPyramidGeometry(baseRadius, height) {
   };
 }
 
-function makeFaceTexture(text) {
+/* -----------------------------------------------------------------------------
+   Mix a hex color toward black to create a darker base for each face.
+   --------------------------------------------------------------------------- */
+function darken(hex, factor = 0.45) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const rd = Math.round(r * factor);
+  const gd = Math.round(g * factor);
+  const bd = Math.round(b * factor);
+  return `rgb(${rd}, ${gd}, ${bd})`;
+}
+
+function makeFaceTexture(spectrumHex, text) {
   const size = 1024;
   const cv = document.createElement('canvas');
   cv.width = cv.height = size;
   const ctx = cv.getContext('2d');
 
-  // 1. Cool dark purple-blue base
-  ctx.fillStyle = PADUA.faceBase;
+  // 1. Deep, cool-shifted base — face's spectrum color darkened toward black
+  //    so the bright bits (glow, label) read against a near-dark surface.
+  ctx.fillStyle = darken(spectrumHex, 0.32);
   ctx.fillRect(0, 0, size, size);
 
-  // 2. Inner glow bleed-through (centered radial gradient, magenta tint)
+  // 2. Inner glow bleed-through — radial gradient in the face's spectrum
+  //    color, brightest at the inner center. Reads as light pushing through
+  //    from inside the form.
   const glow = ctx.createRadialGradient(size / 2, size * 0.55, 0, size / 2, size * 0.55, size * 0.55);
-  glow.addColorStop(0, 'rgba(255, 105, 180, 0.42)');
-  glow.addColorStop(0.4, 'rgba(255, 80, 160, 0.18)');
-  glow.addColorStop(1, 'rgba(255, 105, 180, 0)');
+  glow.addColorStop(0, `${spectrumHex}cc`);  // ~80% alpha at center
+  glow.addColorStop(0.4, `${spectrumHex}55`); // ~33% mid
+  glow.addColorStop(1, `${spectrumHex}00`);   // 0% edge
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, size, size);
 
-  // 3. Cloudy wisps — soft blobs at random positions, magenta tinted
+  // 3. Cloudy wisps — soft blobs at random positions, tinted toward the
+  //    face's spectrum color but with a hint of pink for warmth.
   for (let i = 0; i < 22; i++) {
     const x = Math.random() * size;
     const y = size * 0.3 + Math.random() * size * 0.55;
@@ -305,11 +322,14 @@ async function init() {
   canvas.style.cursor = 'pointer';
   mount.appendChild(canvas);
 
-  // -- scene + camera (a touch steeper than before)
+  // -- scene + camera — steeper top-down view, more "looking down at it" like the cube ref
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-  camera.position.set(0, 1.6, 6.2);
-  camera.lookAt(0, -0.3, 0);
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(0, 3.8, 5.6);
+  camera.lookAt(0, -0.4, 0);
+
+  // Transparent clear so the section bg shows through the canvas
+  renderer.setClearColor(0x000000, 0);
 
   try {
     scene.environment = buildEnvironment(renderer);
@@ -324,15 +344,15 @@ async function init() {
   const HEIGHT = 2.6;
   const { geom, sides } = buildPyramidGeometry(BASE_RADIUS, HEIGHT);
 
-  // Face materials: cool purple-blue glass with the texture (containing the
-  // baked-in glow + wisps + label) on top. Higher transmission so the inner
-  // emissive bleeds through. Sheen adds a velvety rim highlight along edges.
-  const makeFaceMat = (label) => new THREE.MeshPhysicalMaterial({
+  // Face materials: each face's spectrum color baked into its texture
+  // (including dark base, inner glow, wisps, grain, label). Transmission +
+  // sheen give the glass-with-rim look. flatShading keeps facet edges crisp.
+  const makeFaceMat = (spectrumHex, label) => new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: makeFaceTexture(label),
+    map: makeFaceTexture(spectrumHex, label),
     metalness: 0.0,
     roughness: 0.45,
-    transmission: 0.35,
+    transmission: 0.30,
     thickness: 0.9,
     ior: 1.45,
     clearcoat: 0.5,
@@ -346,9 +366,9 @@ async function init() {
   });
 
   const materials = [
-    makeFaceMat('Quality'),
-    makeFaceMat('Value'),
-    makeFaceMat('Turnaround'),
+    makeFaceMat(PADUA.discover,  'Quality'),
+    makeFaceMat(PADUA.compare,   'Value'),
+    makeFaceMat(PADUA.recommend, 'Turnaround'),
     new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.95, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
   ];
 
@@ -358,38 +378,28 @@ async function init() {
   root.add(pyramid);
   scene.add(root);
 
-  // Edge lines — emissive bright magenta along each face boundary. With
-  // bloom they read as luminous edges defining the form.
+  // Edge lines — luminous boundaries along face seams. Bloom amplifies them.
   const edgeGeom = new THREE.EdgesGeometry(geom, 1);
   const edgeMat = new THREE.LineBasicMaterial({
     color: new THREE.Color(PADUA.edge),
     transparent: true,
-    opacity: 0.65,
+    opacity: 0.6,
   });
   const edgeLines = new THREE.LineSegments(edgeGeom, edgeMat);
   pyramid.add(edgeLines);
 
-  // Rotating cloud mesh — sits inside the pyramid. Additive blending so it
-  // adds light rather than blocks it. Rotates slowly for subtle "wisps
-  // moving inside the form" effect, visible through the transmissive faces.
-  const cloudGeom = new THREE.IcosahedronGeometry(0.95, 3);
-  const cloudMat = new THREE.MeshBasicMaterial({
-    map: makeCloudTexture(),
-    transparent: true,
-    opacity: 0.55,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false,
-    side: THREE.DoubleSide,
-  });
-  const cloud = new THREE.Mesh(cloudGeom, cloudMat);
-  root.add(cloud);
+  // (no cloud mesh — it was reading as a visible sphere inside the form.
+  //  The bloom + emissive core + baked face wisps carry the "glow from
+  //  within" feel without showing a discrete inner object.)
 
   /* --------------------------------------------------------------------------
-     Inner emissive core — smaller + brighter than before so the bloom reads
-     as a CONCENTRATED point of light inside the pyramid (not a diffuse fill).
+     Inner emissive core — VERY small + VERY bright. Reads as a point source
+     of light rather than a visible sphere inside the form. The bloom turns
+     it into a diffuse halo. Sits inside the geometry where faces hide its
+     literal shape; only its LIGHT bleeds through.
      -------------------------------------------------------------------------- */
-  const CORE_BASE_INTENSITY = 10.0;
-  const coreGeom = new THREE.IcosahedronGeometry(0.32, 3);
+  const CORE_BASE_INTENSITY = 16.0;
+  const coreGeom = new THREE.IcosahedronGeometry(0.14, 3);
   const coreMat = new THREE.MeshStandardMaterial({
     color: 0x000000,
     emissive: new THREE.Color(PADUA.innerCore),
@@ -400,8 +410,8 @@ async function init() {
   const core = new THREE.Mesh(coreGeom, coreMat);
   root.add(core);
 
-  // Point light at the core — illuminates the inside of the faces from inside.
-  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 22, 7, 1.5);
+  // Point light at the core — illuminates the inside of the faces.
+  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 26, 7, 1.6);
   coreLight.position.set(0, 0, 0);
   root.add(coreLight);
 
@@ -469,7 +479,18 @@ async function init() {
       import('three/addons/postprocessing/UnrealBloomPass.js'),
       import('three/addons/postprocessing/OutputPass.js'),
     ]);
-    composer = new EffectComposer(renderer);
+    // RGBAFormat + HalfFloatType render target preserves alpha through the
+    // bloom pipeline, so the section bg shows through where the pyramid isn't.
+    const rt = new THREE.WebGLRenderTarget(
+      mount.clientWidth || 320,
+      mount.clientHeight || 320,
+      {
+        type: THREE.HalfFloatType,
+        format: THREE.RGBAFormat,
+        colorSpace: THREE.LinearSRGBColorSpace,
+      }
+    );
+    composer = new EffectComposer(renderer, rt);
     composer.addPass(new RenderPass(scene, camera));
     bloomPass = new UnrealBloomPass(
       new THREE.Vector2(mount.clientWidth || 320, mount.clientHeight || 320),
@@ -589,11 +610,6 @@ async function init() {
     // Counter-spin the core slightly for visual life
     core.rotation.y -= dt * 0.6;
     core.rotation.x += dt * 0.3;
-
-    // Cloud spins slower than the core and the pyramid for that lazy-wisp feel
-    cloud.rotation.y += dt * 0.18;
-    cloud.rotation.x += dt * 0.07;
-    cloud.rotation.z -= dt * 0.04;
 
     if (composer) composer.render();
     else renderer.render(scene, camera);
