@@ -1,0 +1,184 @@
+/* =============================================================================
+   PADUA-CARD — primitive
+   =============================================================================
+   Base card pattern. Used across nearly every page. Two main variants:
+     .padua-card           — solid surface card (default)
+     .padua-card--glass    — frosted-glass card (WealthX-style transparency)
+
+   Plus structural modifiers:
+     .padua-card--methodology  — applies methodology color accent
+     .padua-card--lifted       — adds subtle hover lift
+     .padua-card--featured     — solid ink background with spectrum accent
+   =========================================================================== */
+
+.padua-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+  overflow: hidden;
+  color: var(--text-dark);
+  transition: transform var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              background var(--duration-base) var(--ease-out);
+}
+
+/* ---------- glass variant ------------------------------------------------- */
+
+.padua-card--glass {
+  background: var(--glass-bg-paper);
+  -webkit-backdrop-filter: var(--glass-blur-md);
+  backdrop-filter: var(--glass-blur-md);
+  border: var(--glass-border-dark);
+}
+
+.padua-card--glass-dark {
+  background: var(--glass-bg-ink);
+  -webkit-backdrop-filter: var(--glass-blur-md);
+  backdrop-filter: var(--glass-blur-md);
+  border: var(--glass-border-light);
+  color: var(--text-on-dark);
+}
+
+/* ---------- methodology accent (top edge strip + soft halo behind) -------- */
+
+.padua-card--methodology {
+  --m-color: var(--discover);
+  --m-glow: var(--discover-10);
+}
+
+.padua-card--methodology::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--m-color);
+  transform: translateY(-100%);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.padua-card--methodology::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 60% at 50% 100%, var(--m-glow) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Children sit above the halo */
+.padua-card--methodology > * { position: relative; z-index: 1; }
+
+/* Hover state for methodology cards: reveal the accent strip + halo */
+.padua-card--lifted:hover.padua-card--methodology::before { transform: translateY(0); }
+.padua-card--lifted:hover.padua-card--methodology::after  { opacity: 1; }
+
+/* Per-stage data attribute (set on the card itself) */
+.padua-card--methodology[data-stage="discover"]  { --m-color: var(--discover);  --m-glow: var(--discover-10); }
+.padua-card--methodology[data-stage="compare"]   { --m-color: var(--compare);   --m-glow: var(--compare-10); }
+.padua-card--methodology[data-stage="recommend"] { --m-color: var(--recommend); --m-glow: var(--recommend-10); }
+.padua-card--methodology[data-stage="review"]    { --m-color: var(--review);    --m-glow: var(--review-10); }
+.padua-card--methodology[data-stage="teal"]      { --m-color: var(--teal);      --m-glow: var(--teal-10); }
+
+/* ---------- lifted (interactive cards) ------------------------------------ */
+
+.padua-card--lifted {
+  cursor: pointer;
+}
+
+.padua-card--lifted:hover {
+  transform: translateY(-3px);
+  border-color: var(--text-mid);
+}
+
+.padua-card--glass.padua-card--lifted:hover,
+.padua-card--glass-dark.padua-card--lifted:hover {
+  border-color: rgba(255,255,255,0.22);
+}
+
+/* ---------- featured (solid ink + spectrum accent) ----------------------- */
+
+.padua-card--featured {
+  background: var(--ink);
+  color: var(--text-on-dark);
+  border-color: var(--ink);
+}
+
+.padua-card--featured::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: var(--spectrum);
+}
+
+/* ---------- card header / body / footer slots ----------------------------- */
+
+.padua-card__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--m-color, var(--compare));
+  margin-bottom: var(--space-2);
+}
+
+.padua-card__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.padua-card__body {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-mid);
+  flex: 1;
+  margin: 0;
+}
+
+.padua-card--glass-dark .padua-card__body,
+.padua-card--featured .padua-card__body {
+  color: var(--text-on-dark-mid);
+}
+
+.padua-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.padua-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-dark);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  text-decoration: none;
+}
+
+.padua-card--glass-dark .padua-card__link,
+.padua-card--featured .padua-card__link {
+  color: var(--text-on-dark);
+}
+
+.padua-card__link::after {
+  content: "→";
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.padua-card__link:hover::after { transform: translateX(4px); }

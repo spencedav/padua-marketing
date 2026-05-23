@@ -1,0 +1,72 @@
+/* =============================================================================
+   PADUA-METHODOLOGY-PILL — pattern
+   =============================================================================
+   Specialized pill set for showing the 4-stage methodology
+   (Discover → Compare → Recommend → Review) inline as a horizontal flow.
+
+   Used in: hero sub-content, in-line process indicators, methodology callouts.
+
+   For the full scroll-driven methodology reveal, see the homepage's
+   <section class="methodology-reveal"> component.
+   =========================================================================== */
+
+.padua-methodology-pill-set {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.padua-methodology-pill-set__arrow {
+  color: var(--text-mid);
+  font-size: 14px;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.padua-methodology-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--m-glow, var(--discover-10));
+  border: 1px solid var(--m-color, var(--discover));
+  border-color: color-mix(in srgb, var(--m-color, var(--discover)) 35%, transparent);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--m-color, var(--discover));
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+.padua-methodology-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--m-color, var(--discover));
+  flex-shrink: 0;
+}
+
+.padua-methodology-pill[data-stage="discover"]  { --m-color: var(--discover);  --m-glow: var(--discover-10); }
+.padua-methodology-pill[data-stage="compare"]   { --m-color: var(--compare);   --m-glow: var(--compare-10); }
+.padua-methodology-pill[data-stage="recommend"] { --m-color: var(--recommend); --m-glow: var(--recommend-10); }
+.padua-methodology-pill[data-stage="review"]    { --m-color: var(--review);    --m-glow: var(--review-10); }
+
+.padua-methodology-pill:hover {
+  background: var(--m-glow, var(--discover-15));
+  border-color: var(--m-color);
+}
+
+/* Glass variant for dark backgrounds (uses backdrop-filter blur) */
+.padua-methodology-pill--glass {
+  background: var(--glass-bg-ink);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  border-color: var(--m-color);
+  color: var(--m-color);
+}

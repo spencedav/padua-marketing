@@ -1,0 +1,210 @@
+/* =============================================================================
+   PADUA-CTA-BANNER — pattern
+   =============================================================================
+   Full-width call-to-action banner used at the bottom of nearly every page.
+   The spectrum-gradient surface is Padua's signature closing moment.
+
+   Variants:
+     (default)            — paper background with spectrum accent halo
+     .padua-cta--spectrum — full spectrum gradient (the loud one)
+     .padua-cta--ink      — ink surface with multi-color atmospheric dots
+     .padua-cta--compact  — smaller padding, for in-page nudges
+
+   Structure:
+     <section class="padua-cta padua-cta--spectrum">
+       <div class="padua-cta__inner">
+         <p class="padua-cta__eyebrow">Get started</p>
+         <h2 class="padua-cta__title">Ready when you are.</h2>
+         <p class="padua-cta__sub">…</p>
+         <div class="padua-cta__actions">
+           <a class="padua-btn padua-btn--primary">Book a demo</a>
+           <a class="padua-btn padua-btn--ghost">Talk to us</a>
+         </div>
+       </div>
+     </section>
+   =========================================================================== */
+
+.padua-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: var(--space-9) var(--space-5);
+  background: var(--paper-warm);
+  text-align: center;
+}
+
+.padua-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--halo-spectrum);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.padua-cta__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.padua-cta__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--compare);
+  margin: 0;
+}
+
+.padua-cta__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 4.4vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.padua-cta__sub {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--text-mid);
+  margin: 0;
+  max-width: 560px;
+}
+
+.padua-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-3);
+}
+
+/* ---------- Spectrum variant — the signature closer ---------------------- */
+
+.padua-cta--spectrum {
+  background: var(--spectrum);
+  color: var(--text-on-dark);
+}
+
+.padua-cta--spectrum::before {
+  background:
+    radial-gradient(50% 60% at 10% 20%, rgba(255,255,255,0.18) 0%, transparent 60%),
+    radial-gradient(60% 60% at 90% 80%, rgba(0,0,0,0.18) 0%, transparent 60%);
+  opacity: 1;
+}
+
+.padua-cta--spectrum .padua-cta__eyebrow { color: rgba(255,255,255,0.85); }
+.padua-cta--spectrum .padua-cta__title   { color: var(--text-on-dark); }
+.padua-cta--spectrum .padua-cta__sub     { color: rgba(255,255,255,0.85); }
+
+/* ---------- Ink variant — calmer, evening-feel ---------------------------- */
+
+.padua-cta--ink {
+  background: var(--ink);
+  color: var(--text-on-dark);
+}
+
+.padua-cta--ink::before {
+  background:
+    radial-gradient(40% 35% at 15% 20%, var(--discover-25) 0%, transparent 65%),
+    radial-gradient(35% 30% at 85% 25%, var(--compare-25)  0%, transparent 65%),
+    radial-gradient(45% 35% at 75% 85%, var(--review-25)   0%, transparent 65%),
+    radial-gradient(30% 25% at 20% 80%, var(--recommend-25) 0%, transparent 65%);
+  opacity: 1;
+}
+
+.padua-cta--ink .padua-cta__title { color: var(--text-on-dark); }
+.padua-cta--ink .padua-cta__sub   { color: var(--text-on-dark-mid); }
+
+/* ---------- Compact variant — in-page nudges ------------------------------ */
+
+.padua-cta--compact {
+  padding: var(--space-7) var(--space-5);
+}
+
+.padua-cta--compact .padua-cta__title {
+  font-size: clamp(24px, 2.8vw, 36px);
+}
+
+/* ---------- Buttons used inside the CTA ---------------------------------- */
+
+.padua-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out),
+              background var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out);
+  white-space: nowrap;
+}
+
+.padua-btn:hover { transform: translateY(-1px); }
+.padua-btn:active { transform: translateY(0); }
+
+.padua-btn--primary {
+  background: var(--text-dark);
+  color: var(--text-on-dark);
+}
+
+.padua-btn--primary:hover {
+  background: var(--ink);
+}
+
+.padua-btn--ghost {
+  background: transparent;
+  color: var(--text-dark);
+  border-color: color-mix(in srgb, var(--text-dark) 20%, transparent);
+}
+
+.padua-btn--ghost:hover {
+  background: var(--glass-bg-paper);
+  border-color: var(--text-dark);
+}
+
+/* On spectrum/ink — invert the buttons */
+.padua-cta--spectrum .padua-btn--primary,
+.padua-cta--ink .padua-btn--primary {
+  background: var(--text-on-dark);
+  color: var(--text-dark);
+}
+
+.padua-cta--spectrum .padua-btn--primary:hover,
+.padua-cta--ink .padua-btn--primary:hover {
+  background: var(--paper-warm);
+}
+
+.padua-cta--spectrum .padua-btn--ghost,
+.padua-cta--ink .padua-btn--ghost {
+  color: var(--text-on-dark);
+  border-color: rgba(255,255,255,0.35);
+}
+
+.padua-cta--spectrum .padua-btn--ghost:hover,
+.padua-cta--ink .padua-btn--ghost:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.7);
+}
+
+@media (max-width: 767px) {
+  .padua-cta { padding: var(--space-7) var(--space-4); }
+  .padua-cta__actions { flex-direction: column; width: 100%; }
+  .padua-btn { justify-content: center; width: 100%; }
+}

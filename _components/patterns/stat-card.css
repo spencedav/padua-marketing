@@ -1,0 +1,98 @@
+/* =============================================================================
+   PADUA-STAT-CARD — pattern
+   =============================================================================
+   Statistical proof point. Big number + label + supporting sub-line.
+   Used in: trust strips, methodology proof, hero stats.
+
+   Visual: borrows WealthX's subtle glow technique — number sits on a soft
+   methodology-color halo that swells on hover.
+   =========================================================================== */
+
+.padua-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-5);
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-lg);
+  background: transparent;
+}
+
+/* Soft methodology halo behind the number */
+.padua-stat-card::before {
+  content: "";
+  position: absolute;
+  inset: -10% 30% 60% 30%;
+  background: radial-gradient(60% 50% at 50% 50%, var(--m-glow, var(--discover-15)) 0%, transparent 70%);
+  z-index: -1;
+  transition: inset var(--duration-base) var(--ease-out),
+              opacity var(--duration-base) var(--ease-out);
+  opacity: 0.85;
+}
+
+.padua-stat-card:hover::before {
+  inset: -20% 10% 40% 10%;
+  opacity: 1;
+}
+
+.padua-stat-card__number {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 5.6vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--m-color, var(--text-dark));
+  margin: 0;
+  font-variation-settings: "opsz" 72;
+}
+
+.padua-stat-card__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.padua-stat-card__sub {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text-mid);
+  margin: var(--space-1) 0 0;
+}
+
+/* On dark backgrounds */
+.padua-glow--ink .padua-stat-card__label,
+.padua-card--featured .padua-stat-card__label {
+  color: var(--text-on-dark-soft);
+}
+
+.padua-glow--ink .padua-stat-card__sub,
+.padua-card--featured .padua-stat-card__sub {
+  color: var(--text-on-dark-mid);
+}
+
+/* Methodology variants */
+.padua-stat-card[data-stage="discover"]  { --m-color: var(--discover);  --m-glow: var(--discover-15); }
+.padua-stat-card[data-stage="compare"]   { --m-color: var(--compare);   --m-glow: var(--compare-15); }
+.padua-stat-card[data-stage="recommend"] { --m-color: var(--recommend); --m-glow: var(--recommend-15); }
+.padua-stat-card[data-stage="review"]    { --m-color: var(--review);    --m-glow: var(--review-15); }
+.padua-stat-card[data-stage="teal"]      { --m-color: var(--teal);      --m-glow: var(--teal-15); }
+
+/* Stat grid container (typical layout) */
+.padua-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 767px) {
+  .padua-stat-grid { grid-template-columns: 1fr 1fr; }
+  .padua-stat-card { padding: var(--space-4); }
+}
+
+@media (max-width: 479px) {
+  .padua-stat-grid { grid-template-columns: 1fr; }
+}

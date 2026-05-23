@@ -1,0 +1,80 @@
+/* =============================================================================
+   PADUA-GLOW — primitive
+   =============================================================================
+   Atmospheric radial halos for hero + section backgrounds. The "WealthX glow"
+   technique adapted to Padua's methodology palette.
+
+   Apply to a section or container:
+     <section class="padua-glow padua-glow--spectrum"> ... </section>
+
+   Or as a standalone background layer:
+     <div class="padua-glow padua-glow--discover"></div>
+
+   Variants:
+     .padua-glow--discover   — single purple halo (subtle)
+     .padua-glow--compare    — single pink halo
+     .padua-glow--recommend  — single red halo
+     .padua-glow--review     — single orange halo
+     .padua-glow--teal       — single teal halo (calmer)
+     .padua-glow--spectrum   — multi-color atmospheric (hero-ready)
+     .padua-glow--ink        — dark wash with subtle methodology dots
+
+   Positioning modifiers (move the halo away from center):
+     .padua-glow--top-left, --top-right, --bottom-left, --bottom-right
+   =========================================================================== */
+
+.padua-glow {
+  position: relative;
+  isolation: isolate;
+}
+
+.padua-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--padua-glow-bg, var(--halo-discover));
+}
+
+.padua-glow > * { position: relative; z-index: 1; }
+
+/* ---------- single-color halos ------------------------------------------- */
+
+.padua-glow--discover  { --padua-glow-bg: var(--halo-discover); }
+.padua-glow--compare   { --padua-glow-bg: var(--halo-compare); }
+.padua-glow--recommend { --padua-glow-bg: var(--halo-recommend); }
+.padua-glow--review    { --padua-glow-bg: var(--halo-review); }
+.padua-glow--teal      { --padua-glow-bg: var(--halo-teal); }
+
+/* ---------- multi-color hero atmospheric --------------------------------- */
+
+.padua-glow--spectrum {
+  --padua-glow-bg: var(--halo-spectrum);
+}
+
+/* Ink section with subtle methodology dots in the corners */
+.padua-glow--ink {
+  background: var(--ink);
+  color: var(--text-on-dark);
+}
+
+.padua-glow--ink::before {
+  background:
+    radial-gradient(35% 30% at 12% 18%, var(--discover-15) 0%, transparent 65%),
+    radial-gradient(35% 30% at 88% 22%, var(--compare-15)  0%, transparent 65%),
+    radial-gradient(45% 35% at 75% 85%, var(--review-15)   0%, transparent 65%),
+    radial-gradient(30% 25% at 18% 82%, var(--recommend-15) 0%, transparent 65%);
+}
+
+/* ---------- positioning modifiers (move halo away from center) ----------- */
+
+.padua-glow--top-left::before    { background-position: 0% 0%; background-size: 80% 60%; background-repeat: no-repeat; }
+.padua-glow--top-right::before   { background-position: 100% 0%; background-size: 80% 60%; background-repeat: no-repeat; }
+.padua-glow--bottom-left::before { background-position: 0% 100%; background-size: 80% 60%; background-repeat: no-repeat; }
+.padua-glow--bottom-right::before{ background-position: 100% 100%; background-size: 80% 60%; background-repeat: no-repeat; }
+
+/* ---------- intensity modifiers ------------------------------------------ */
+
+.padua-glow--subtle::before { opacity: 0.6; }
+.padua-glow--strong::before { opacity: 1.2; mix-blend-mode: screen; }

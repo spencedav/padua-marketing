@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- =====================================================================
+     SEO
+     ===================================================================== -->
+<title>Padua Software — Home, Discover, Compare, Recommend | Padua Solutions (v2 — library pilot)</title>
+<meta name="description" content="Padua Software gives advisers an unlimited tech stack across the four stages of advice — Home, Discover, Compare, Recommend. Better quality, better value, better turnaround. 100% Australian onshore.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://paduasolutions.com/software">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://paduasolutions.com/software">
+<meta property="og:title" content="Padua Software — Home, Discover, Compare, Recommend">
+<meta property="og:description" content="An unlimited tech stack for advisers and support staff. Four products across the advice journey — built and supported 100% onshore in Australia.">
+<meta property="og:image" content="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65dfb237dcb19a8c7896fb9c_Recommend-strategies.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Padua Software — Home, Discover, Compare, Recommend">
+<meta name="twitter:description" content="An unlimited tech stack for advisers and support staff. Four products across the advice journey — built and supported 100% onshore in Australia.">
+<meta name="twitter:image" content="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65dfb237dcb19a8c7896fb9c_Recommend-strategies.png">
+
+<link rel="apple-touch-icon" href="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+<link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65836b6efef6ba9fee59b1d8_Padua-touch-icon.png">
+
+<!-- =====================================================================
+     FONTS
+     Brand display: Quincy CF (Connary Fagen). Newsreader is the closest
+     free substitute and is what the v3 prototype uses.
+     ===================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Geist:wght@300..700&display=swap" rel="stylesheet">
+
+<!-- =====================================================================
+     PADUA COMPONENT LIBRARY (pilot)
+     ===================================================================== -->
+<link rel="stylesheet" href="/_components/tokens.css">
+<link rel="stylesheet" href="/_components/primitives/pill.css">
+<link rel="stylesheet" href="/_components/primitives/card.css">
+<link rel="stylesheet" href="/_components/primitives/glow.css">
+<link rel="stylesheet" href="/_components/primitives/chip.css">
+<link rel="stylesheet" href="/_components/patterns/stat-card.css">
+<link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
+<link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
+<link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/cta-banner.css">
+
+<style>
+/* =====================================================================
+   TOKENS (mirrors v3 prototype)
+   ===================================================================== */
+:root {
+  /* Brand methodology */
+  --discover:  #4a308c;
+  --compare:   #ab2178;
+  --recommend: #eb2e4d;
+  --review:    #f59436;
+  --yellow:    #f5d534;
+  --teal:      #007282;
+
+  --spectrum: linear-gradient(135deg, #4a308c 0%, #ab2178 28%, #eb2e4d 52%, #f59436 78%, #f5d534 100%);
+
+  /* Hero gradient — sunset / brand sky */
+  --hero-gradient:
+    radial-gradient(ellipse 100% 70% at 75% 110%, rgba(245,213,52,0.55), transparent 60%),
+    radial-gradient(ellipse 90% 60% at 25% 120%, rgba(235,46,77,0.55), transparent 60%),
+    radial-gradient(ellipse 80% 55% at 50% 130%, rgba(171,33,120,0.65), transparent 70%),
+    linear-gradient(180deg, #1a0d2e 0%, #2a1240 30%, #4a1a4a 55%, #7a2a3e 75%, #b04020 92%, #d97d20 100%);
+
+  /* Surfaces */
+  --ink:        #16121f;
+  --ink-soft:   #1f1b2a;
+  --paper:      #faf8f4;
+  --paper-warm: #f1ede4;
+  --line:       rgba(22,18,31,0.08);
+  --line-dark:  rgba(255,255,255,0.12);
+
+  /* Text */
+  --text-dark:  #1a1525;
+  --text-mid:   #555560;
+  --text-light: #80808c;
+  --text-on-dark: #ffffff;
+  --text-on-dark-mid: rgba(255,255,255,0.7);
+  --text-on-dark-soft: rgba(255,255,255,0.5);
+
+  /* Type */
+  --font-display: 'Newsreader', 'Quincy CF', Georgia, serif;
+  --font-body: 'Geist', system-ui, -apple-system, sans-serif;
+
+  --radius: 14px;
+  --radius-lg: 22px;
+  --max: 1240px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--text-dark); background: var(--paper); }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
+
+/* =====================================================================
+   LOGO
+   ===================================================================== */
+.padua-logo { display: inline-flex; align-items: center; gap: 9px; }
+.padua-logo-mark { width: 28px; height: auto; flex-shrink: 0; display: block; }
+.padua-logo-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  font-variation-settings: "opsz" 32;
+}
+.padua-logo-tm { font-size: 0.42em; vertical-align: super; opacity: 0.55; font-weight: 400; margin-left: 1px; }
+
+/* =====================================================================
+   NAV (canonical)
+   ===================================================================== */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(22,18,31,0.88);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--line-dark);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 0 32px; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px;
+  color: var(--text-on-dark);
+}
+.nav .padua-logo-text { color: var(--text-on-dark); }
+.nav-links { display: flex; align-items: center; gap: 0; }
+.nav-item { position: relative; }
+.nav-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 14px; height: 72px;
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text-on-dark-mid); white-space: nowrap;
+  transition: color .18s ease;
+}
+.nav-link:hover, .nav-link.active { color: var(--text-on-dark); }
+.nav-link.active::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 0; height: 2px;
+  background: var(--spectrum); border-radius: 2px;
+}
+.nav-caret { width: 9px; height: 9px; opacity: .55; }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-size: 13.5px; font-weight: 500; border-radius: 999px; transition: all .18s ease; white-space: nowrap; }
+.btn-ghost-dark { color: var(--text-on-dark); border: 1px solid rgba(255,255,255,0.22); }
+.btn-ghost-dark:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+.btn-spectrum {
+  color: white; font-weight: 600;
+  background: var(--spectrum);
+  background-size: 200% 100%; background-position: 0% 50%;
+}
+.btn-spectrum:hover { background-position: 100% 50%; transform: translateY(-1px); box-shadow: 0 10px 26px -10px rgba(235,46,77,0.55); }
+.btn-outline { border: 1px solid var(--ink); color: var(--ink); padding: 12px 22px; }
+.btn-outline:hover { background: var(--ink); color: white; }
+.btn-outline-light { border: 1px solid rgba(255,255,255,0.4); color: white; padding: 12px 22px; }
+.btn-outline-light:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+/* Dropdown */
+.dropdown {
+  position: absolute; top: 72px; left: 50%; transform: translateX(-50%) translateY(-6px);
+  background: white; color: var(--text-dark);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px; min-width: 260px;
+  box-shadow: 0 24px 50px -12px rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none; transition: opacity .18s ease, transform .18s ease;
+}
+.nav-item:hover .dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+.dropdown-section {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+  padding: 4px 12px;
+  margin: 14px 0 4px;
+}
+.dropdown-section:first-of-type { margin-top: 0; }
+.dropdown a { display: block; padding: 9px 12px; font-size: 14px; color: var(--text-mid); border-radius: 8px; }
+.dropdown a:hover { background: var(--paper-warm); color: var(--text-dark); }
+.dropdown-divider { height: 1px; background: var(--line); margin: 10px 12px; }
+.dropdown a small { display: block; font-size: 11.5px; color: var(--text-light); margin-top: 2px; font-weight: 400; }
+
+/* Mega menu */
+.dropdown-mega { min-width: 760px; padding: 28px; }
+.mega-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--compare);
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--line);
+  margin: 0 0 22px;
+}
+.mega-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-bottom: 22px; }
+.mega-col h5 {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  letter-spacing: -0.01em; color: var(--text-dark);
+  margin-bottom: 10px;
+}
+.mega-col a {
+  display: block;
+  padding: 8px 10px;
+  font-size: 13.5px; color: var(--text-mid);
+  border-radius: 8px;
+  margin: 0 -10px;
+}
+.mega-col a:hover { background: var(--paper-warm); color: var(--text-dark); }
+.mega-featured {
+  background: linear-gradient(135deg, #2a1240 0%, #4a1a4a 50%, #d97d20 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex; align-items: center; gap: 16px;
+}
+.mega-featured-play {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.mega-featured-play::after {
+  content: ""; width: 0; height: 0;
+  border-left: 10px solid #1a1a1a;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  margin-left: 2px;
+}
+.mega-featured-text { flex: 1; line-height: 1.3; }
+.mega-featured-text .eb { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+.mega-featured-text h6 { font-family: var(--font-display); font-size: 17px; font-weight: 500; letter-spacing: -0.01em; margin: 0; color: white; }
+.mega-featured-arrow { font-size: 20px; color: white; opacity: 0.9; transition: transform .18s ease; }
+.mega-featured:hover .mega-featured-arrow { opacity: 1; transform: translateX(3px); }
+.mega-featured:hover { color: white; }
+
+.nav-item.has-mega .dropdown { left: 0; transform: translateX(0) translateY(-6px); }
+.nav-item.has-mega:hover .dropdown { transform: translateX(0) translateY(0); }
+
+/* =====================================================================
+   HERO (H1 — split layout: text + product visual)
+   ===================================================================== */
+.hero {
+  position: relative;
+  background: var(--hero-gradient);
+  background-size: cover;
+  color: var(--text-on-dark);
+  overflow: hidden;
+  padding: 88px 32px 96px;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 75% 18%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 45% 12%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 90% 38%, rgba(255,255,255,0.3), transparent);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: var(--max); margin: 0 auto;
+  width: 100%; position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 56px;
+  align-items: center;
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(38px, 5.2vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin-bottom: 22px;
+  font-variation-settings: "opsz" 72;
+}
+.hero h1 em { font-style: italic; font-weight: 400; color: #ffb47a; }
+.hero-sub {
+  font-size: 18px; line-height: 1.55;
+  color: var(--text-on-dark-mid);
+  max-width: 520px;
+  margin-bottom: 34px;
+}
+.hero-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.hero-link {
+  font-size: 14px;
+  color: var(--text-on-dark);
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+  padding-bottom: 2px;
+}
+.hero-link:hover { border-color: white; }
+
+/* Hero product visual: tilted laptop frame */
+.hero-visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  perspective: 1400px;
+}
+.hero-visual-glow {
+  position: absolute;
+  inset: -8% -6% -2% -6%;
+  background: var(--spectrum);
+  filter: blur(60px);
+  opacity: 0.38;
+  border-radius: 50%;
+  z-index: 0;
+}
+.hero-laptop {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: #1a1525;
+  border-radius: 14px;
+  padding: 12px 12px 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 40px 80px -30px rgba(0,0,0,0.6),
+    0 20px 40px -20px rgba(74,48,140,0.5);
+  transform: rotateY(-8deg) rotateX(4deg);
+  transform-style: preserve-3d;
+}
+.hero-laptop-bar {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 10px; padding: 0 4px;
+}
+.hero-laptop-bar span {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+}
+.hero-laptop img {
+  width: 100%; height: auto;
+  display: block;
+  border-radius: 6px;
+  background: white;
+}
+
+/* =====================================================================
+   SECTIONS / TYPE
+   ===================================================================== */
+.section { padding: 100px 32px; }
+.section-tight { padding: 76px 32px; }
+.section-paper { background: var(--paper); }
+.section-warm { background: var(--paper-warm); }
+.section-white { background: white; }
+.section-ink { background: var(--ink); color: var(--text-on-dark); }
+.container { max-width: var(--max); margin: 0 auto; }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--compare);
+  margin-bottom: 16px;
+}
+h2.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 3.6vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  max-width: 820px;
+  margin-bottom: 20px;
+  font-variation-settings: "opsz" 72;
+}
+h2.section-title em {
+  font-style: italic;
+  background: var(--spectrum);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.section-lede {
+  font-size: 17px; line-height: 1.65;
+  color: var(--text-mid);
+  max-width: 640px;
+}
+.section-header-center { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+.section-header-center .section-lede { margin: 0 auto; }
+
+/* =====================================================================
+   UNATTAINABLE TRIANGLE — signature brand moment
+   ===================================================================== */
+.triangle-section {
+  background: var(--paper-warm);
+  padding: 110px 32px 90px;
+  position: relative;
+  overflow: hidden;
+}
+.triangle-section::before {
+  content: "";
+  position: absolute; top: -20%; left: 50%;
+  width: 900px; height: 900px;
+  transform: translateX(-50%);
+  background: var(--spectrum);
+  filter: blur(180px); opacity: 0.10;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.triangle-inner {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: 0 auto;
+  text-align: center;
+}
+.triangle-inner .eyebrow { color: var(--recommend); }
+.triangle-inner h2.section-title {
+  margin: 0 auto 18px;
+  font-size: clamp(34px, 4.2vw, 58px);
+}
+.triangle-lede {
+  font-size: 17.5px; line-height: 1.65; color: var(--text-mid);
+  max-width: 620px; margin: 0 auto 56px;
+}
+.triangle-figure {
+  position: relative;
+  max-width: 520px; margin: 0 auto;
+}
+.triangle-figure img {
+  width: 100%; height: auto; display: block;
+  filter: drop-shadow(0 30px 50px rgba(74,48,140,0.18));
+}
+
+/* =====================================================================
+   DIFFERENTIATOR CARDS (matches v3 .diff-card pattern)
+   ===================================================================== */
+.diff-section { background: white; }
+.diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px; }
+.diff-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 36px 32px 32px;
+  display: flex; flex-direction: column;
+  text-align: left;
+  position: relative;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.diff-card:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(0,0,0,0.15); border-color: rgba(22,18,31,0.16); }
+.diff-card-triangle {
+  width: 88px; height: 88px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 22px;
+}
+.diff-card-triangle img { width: 100%; height: 100%; display: block; }
+.diff-card h4 {
+  font-family: var(--font-display);
+  font-size: 26px; font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+}
+.diff-card p { font-size: 14.5px; line-height: 1.62; color: var(--text-mid); flex: 1; }
+.diff-card:nth-child(1) h4 { color: var(--discover); }
+.diff-card:nth-child(2) h4 { color: var(--compare); }
+.diff-card:nth-child(3) h4 { color: var(--recommend); }
+
+/* =====================================================================
+   PRODUCT SHOWCASE — alternating sections
+   ===================================================================== */
+.product { padding: 110px 32px; position: relative; overflow: hidden; }
+.product-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  gap: 72px; align-items: center;
+  position: relative; z-index: 1;
+}
+.product.reverse .product-inner { grid-template-columns: 1.1fr 1fr; }
+.product.reverse .product-text { order: 2; }
+.product.reverse .product-visual { order: 1; }
+
+.product-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 18px;
+}
+.product-eyebrow::before {
+  content: ""; width: 28px; height: 1px; background: currentColor; opacity: 0.6;
+}
+.product-logo {
+  height: 44px; width: auto; display: block;
+  margin-bottom: 26px;
+}
+.product-logo-onlight {
+  /* When the product logo is white-on-dark variant but placed on light bg,
+     we put it in a colored pill so it reads correctly. */
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 22px;
+  border-radius: 12px;
+  margin-bottom: 26px;
+}
+.product-logo-onlight img { height: 32px; width: auto; display: block; }
+.product h3.product-name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  margin-bottom: 22px;
+  font-variation-settings: "opsz" 72;
+  color: var(--text-dark);
+}
+.product-desc {
+  font-size: 17px; line-height: 1.65; color: var(--text-mid);
+  max-width: 540px;
+  margin-bottom: 28px;
+}
+.product-stats {
+  display: flex; gap: 36px; flex-wrap: wrap;
+  margin: 0 0 32px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.product-stat-num {
+  font-family: var(--font-display);
+  font-size: 42px; font-weight: 500;
+  letter-spacing: -0.025em; line-height: 1;
+  margin-bottom: 4px;
+}
+.product-stat-label {
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-light);
+}
+.product-cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.product-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text-dark);
+  border-bottom: 1px solid currentColor; padding-bottom: 2px;
+}
+.product-link::after { content: "→"; transition: transform .2s ease; }
+.product-link:hover::after { transform: translateX(4px); }
+
+/* Visual frame for product screens */
+.product-visual {
+  position: relative;
+}
+.product-visual-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 40px 80px -40px rgba(22,18,31,0.35), 0 20px 40px -30px rgba(74,48,140,0.18);
+}
+.product-visual-frame img {
+  width: 100%; height: auto; display: block;
+}
+.product-visual-bg {
+  position: absolute;
+  inset: -8%;
+  border-radius: 40px;
+  z-index: -1;
+  opacity: 0.22;
+  filter: blur(60px);
+}
+
+/* === Per-product theming === */
+/* Padua Home — neutral (paper) */
+.product-home { background: var(--paper); }
+.product-home .product-eyebrow { color: var(--teal); }
+.product-home .product-logo-onlight { background: var(--ink); }
+
+/* Discover — purple */
+.product-discover { background: linear-gradient(180deg, #2a1846 0%, #1f1230 100%); color: var(--text-on-dark); }
+.product-discover .product-eyebrow { color: rgba(255,255,255,0.55); }
+.product-discover h3.product-name { color: white; }
+.product-discover .product-desc { color: rgba(255,255,255,0.75); }
+.product-discover .product-stats { border-color: rgba(255,255,255,0.12); }
+.product-discover .product-stat-label { color: rgba(255,255,255,0.55); }
+.product-discover .product-link { color: white; }
+.product-discover .product-cta-row .btn-outline { border-color: rgba(255,255,255,0.4); color: white; }
+.product-discover .product-cta-row .btn-outline:hover { background: white; color: var(--discover); }
+.product-discover .product-visual-frame {
+  background: linear-gradient(135deg, #4a308c 0%, #7a4ea8 50%, #2a1846 100%);
+  border-color: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  aspect-ratio: 16 / 11;
+  padding: 56px;
+}
+.product-discover .product-visual-frame img { max-width: 60%; height: auto; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4)); }
+.product-discover .product-visual-bg { background: var(--discover); }
+
+/* Compare — pink */
+.product-compare { background: linear-gradient(180deg, #fdf3f8 0%, #faeaf2 100%); }
+.product-compare .product-eyebrow { color: var(--compare); }
+.product-compare .product-logo-onlight { background: var(--compare); }
+.product-compare h3.product-name { color: var(--text-dark); }
+.product-compare .product-stat-num { color: var(--compare); }
+.product-compare .product-visual-bg { background: var(--compare); }
+
+/* Recommend — red */
+.product-recommend { background: linear-gradient(180deg, #fdf3f5 0%, #faeaee 100%); }
+.product-recommend .product-eyebrow { color: var(--recommend); }
+.product-recommend .product-logo-onlight { background: var(--recommend); }
+.product-recommend h3.product-name { color: var(--text-dark); }
+.product-recommend .product-stat-num { color: var(--recommend); }
+.product-recommend .product-visual-bg { background: var(--recommend); }
+
+/* Section index pill (1/4, 2/4 etc) */
+.product-index {
+  position: absolute;
+  top: 56px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-light);
+}
+.product-discover .product-index { color: rgba(255,255,255,0.45); }
+
+/* =====================================================================
+   TESTIMONIALS
+   ===================================================================== */
+.testimonials-section { background: var(--paper); }
+.testimonials-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px; margin-top: 56px;
+}
+.testimonial {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 38px 32px;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.testimonial::before {
+  content: "“";
+  position: absolute;
+  top: 18px; left: 28px;
+  font-family: var(--font-display);
+  font-size: 80px;
+  line-height: 1;
+  color: var(--compare);
+  opacity: 0.18;
+}
+.testimonial-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 19px; line-height: 1.45;
+  color: var(--text-dark);
+  margin-bottom: 28px;
+  flex: 1;
+  font-variation-settings: "opsz" 32;
+  position: relative; z-index: 1;
+}
+.testimonial-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.testimonial-attribution { font-size: 13.5px; line-height: 1.4; }
+.testimonial-name { font-weight: 600; color: var(--text-dark); display: block; }
+.testimonial-role { color: var(--text-light); font-size: 12.5px; }
+.testimonial-logo { height: 28px; width: auto; opacity: 0.7; filter: grayscale(1); }
+.testimonial-logo:hover { opacity: 1; filter: none; }
+
+/* =====================================================================
+   TRUST STRIP
+   ===================================================================== */
+.trust-section { background: white; padding: 76px 32px; }
+.trust-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 48px; align-items: center;
+}
+.trust-label {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 22px;
+}
+.trust-row { display: flex; align-items: center; gap: 36px; flex-wrap: wrap; }
+.trust-partner {
+  height: 36px;
+  display: flex; align-items: center;
+}
+.trust-partner img { max-height: 36px; width: auto; filter: grayscale(1); opacity: 0.78; transition: opacity .2s, filter .2s; }
+.trust-partner:hover img { filter: none; opacity: 1; }
+
+.trust-side { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.trust-side img { height: 76px; width: auto; }
+.trust-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text-dark);
+  background: var(--paper);
+}
+.trust-pill::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--teal);
+}
+
+/* =====================================================================
+   CTA BANNER (S8 — spectrum)
+   ===================================================================== */
+.cta-wrap { padding: 0 32px 100px; }
+.cta-banner {
+  padding: 56px;
+  background: var(--spectrum);
+  border-radius: 28px;
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 48px; align-items: center;
+  max-width: var(--max); margin: 0 auto;
+  position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ""; position: absolute;
+  top: -30%; right: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+  pointer-events: none;
+}
+.cta-banner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 44px);
+  font-weight: 400; line-height: 1.05;
+  letter-spacing: -0.025em; color: white;
+  font-variation-settings: "opsz" 72;
+  position: relative;
+}
+.cta-banner h2 em { font-style: italic; color: rgba(255,255,255,0.78); }
+.cta-banner-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; position: relative; }
+.btn-on-spectrum { background: white; color: var(--ink); padding: 13px 26px; font-weight: 500; }
+.btn-on-spectrum:hover { transform: translateY(-1px); box-shadow: 0 14px 30px -10px rgba(0,0,0,0.25); }
+.btn-on-spectrum-ghost { color: white; border: 1px solid rgba(255,255,255,0.55); padding: 13px 26px; }
+.btn-on-spectrum-ghost:hover { background: rgba(255,255,255,0.12); }
+
+/* =====================================================================
+   FOOTER (canonical)
+   ===================================================================== */
+.footer { background: var(--ink); color: var(--text-on-dark); padding: 76px 32px 32px; }
+.footer .padua-logo-text { color: var(--text-on-dark); }
+.footer-inner { max-width: var(--max); margin: 0 auto; }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 44px; border-bottom: 1px solid var(--line-dark); }
+.footer-brand p { font-size: 13.5px; color: var(--text-on-dark-mid); line-height: 1.6; max-width: 340px; margin-top: 16px; }
+.footer-col h4 { font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 14px; text-transform: uppercase; color: white; }
+.footer-col a { display: block; font-size: 13.5px; color: var(--text-on-dark-mid); padding: 5px 0; }
+.footer-col a:hover { color: white; }
+.footer-bottom { margin-top: 26px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; font-size: 12px; color: var(--text-on-dark-soft); }
+.footer-bottom-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.footer-cert-pill { padding: 5px 11px; border: 1px solid var(--line-dark); border-radius: 999px; }
+.acknowledgement { max-width: 700px; font-size: 12px; line-height: 1.6; color: var(--text-on-dark-soft); margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--line-dark); }
+
+/* =====================================================================
+   RESPONSIVE — Webflow-compatible breakpoints (991, 767, 479)
+   ===================================================================== */
+@media (max-width: 991px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-laptop { transform: none; }
+  .product-inner { grid-template-columns: 1fr; gap: 48px; }
+  .product.reverse .product-text { order: 1; }
+  .product.reverse .product-visual { order: 2; }
+  .diff-grid { grid-template-columns: 1fr; gap: 16px; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .trust-inner { grid-template-columns: 1fr; gap: 32px; }
+  .cta-banner { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 767px) {
+  .nav-links { display: none; }
+  .nav-actions .btn-ghost-dark { display: none; }
+  .section, .product { padding: 64px 22px; }
+  .triangle-section { padding: 72px 22px 60px; }
+  .hero { padding: 56px 22px 64px; }
+  .hero-inner { gap: 36px; }
+  .product-stats { gap: 24px; padding: 18px 0; }
+  .testimonial { padding: 30px 26px 26px; }
+  .testimonial-quote { font-size: 17px; }
+  .trust-row { gap: 24px; }
+  .cta-wrap { padding: 0 22px 64px; }
+  .cta-banner { padding: 36px 28px; }
+  .footer-top { grid-template-columns: 1fr; gap: 28px; padding-bottom: 32px; }
+  .footer { padding: 56px 22px 24px; }
+}
+@media (max-width: 479px) {
+  .hero h1 { font-size: 36px; }
+  .product h3.product-name { font-size: 34px; }
+  h2.section-title { font-size: 30px; }
+  .product-stat-num { font-size: 34px; }
+  .trust-side img { height: 60px; }
+  .trust-row { gap: 20px; }
+  .trust-partner { height: 28px; }
+  .trust-partner img { max-height: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     NAVIGATION (canonical — Advisers & Licensees ACTIVE)
+     ===================================================================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="padua-logo">
+      <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
+      <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
+    </a>
+
+    <div class="nav-links">
+
+      <!-- ADVISERS & LICENSEES (mega) — ACTIVE -->
+      <div class="nav-item has-mega">
+        <a class="nav-link active" href="/advisers-licensees">Advisers &amp; Licensees
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown dropdown-mega">
+          <div class="mega-eyebrow">Our Solutions  ·  for advisers &amp; licensees</div>
+          <div class="mega-cols">
+            <div class="mega-col">
+              <h5>The Padua Portal</h5>
+              <a href="/advisers-licensees">Portal overview</a>
+              <a href="#watch">See the workflow in action</a>
+            </div>
+            <div class="mega-col">
+              <h5>Services</h5>
+              <a href="/services">Tech-enabled paraplanning<small>The fastest path to scale</small></a>
+              <a href="/services#transition">Transition management<small>End-to-end implementation</small></a>
+            </div>
+            <div class="mega-col">
+              <h5>Software</h5>
+              <a href="/software#padua-home">Padua Home<small>Product hub</small></a>
+              <a href="/software#discover">Discover<small>Digital fact-finding</small></a>
+              <a href="/software#compare">Compare<small>Side-by-side analysis</small></a>
+              <a href="/software#recommend">Recommend<small>Strategy at scale</small></a>
+            </div>
+          </div>
+          <a class="mega-featured" href="/#watch">
+            <div class="mega-featured-play"></div>
+            <div class="mega-featured-text">
+              <div class="eb">2 min video</div>
+              <h6>See the Padua Portal in action</h6>
+            </div>
+            <div class="mega-featured-arrow">→</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- PLATFORMS & SUPER FUNDS -->
+      <div class="nav-item">
+        <a class="nav-link" href="/product-providers">Platforms &amp; Super Funds
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="mega-eyebrow">Our Solutions  ·  for platforms &amp; super funds</div>
+          <div class="dropdown-section">Solutions overview</div>
+          <a href="/product-providers">For platforms &amp; super funds</a>
+          <div class="dropdown-section">Services</div>
+          <a href="/services">Tech-enabled paraplanning</a>
+          <a href="/services#transition">Transition management</a>
+          <div class="dropdown-section">Software</div>
+          <a href="/software#padua-home">Padua Home<small>Product hub</small></a>
+          <a href="/software#discover">Discover<small>Digital fact-finding</small></a>
+          <a href="/software#compare">Compare<small>Side-by-side analysis</small></a>
+          <a href="/software#recommend">Recommend<small>Strategy at scale</small></a>
+        </div>
+      </div>
+
+      <!-- INVESTMENT MANAGERS -->
+      <div class="nav-item">
+        <a class="nav-link" href="/product-providers">Investment Managers
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="mega-eyebrow">Our Solutions  ·  for investment managers</div>
+          <div class="dropdown-section">Solutions overview</div>
+          <a href="/product-providers">For investment managers &amp; fund administrators</a>
+          <div class="dropdown-section">Software &amp; Data</div>
+          <a href="/software#padua-home">Padua Home<small>Product hub</small></a>
+          <a href="/software#discover">Discover<small>Digital fact-finding</small></a>
+          <a href="/software#compare">Compare<small>Side-by-side analysis</small></a>
+          <a href="/software#recommend">Recommend<small>Strategy at scale</small></a>
+          <div class="dropdown-section">Distribution</div>
+          <a href="/product-providers">Media &amp; Advertising<small>Reach Australian advisers</small></a>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="nav-item">
+        <a class="nav-link" href="/about/who-we-are">About
+          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
+        </a>
+        <div class="dropdown">
+          <div class="dropdown-section">Company</div>
+          <a href="/about/who-we-are">Who we are<small>Our mission, values, Advice Guides</small></a>
+          <a href="/about/our-people">Our people</a>
+          <a href="/about/careers">Careers</a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section">Content</div>
+          <a href="/news-insights">News &amp; insights</a>
+          <a href="/events">Events &amp; webinars</a>
+          <a href="/resources">Resources<small>Whitepapers &amp; reports</small></a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section">Trust</div>
+          <a href="/security">Security &amp; compliance<small>ISO 27001 certified</small></a>
+        </div>
+      </div>
+
+      <a class="nav-link" href="/contact-us">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a class="btn btn-ghost-dark" href="https://home.paduasolutions.com/">Log in</a>
+      <a class="btn btn-spectrum" href="/book-a-demo">Book a demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- =====================================================================
+     HERO (H1 — split layout)
+     ===================================================================== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Tech-Enabled Paraplanning</div>
+      <h1>An <em>unlimited</em> tech stack for advisers and support staff.</h1>
+      <p class="hero-sub">Four products across the four stages of advice — Home, Discover, Compare and Recommend. Use them together to reduce your tech stack, lift quality, and turn advice around faster.</p>
+
+      <div class="padua-methodology-pill-set" style="margin: 20px 0 28px;">
+        <a class="padua-methodology-pill" data-stage="discover" href="#discover">Discover</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="compare" href="#compare">Compare</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="recommend" href="#recommend">Recommend</a>
+        <span class="padua-methodology-pill-set__arrow">→</span>
+        <a class="padua-methodology-pill" data-stage="review" href="/services">Review</a>
+      </div>
+
+      <div class="hero-cta-row">
+        <a class="btn btn-spectrum" href="/book-a-demo">Book a demo</a>
+        <a class="hero-link" href="/contact-us">Contact us</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-visual-glow"></div>
+      <div class="hero-laptop">
+        <div class="hero-laptop-bar"><span></span><span></span><span></span></div>
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/652f7224fdea641a755edd88_Home.png" alt="Padua Home — the product hub for tracking client engagements and advice progress">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     UNATTAINABLE TRIANGLE — signature brand moment
+     ===================================================================== -->
+<section class="triangle-section">
+  <div class="triangle-inner">
+    <div class="eyebrow">The Padua difference</div>
+    <h2 class="section-title">The unattainable triangle is <em>attainable</em> with Padua.</h2>
+    <p class="triangle-lede">Quality, cost, turnaround — pick two? Not with us. We've spent a decade building software and an onshore team that solves for all three at once.</p>
+    <div class="triangle-figure">
+      <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111929108642818ba2d22_unattainable-triangle-final.svg" alt="The unattainable triangle — Quality, Cost and Turnaround — made attainable with Padua">
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     DIFFERENTIATOR CARDS — rebuilt with padua-feature-card
+     ===================================================================== -->
+<section class="section diff-section padua-glow padua-glow--teal padua-glow--subtle">
+  <div class="container">
+    <div style="max-width: 760px;">
+      <span class="padua-chip" data-stage="teal">How we solve it</span>
+      <h2 class="section-title" style="margin-top: 12px;">Three things, all at once — not two out of three.</h2>
+      <p class="section-lede">Software does the repeatable work. Our onshore advice professionals do the judgement work. The combination is what makes the triangle attainable.</p>
+    </div>
+
+    <div class="padua-feature-grid" style="margin-top: 48px;">
+      <article class="padua-feature-card" data-stage="discover">
+        <span class="padua-feature-card__icon">
+          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66c42b290ae0a979bf19ffba_quality-triangle.svg" alt="" style="width:24px;height:24px;">
+        </span>
+        <p class="padua-feature-card__eyebrow">Quality</p>
+        <h3 class="padua-feature-card__title">Better Quality</h3>
+        <p class="padua-feature-card__body">Our team of experts uses our technology to help you generate high quality advice — each advice output generated to meet your client's unique needs.</p>
+      </article>
+
+      <article class="padua-feature-card" data-stage="compare">
+        <span class="padua-feature-card__icon">
+          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111ac0f8cf11f3b8cfefd_cost-triangle.svg" alt="" style="width:24px;height:24px;">
+        </span>
+        <p class="padua-feature-card__eyebrow">Value</p>
+        <h3 class="padua-feature-card__title">Better Value</h3>
+        <p class="padua-feature-card__body">By leveraging our Software, we pass the savings on to you, ensuring you get the best value across every advice document we produce.</p>
+      </article>
+
+      <article class="padua-feature-card" data-stage="recommend">
+        <span class="padua-feature-card__icon">
+          <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d111acb727c54a0d1e85e5_turnaround-triangle.svg" alt="" style="width:24px;height:24px;">
+        </span>
+        <p class="padua-feature-card__eyebrow">Turnaround</p>
+        <h3 class="padua-feature-card__title">Better Turnaround</h3>
+        <p class="padua-feature-card__body">We understand that saving time means saving money. Our dedicated team ensure your plans are turned around quickly, every time.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PRODUCT 1 — PADUA HOME (neutral / paper)
+     ===================================================================== -->
+<section class="product product-home" id="padua-home">
+  <div class="product-index">01 — The hub</div>
+  <div class="product-inner">
+    <div class="product-text">
+      <div class="product-eyebrow">Padua Home</div>
+      <div class="product-logo-onlight">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/664d7988439f2faf5bc586f7_home-logo.svg" alt="Padua Home">
+      </div>
+      <h3 class="product-name">The product hub for every advice engagement.</h3>
+      <p class="product-desc">A comprehensive tool for tracking client engagements and the advice given, with visual insights at every step. Home is where your team starts the day and where every piece of work comes back together.</p>
+      <div class="product-cta-row">
+        <a class="btn btn-outline" href="/book-a-demo">Book a demo</a>
+        <a class="product-link" href="/advisers-licensees">See the workflow </a>
+      </div>
+    </div>
+
+    <div class="product-visual">
+      <div class="product-visual-bg" style="background: linear-gradient(135deg, var(--discover), var(--compare));"></div>
+      <div class="product-visual-frame">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/652f7224fdea641a755edd88_Home.png" alt="Padua Home dashboard — client engagement tracking and visual insights">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PRODUCT 2 — DISCOVER (purple, reverse)
+     ===================================================================== -->
+<section class="product product-discover reverse" id="discover">
+  <div class="product-index">02 — Fact-find</div>
+  <div class="product-inner">
+    <div class="product-text">
+      <div class="product-eyebrow">Discover</div>
+      <img class="product-logo" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/664eedfd4e22eb81f4af3c24_discover-logo-white.svg" alt="Padua Discover">
+      <h3 class="product-name">Digital fact-finding that talks to your CRM.</h3>
+      <p class="product-desc">Discover enables transparent digital fact-finding with comprehensive API integration with your CRM. No more chasing forms — your clients can complete fact-finds online and the data flows straight back into your workflow.</p>
+      <div class="product-cta-row">
+        <a class="btn btn-outline-light" href="/book-a-demo">Book a demo</a>
+        <a class="product-link" href="/contact-us">Talk to us about integration </a>
+      </div>
+    </div>
+
+    <div class="product-visual">
+      <div class="product-visual-bg"></div>
+      <div class="product-visual-frame">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/664eedfd4e22eb81f4af3c24_discover-logo-white.svg" alt="Discover — digital fact-finding by Padua">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PRODUCT 3 — COMPARE (pink)
+     ===================================================================== -->
+<section class="product product-compare" id="compare">
+  <div class="product-index">03 — Compare</div>
+  <div class="product-inner">
+    <div class="product-text">
+      <div class="product-eyebrow">Compare</div>
+      <div class="product-logo-onlight">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/664d792c3b0badd749e04115_Padua-Product-Compare.svg" alt="Padua Compare">
+      </div>
+      <h3 class="product-name">Side-by-side comparison across the Australian market.</h3>
+      <p class="product-desc">Easily compare your clients' platforms and investments against recommended and alternative positions. Compare reads from the broadest dataset in Australian advice — so your recommendation is always defensible.</p>
+
+      <div class="padua-stat-grid" style="grid-template-columns: 1fr 1fr; max-width: 380px; margin: 8px 0 24px;">
+        <div class="padua-stat-card" data-stage="compare">
+          <p class="padua-stat-card__number">1.8k+</p>
+          <p class="padua-stat-card__label">Platforms</p>
+        </div>
+        <div class="padua-stat-card" data-stage="compare">
+          <p class="padua-stat-card__number">22k+</p>
+          <p class="padua-stat-card__label">Investments</p>
+        </div>
+      </div>
+
+      <div class="product-cta-row">
+        <a class="btn btn-outline" href="/book-a-demo">Book a demo</a>
+        <a class="product-link" href="/contact-us">See it in action </a>
+      </div>
+    </div>
+
+    <div class="product-visual">
+      <div class="product-visual-bg"></div>
+      <div class="product-visual-frame">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/67649e498c56de41125e557b_compare-screen-v2.png" alt="Padua Compare — platform and investment comparison screen">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     PRODUCT 4 — RECOMMEND (red, reverse)
+     ===================================================================== -->
+<section class="product product-recommend reverse" id="recommend">
+  <div class="product-index">04 — Strategise</div>
+  <div class="product-inner">
+    <div class="product-text">
+      <div class="product-eyebrow">Recommend</div>
+      <div class="product-logo-onlight">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66502571eb964a084dc9ddd5_recommend-logo-white.svg" alt="Padua Recommend">
+      </div>
+      <h3 class="product-name">Strategy at scale — without losing the strategic edge.</h3>
+      <p class="product-desc">Recommend lets you make strategy recommendations across the breadth of technical advice. It's the engine behind every advice document we produce — and it's available to your team too.</p>
+
+      <div class="padua-stat-grid" style="grid-template-columns: 1fr; max-width: 220px; margin: 8px 0 24px;">
+        <div class="padua-stat-card" data-stage="recommend">
+          <p class="padua-stat-card__number">850+</p>
+          <p class="padua-stat-card__label">Technical strategies</p>
+        </div>
+      </div>
+
+      <div class="product-cta-row">
+        <a class="btn btn-outline" href="/book-a-demo">Book a demo</a>
+        <a class="product-link" href="/contact-us">Talk to a strategist </a>
+      </div>
+    </div>
+
+    <div class="product-visual">
+      <div class="product-visual-bg"></div>
+      <div class="product-visual-frame">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65dfb237dcb19a8c7896fb9c_Recommend-strategies.png" alt="Padua Recommend — technical strategy selection across 850+ strategies">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     TESTIMONIALS
+     ===================================================================== -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div style="max-width: 760px;">
+      <div class="eyebrow">In their words</div>
+      <h2 class="section-title">Trusted by Australian advice firms.</h2>
+      <p class="section-lede">A few of the people who run their practice on Padua software, and what they have to say about it.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <p class="testimonial-quote">We've been able to leverage Padua's expertise and interactive software, with our internal offering, to ensure we provide our clients with quality advice, in an efficient manner. Their efficiency has played a key role in the quality of our service offering to our clients.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-attribution">
+            <span class="testimonial-name">Sarah Humm</span>
+            <span class="testimonial-role">National Adviser Support Manager</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <p class="testimonial-quote">Padua has always been a dependable partner in providing Invest Blue with an efficient and flexible outsourced paraplanning solution. With easy-to-use technology, Padua provides us with what our business values most; high-quality advice documents and fast turnaround times.</p>
+        <div class="testimonial-footer">
+          <div class="testimonial-attribution">
+            <span class="testimonial-name">Nick Stannard</span>
+            <span class="testimonial-role">Head of Advice &amp; Compliance, Invest Blue</span>
+          </div>
+          <img class="testimonial-logo" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     TRUST STRIP — rebuilt with padua-partner-grid
+     ===================================================================== -->
+<section class="padua-partner-grid">
+  <div class="container" style="max-width: var(--max); margin: 0 auto; padding: 0 24px;">
+    <header class="padua-partner-grid__head">
+      <span class="padua-partner-grid__eyebrow">Trust &amp; security</span>
+      <h2 class="padua-partner-grid__title">Trusted by Australian advice firms.</h2>
+      <p class="padua-partner-grid__sub">ISO 27001 certified, 100% Australian onshore — the partners who run their practice on Padua.</p>
+    </header>
+
+    <div class="padua-partner-grid__items">
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png" alt="Invest Blue">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b57c2c6513093627772_findex.jpeg" alt="Findex">
+      </div>
+      <div class="padua-partner-grid__item">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/66d1202b1681fafb47acb27d_ISO%2027001%20Certified%20Badge.svg" alt="ISO 27001 Certified" style="max-height:60px;">
+      </div>
+      <div class="padua-partner-grid__item">
+        <span class="padua-chip padua-chip--bg" data-stage="teal" style="font-size: 12px;">100% Australian onshore</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     CTA BANNER — rebuilt with padua-cta--spectrum
+     ===================================================================== -->
+<section class="padua-cta padua-cta--spectrum">
+  <div class="padua-cta__inner">
+    <p class="padua-cta__eyebrow">Get started</p>
+    <h2 class="padua-cta__title">Ready to <em>reduce your tech stack?</em></h2>
+    <p class="padua-cta__sub">Book a 20-minute demo and see Home, Discover, Compare and Recommend in action — or talk to one of our strategists about how Padua can fit into your practice.</p>
+    <div class="padua-cta__actions">
+      <a class="padua-btn padua-btn--primary" href="/book-a-demo">Book a demo</a>
+      <a class="padua-btn padua-btn--ghost" href="/contact-us">Talk to us</a>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FOOTER (canonical — verbatim)
+     ===================================================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="padua-logo">
+          <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
+          <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
+        </a>
+        <p>Padua Solutions is Australia's tech-enabled financial advice infrastructure. Combining experienced onshore advice professionals, intelligent workflow and AI to help advisers help more Australians.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Advisers &amp; Licensees</h4>
+        <a href="/advisers-licensees">Padua Advice Portal</a>
+        <a href="/advice-guides">Advice Guides</a>
+        <a href="/services">Paraplanning services</a>
+        <a href="/services#transition">Transition management</a>
+        <a href="/rafa">RAFA &amp; cold storage</a>
+      </div>
+      <div class="footer-col">
+        <h4>Other streams</h4>
+        <a href="/product-providers">Platforms &amp; Super Funds</a>
+        <a href="/product-providers">Investment Managers</a>
+        <a href="/fund-administrators">Fund Administrators</a>
+        <a href="/product-providers">Media &amp; Advertising</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="/about/who-we-are">About Padua</a>
+        <a href="/about/our-people">Our people</a>
+        <a href="/news-insights">News &amp; insights</a>
+        <a href="/about/careers">Careers</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Padua Solutions Pty Ltd. ABN 93 167 243 745. All rights reserved.</p>
+      <div class="footer-bottom-right">
+        <div class="footer-cert-pill">ISO 27001 Certified</div>
+        <div class="footer-cert-pill">100% Onshore</div>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+
+    <p class="acknowledgement">
+      Padua acknowledges the Traditional Owners of the lands on which we work, the Wodi Wodi people on Dharawal country and the Gadigal people of the Eora Nation. We acknowledge their continuing connection to land, waters, and community. We pay our respects to the people, the cultures, and the Elders past and present.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

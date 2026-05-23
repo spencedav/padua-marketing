@@ -1,0 +1,129 @@
+/* =============================================================================
+   PADUA-PILL — primitive
+   =============================================================================
+   Small rounded element for tags, status indicators, dropdown items, toggle
+   buttons. Borrows from WealthX's frosted-glass pill aesthetic with Padua's
+   methodology colors as accents.
+
+   Variants:
+     .padua-pill                   — default (paper-warm background)
+     .padua-pill--glass            — frosted-glass on dark backgrounds
+     .padua-pill--glass-light      — frosted-glass on light backgrounds
+     .padua-pill--methodology      — uses var(--m-color) custom prop
+     .padua-pill--active           — active/selected state (uses spectrum)
+     .padua-pill--sm               — smaller size
+
+   Methodology color binding (set --m-color on parent or pill):
+     .padua-pill[data-stage="discover"]  → purple
+     .padua-pill[data-stage="compare"]   → pink
+     .padua-pill[data-stage="recommend"] → red
+     .padua-pill[data-stage="review"]    → orange
+   =========================================================================== */
+
+.padua-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--text-dark);
+  background: var(--paper-warm);
+  border: 1px solid var(--line);
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.padua-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--m-color, currentColor);
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+/* ---------- glass variants (frosted background, atmospheric) -------------- */
+
+.padua-pill--glass {
+  background: var(--glass-bg-ink);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  border: var(--glass-border-light);
+  color: var(--text-on-dark);
+}
+
+.padua-pill--glass-light {
+  background: var(--glass-bg-paper);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  border: var(--glass-border-dark);
+  color: var(--text-dark);
+}
+
+/* ---------- methodology variants ------------------------------------------ */
+
+.padua-pill[data-stage="discover"]  { --m-color: var(--discover);  background: var(--discover-10);  border-color: var(--discover-25); }
+.padua-pill[data-stage="compare"]   { --m-color: var(--compare);   background: var(--compare-10);   border-color: var(--compare-25); }
+.padua-pill[data-stage="recommend"] { --m-color: var(--recommend); background: var(--recommend-10); border-color: var(--recommend-25); }
+.padua-pill[data-stage="review"]    { --m-color: var(--review);    background: var(--review-10);    border-color: var(--review-25); }
+.padua-pill[data-stage="teal"]      { --m-color: var(--teal);      background: var(--teal-10);      border-color: var(--teal-25); }
+
+/* On dark backgrounds, methodology pills use glass + colored dot */
+.padua-pill--glass[data-stage] {
+  background: var(--glass-bg-ink);
+  color: var(--text-on-dark);
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* ---------- active state (spectrum gradient background) ------------------- */
+
+.padua-pill--active {
+  background: var(--spectrum);
+  color: white;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.padua-pill--active::before {
+  background: rgba(255,255,255,0.95);
+  opacity: 1;
+}
+
+/* ---------- size variants ------------------------------------------------- */
+
+.padua-pill--sm {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.padua-pill--lg {
+  padding: 8px 18px;
+  font-size: 14px;
+}
+
+/* ---------- interactive states (when used as button or anchor) ------------ */
+
+button.padua-pill,
+a.padua-pill {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button.padua-pill:hover:not(.padua-pill--active),
+a.padua-pill:hover:not(.padua-pill--active) {
+  background: var(--paper);
+  border-color: var(--text-mid);
+}
+
+.padua-pill--glass:hover:not(.padua-pill--active),
+.padua-pill--glass-light:hover:not(.padua-pill--active) {
+  border-color: rgba(255,255,255,0.25);
+}

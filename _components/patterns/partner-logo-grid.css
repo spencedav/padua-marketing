@@ -1,0 +1,132 @@
+/* =============================================================================
+   PADUA-PARTNER-LOGO-GRID — pattern
+   =============================================================================
+   Grid of partner / licensee / integration logos. Currently used on 4 pages:
+   /services, /advisers-licensees, /product-providers, /mortgage-brokers.
+
+   Each previously had its own slightly different copy of this pattern.
+   This consolidates them with a soft methodology halo behind the grid for
+   atmosphere (WealthX-inspired transparency).
+   =========================================================================== */
+
+.padua-partner-grid {
+  position: relative;
+  isolation: isolate;
+  padding: var(--space-7) 0;
+}
+
+/* Soft halo behind the grid (subtle methodology atmosphere) */
+.padua-partner-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(80% 60% at 50% 50%, var(--teal-10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.padua-partner-grid__head {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.padua-partner-grid__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--compare);
+  margin-bottom: var(--space-3);
+}
+
+.padua-partner-grid__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 2.8vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--text-dark);
+  margin: 0 0 var(--space-2);
+}
+
+.padua-partner-grid__sub {
+  font-size: 15px;
+  color: var(--text-mid);
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* The actual logo row */
+.padua-partner-grid__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+  align-items: center;
+  justify-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.padua-partner-grid__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 90px;
+  padding: var(--space-4) var(--space-5);
+  background: var(--glass-bg-paper);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  border: var(--glass-border-dark);
+  border-radius: var(--radius);
+  transition: transform var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              background var(--duration-base) var(--ease-out);
+}
+
+.padua-partner-grid__item:hover {
+  transform: translateY(-2px);
+  background: white;
+  border-color: var(--text-mid);
+}
+
+.padua-partner-grid__item img {
+  max-width: 100%;
+  max-height: 40px;
+  width: auto;
+  height: auto;
+  display: block;
+  filter: grayscale(1) opacity(0.65);
+  transition: filter var(--duration-base) var(--ease-out);
+}
+
+.padua-partner-grid__item:hover img {
+  filter: grayscale(0) opacity(1);
+}
+
+/* Dark variant — for use on ink/spectrum backgrounds */
+.padua-partner-grid--dark::before {
+  background: radial-gradient(80% 60% at 50% 50%, var(--teal-15) 0%, transparent 70%);
+}
+
+.padua-partner-grid--dark .padua-partner-grid__title { color: var(--text-on-dark); }
+.padua-partner-grid--dark .padua-partner-grid__sub   { color: var(--text-on-dark-mid); }
+
+.padua-partner-grid--dark .padua-partner-grid__item {
+  background: var(--glass-bg-ink);
+  border: var(--glass-border-light);
+}
+
+.padua-partner-grid--dark .padua-partner-grid__item img {
+  filter: grayscale(1) opacity(0.55) brightness(1.5);
+}
+
+.padua-partner-grid--dark .padua-partner-grid__item:hover img {
+  filter: grayscale(0) opacity(1) brightness(1);
+}
+
+@media (max-width: 767px) {
+  .padua-partner-grid__items { grid-template-columns: repeat(2, 1fr); }
+  .padua-partner-grid__item { min-height: 70px; padding: var(--space-3); }
+}

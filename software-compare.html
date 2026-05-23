@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Padua /software — A/B Compare (current vs library pilot)</title>
+<meta name="robots" content="noindex">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: #0e0a1a; font-family: 'Geist', system-ui, -apple-system, sans-serif; }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .stage iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #faf8f4;
+    transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .stage iframe[aria-hidden="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Toggle bar — floats top-center */
+  .ab-bar {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 999px;
+    background: rgba(22, 18, 31, 0.92);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .ab-bar__label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0 10px 0 14px;
+    user-select: none;
+  }
+
+  .ab-bar__btn {
+    appearance: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    border: 0;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 180ms ease, color 180ms ease;
+  }
+
+  .ab-bar__btn:hover { color: #fff; }
+
+  .ab-bar__btn[aria-pressed="true"] {
+    background: linear-gradient(135deg, #4a308c 0%, #ab2178 50%, #eb2e4d 100%);
+    color: #fff;
+  }
+
+  .ab-bar__hint {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
+    padding: 0 12px 0 4px;
+    user-select: none;
+  }
+
+  .ab-bar__hint kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 2px;
+  }
+
+  @media (max-width: 540px) {
+    .ab-bar__label, .ab-bar__hint { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ab-bar" role="group" aria-label="A/B comparison toggle">
+  <span class="ab-bar__label">/software</span>
+  <button class="ab-bar__btn" id="ab-a" aria-pressed="true" data-target="a">A · Current</button>
+  <button class="ab-bar__btn" id="ab-b" aria-pressed="false" data-target="b">B · Library</button>
+  <span class="ab-bar__hint">Press <kbd>A</kbd> / <kbd>B</kbd></span>
+</div>
+
+<div class="stage">
+  <iframe id="frame-a" src="/software" title="Current /software" aria-hidden="false" loading="eager"></iframe>
+  <iframe id="frame-b" src="/software-v2" title="Library pilot /software-v2" aria-hidden="true" loading="lazy"></iframe>
+</div>
+
+<script>
+  const btnA = document.getElementById('ab-a');
+  const btnB = document.getElementById('ab-b');
+  const frameA = document.getElementById('frame-a');
+  const frameB = document.getElementById('frame-b');
+
+  function show(target) {
+    const isA = target === 'a';
+    btnA.setAttribute('aria-pressed', isA ? 'true' : 'false');
+    btnB.setAttribute('aria-pressed', isA ? 'false' : 'true');
+    frameA.setAttribute('aria-hidden', isA ? 'false' : 'true');
+    frameB.setAttribute('aria-hidden', isA ? 'true' : 'false');
+  }
+
+  btnA.addEventListener('click', () => show('a'));
+  btnB.addEventListener('click', () => show('b'));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'a' || e.key === 'A') show('a');
+    if (e.key === 'b' || e.key === 'B') show('b');
+  });
+</script>
+
+</body>
+</html>

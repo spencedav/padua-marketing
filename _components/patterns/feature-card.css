@@ -1,0 +1,177 @@
+/* =============================================================================
+   PADUA-FEATURE-CARD — pattern
+   =============================================================================
+   Editorial feature card with icon (or numeric badge) + title + body + optional
+   footer link. Used in:
+     - /software "Better Quality / Value / Turnaround" trio
+     - /careers values section
+     - /who-we-are principles grid
+     - /services capability tiles
+
+   Visual: borrows WealthX's subtle-glow + soft-border treatment. Methodology
+   data-stage attribute drives the icon halo and hover glow color.
+   =========================================================================== */
+
+.padua-feature-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-paper);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  border: var(--glass-border-dark);
+  transition: transform var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+
+/* Soft methodology halo on hover (WealthX trick) */
+.padua-feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(60% 50% at 30% 0%, var(--m-glow, var(--discover-10)) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+  pointer-events: none;
+}
+
+.padua-feature-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--m-color, var(--discover)) 30%, transparent);
+}
+
+.padua-feature-card:hover::before {
+  opacity: 1;
+}
+
+/* Icon / badge slot */
+.padua-feature-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--m-glow, var(--discover-15));
+  color: var(--m-color, var(--discover));
+  margin-bottom: var(--space-2);
+}
+
+.padua-feature-card__icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+}
+
+/* Numbered variant (steps / counted features) */
+.padua-feature-card__icon--num {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Eyebrow above the title */
+.padua-feature-card__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--m-color, var(--compare));
+  margin: 0;
+}
+
+.padua-feature-card__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.padua-feature-card__body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-mid);
+  margin: 0;
+}
+
+.padua-feature-card__footer {
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+.padua-feature-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--m-color, var(--discover));
+  text-decoration: none;
+  transition: gap var(--duration-fast) var(--ease-out);
+}
+
+.padua-feature-card__link::after {
+  content: "→";
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.padua-feature-card__link:hover {
+  gap: var(--space-3);
+}
+
+.padua-feature-card__link:hover::after {
+  transform: translateX(2px);
+}
+
+/* Methodology data-stage variants */
+.padua-feature-card[data-stage="discover"]  { --m-color: var(--discover);  --m-glow: var(--discover-15); }
+.padua-feature-card[data-stage="compare"]   { --m-color: var(--compare);   --m-glow: var(--compare-15); }
+.padua-feature-card[data-stage="recommend"] { --m-color: var(--recommend); --m-glow: var(--recommend-15); }
+.padua-feature-card[data-stage="review"]    { --m-color: var(--review);    --m-glow: var(--review-15); }
+.padua-feature-card[data-stage="teal"]      { --m-color: var(--teal);      --m-glow: var(--teal-15); }
+
+/* Dark variant — for ink/spectrum backgrounds */
+.padua-feature-card--dark {
+  background: var(--glass-bg-ink);
+  border: var(--glass-border-light);
+}
+
+.padua-feature-card--dark .padua-feature-card__title { color: var(--text-on-dark); }
+.padua-feature-card--dark .padua-feature-card__body  { color: var(--text-on-dark-mid); }
+
+/* Featured variant — larger, more presence */
+.padua-feature-card--featured {
+  padding: var(--space-7);
+  background: linear-gradient(180deg, var(--m-glow, var(--discover-10)) 0%, transparent 100%), var(--glass-bg-paper);
+}
+
+.padua-feature-card--featured .padua-feature-card__title {
+  font-size: clamp(24px, 2.6vw, 32px);
+}
+
+/* Grid container for a typical feature-card layout */
+.padua-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .padua-feature-grid { grid-template-columns: 1fr; }
+  .padua-feature-card { padding: var(--space-5); }
+  .padua-feature-card--featured { padding: var(--space-6); }
+}

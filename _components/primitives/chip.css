@@ -1,0 +1,75 @@
+/* =============================================================================
+   PADUA-CHIP — primitive
+   =============================================================================
+   Compact text element with methodology coloring. Used for:
+     - Methodology stage labels in body content
+     - "X minutes read" indicators
+     - Step counters in process timelines
+     - Inline category tags
+
+   Differs from .padua-pill — chips are flatter, less interactive, more typographic.
+   Pills are for selectable/clickable items; chips are for labeling.
+   =========================================================================== */
+
+.padua-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--m-color, var(--compare));
+  padding: 0;
+}
+
+.padua-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+/* Variant: no dot (pure typographic eyebrow) */
+.padua-chip--plain::before { display: none; }
+
+/* Variant: numbered (step counter — uses ::before for the number) */
+.padua-chip--step {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.padua-chip--step::before {
+  content: attr(data-step);
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--m-color);
+  opacity: 1;
+}
+
+/* Methodology data-stage variants */
+.padua-chip[data-stage="discover"]  { --m-color: var(--discover); }
+.padua-chip[data-stage="compare"]   { --m-color: var(--compare); }
+.padua-chip[data-stage="recommend"] { --m-color: var(--recommend); }
+.padua-chip[data-stage="review"]    { --m-color: var(--review); }
+.padua-chip[data-stage="teal"]      { --m-color: var(--teal); }
+
+/* Subtle background variant (chip becomes a tiny pill-ish thing with bg) */
+.padua-chip--bg {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--m-color, var(--compare)) 12%, transparent);
+}
