@@ -1,61 +1,147 @@
 /* =============================================================================
-   PADUA TRIANGLE 3D — Three.js glass tetrahedron (v2 — no importmap, no addons)
+   PADUA TRIANGLE 3D — Three.js triangular pyramid, base-down, spinning
    =============================================================================
-   Auto-attaches to id="padua-tri3d". Self-contained: no importmap, no addons
-   (built-in env replaces RoomEnvironment). Wraps init in try/catch and writes
-   any error visibly into the mount so we can diagnose without dev tools.
+   A glass-tinted triangular pyramid sits flat on its base and rotates slowly
+   around the vertical axis. Each of the three side faces carries a methodology-
+   tinted label (Quality, Cost, Turnaround) painted onto a plane that hugs the
+   face, so labels rotate with the pyramid and present themselves in turn.
+
+   Self-contained: no importmap, no Three.js addons. Wraps init in try/catch
+   and writes any error visibly into the mount so failures are observable
+   without dev tools.
    =========================================================================== */
 
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js';
 
 const PADUA = {
-  discover:  0x4a308c,
-  compare:   0xab2178,
-  recommend: 0xeb2e4d,
-  review:    0xf59436,
-  yellow:    0xf5d534,
-  teal:      0x007282,
+  discover:  '#4a308c',
+  compare:   '#ab2178',
+  recommend: '#eb2e4d',
+  review:    '#f59436',
+  yellow:    '#f5d534',
+  teal:      '#007282',
+  ink:       '#16121f',
+  paper:     '#faf8f4',
 };
+
+const FACES = [
+  { stage: 'discover',  color: PADUA.discover,  text: 'Quality' },
+  { stage: 'compare',   color: PADUA.compare,   text: 'Cost' },
+  { stage: 'recommend', color: PADUA.recommend, text: 'Turnaround' },
+];
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* -----------------------------------------------------------------------------
-   Build a simple PMREM environment from a generated cube texture.
-   Replaces RoomEnvironment so we don't need addons / importmap.
+   Small studio-IBL environment, built from a 6-face cube of canvas swatches.
+   Replaces RoomEnvironment so we don't need addons.
    --------------------------------------------------------------------------- */
 function buildEnvironment(renderer) {
-  // 6 face colors approximating a soft studio: warm key, cool fill, dim floor/ceiling
-  const faces = [
-    '#fffaf0', // +X (warm key, right)
-    '#eef2f7', // -X (cool fill, left)
-    '#ffffff', // +Y (top, sky)
-    '#3a2f4e', // -Y (floor, warm ink)
-    '#fdf5ec', // +Z (front, warm)
-    '#dfe5ee', // -Z (back, cool)
-  ];
+  const faces = ['#fffaf0','#eef2f7','#ffffff','#3a2f4e','#fdf5ec','#dfe5ee'];
   const size = 16;
-  const faceTextures = faces.map((c) => {
+  const imgs = faces.map((c) => {
     const cv = document.createElement('canvas');
     cv.width = cv.height = size;
     const ctx = cv.getContext('2d');
     ctx.fillStyle = c;
     ctx.fillRect(0, 0, size, size);
-    return new THREE.CanvasTexture(cv);
+    return cv;
   });
-  const cubeRT = new THREE.WebGLCubeRenderTarget(size);
-  const cubeScene = new THREE.Scene();
-  // Use a CubeTexture built from the 6 canvases
-  const cubeTex = new THREE.CubeTexture(faceTextures.map((t) => t.image));
+  const cubeTex = new THREE.CubeTexture(imgs);
   cubeTex.needsUpdate = true;
   cubeTex.colorSpace = THREE.SRGBColorSpace;
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envTex = pmrem.fromCubemap(cubeTex).texture;
   pmrem.dispose();
-  faceTextures.forEach((t) => t.dispose());
-  cubeRT.dispose();
-  cubeScene.clear();
   return envTex;
+}
+
+/* -----------------------------------------------------------------------------
+   Build a triangular-pyramid BufferGeometry centered on origin, base on the
+   y = -h/2 plane, apex at y = +h/2.
+   --------------------------------------------------------------------------- */
+function buildPyramidGeometry(baseRadius, height) {
+  const half = height / 2;
+  // 3 base vertices, 120° apart, on the y = -half plane
+  const b0 = [ baseRadius * Math.cos(0),                  -half, baseRadius * Math.sin(0) ];
+  const b1 = [ baseRadius * Math.cos((2 * Math.PI) / 3),  -half, baseRadius * Math.sin((2 * Math.PI) / 3) ];
+  const b2 = [ baseRadius * Math.cos((4 * Math.PI) / 3),  -half, baseRadius * Math.sin((4 * Math.PI) / 3) ];
+  const ap = [ 0,                                          half, 0 ];
+
+  // Side faces CCW seen from outside; base CCW seen from below
+  const positions = new Float32Array([
+    ...b0, ...b1, ...ap, // side A (between b0 and b1)
+    ...b1, ...b2, ...ap, // side B (between b1 and b2)
+    ...b2, ...b0, ...ap, // side C (between b2 and b0)
+    ...b0, ...b2, ...b1, // base
+  ]);
+
+  const geom = new THREE.BufferGeometry();
+  geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geom.computeVertexNormals();
+  return { geom, baseVerts: [b0, b1, b2], apex: ap };
+}
+
+/* -----------------------------------------------------------------------------
+   Render a chip-style label to a canvas: dot + uppercase text on a soft tinted
+   pill background. Returns a CanvasTexture.
+   --------------------------------------------------------------------------- */
+function makeLabelTexture(text, color) {
+  const W = 1024;
+  const H = 256;
+  const cv = document.createElement('canvas');
+  cv.width = W;
+  cv.height = H;
+  const ctx = cv.getContext('2d');
+
+  // Transparent canvas. Draw a pill in the lower portion.
+  ctx.clearRect(0, 0, W, H);
+
+  const pillW = 760;
+  const pillH = 140;
+  const pillX = (W - pillW) / 2;
+  const pillY = (H - pillH) / 2;
+  const r = pillH / 2;
+
+  // Soft background pill
+  ctx.beginPath();
+  ctx.moveTo(pillX + r, pillY);
+  ctx.lineTo(pillX + pillW - r, pillY);
+  ctx.arc(pillX + pillW - r, pillY + r, r, -Math.PI / 2, Math.PI / 2);
+  ctx.lineTo(pillX + r, pillY + pillH);
+  ctx.arc(pillX + r, pillY + r, r, Math.PI / 2, (3 * Math.PI) / 2);
+  ctx.closePath();
+
+  // Fill with translucent paper, then tinted border
+  ctx.fillStyle = 'rgba(250, 248, 244, 0.92)';
+  ctx.fill();
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = color;
+  ctx.stroke();
+
+  // Dot
+  const dotR = 14;
+  const dotX = pillX + 56;
+  const dotY = pillY + pillH / 2;
+  ctx.beginPath();
+  ctx.arc(dotX, dotY, dotR, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+
+  // Text
+  ctx.fillStyle = color;
+  ctx.font = '600 70px "Geist", system-ui, -apple-system, sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.letterSpacing = '6px';
+  ctx.fillText(text.toUpperCase(), dotX + 36, dotY + 4);
+
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
 }
 
 function showError(mount, message) {
@@ -89,7 +175,6 @@ function init() {
     showError(mount, 'WebGL not available');
     return;
   }
-
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -103,96 +188,150 @@ function init() {
 
   // -- scene + camera
   const scene = new THREE.Scene();
-  scene.background = null;
 
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  camera.position.set(0, 0.3, 5.4);
-  camera.lookAt(0, 0, 0);
+  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+  camera.position.set(0, 1.0, 6.2);
+  camera.lookAt(0, -0.1, 0);
 
-  // -- env
+  // -- IBL
   try {
     scene.environment = buildEnvironment(renderer);
   } catch (err) {
-    console.warn('[padua-tri3d] env build failed, continuing without IBL', err);
+    console.warn('[padua-tri3d] env build failed', err);
   }
 
-  // -- glass tetrahedron (flat-facet shading via non-indexed geometry)
-  const tetraGeom = new THREE.TetrahedronGeometry(1.6, 0).toNonIndexed();
-  tetraGeom.computeVertexNormals();
+  // -- pyramid geometry
+  const BASE_RADIUS = 1.7;
+  const HEIGHT = 2.55;
+  const { geom: pyrGeom, baseVerts, apex } = buildPyramidGeometry(BASE_RADIUS, HEIGHT);
 
+  // Glass-prism material (tinted enough that back faces don't show through)
   const glassMat = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
     metalness: 0,
-    roughness: 0.05,
-    transmission: 1.0,
+    roughness: 0.08,
+    transmission: 0.45,
     thickness: 1.2,
     ior: 1.5,
     attenuationColor: new THREE.Color(PADUA.discover),
-    attenuationDistance: 2.6,
+    attenuationDistance: 1.8,
     clearcoat: 1.0,
-    clearcoatRoughness: 0.06,
+    clearcoatRoughness: 0.08,
     envMapIntensity: 1.1,
     specularIntensity: 1.0,
     side: THREE.DoubleSide,
     flatShading: true,
   });
 
-  const tetra = new THREE.Mesh(tetraGeom, glassMat);
-  tetra.rotation.x = -0.35;
-  tetra.rotation.y = 0.6;
-  scene.add(tetra);
+  const pyramid = new THREE.Mesh(pyrGeom, glassMat);
 
-  // -- inner spectrum-tinted core (visible through the glass via refraction)
-  const coreGeom = new THREE.IcosahedronGeometry(0.55, 1);
-  const colors = [];
-  const palette = [
-    new THREE.Color(PADUA.discover),
-    new THREE.Color(PADUA.compare),
-    new THREE.Color(PADUA.recommend),
-    new THREE.Color(PADUA.review),
-    new THREE.Color(PADUA.yellow),
+  // Root group rotates; pyramid + labels are children, so they rotate together
+  const root = new THREE.Group();
+  root.add(pyramid);
+  scene.add(root);
+
+  /* ---------------------------------------------------------------------------
+     Place a labelled plane just outside each of the 3 side faces.
+     For each side face (b_i, b_{i+1}, apex):
+       - face center = centroid of the 3 vertices
+       - face normal = normalize cross product
+       - position the label plane at center + normal × offset
+       - orient the plane so its +Z aligns with the face normal
+     ----------------------------------------------------------------------- */
+  function v(a) { return new THREE.Vector3(a[0], a[1], a[2]); }
+
+  const sideTriples = [
+    [v(baseVerts[0]), v(baseVerts[1]), v(apex), FACES[0]],
+    [v(baseVerts[1]), v(baseVerts[2]), v(apex), FACES[1]],
+    [v(baseVerts[2]), v(baseVerts[0]), v(apex), FACES[2]],
   ];
-  const posAttr = coreGeom.attributes.position;
-  for (let i = 0; i < posAttr.count; i++) {
-    const y = posAttr.getY(i);
-    const t = Math.max(0, Math.min(1, (y + 0.55) / 1.1));
-    const seg = t * (palette.length - 1);
-    const idx = Math.floor(seg);
-    const next = Math.min(palette.length - 1, idx + 1);
-    const local = seg - idx;
-    const c = palette[idx].clone().lerp(palette[next], local);
-    colors.push(c.r, c.g, c.b);
-  }
-  coreGeom.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-  const coreMat = new THREE.MeshBasicMaterial({
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.9,
-  });
-  const core = new THREE.Mesh(coreGeom, coreMat);
-  core.scale.setScalar(0.55);
-  scene.add(core);
 
-  // -- lights: methodology-tinted points at the vertices + soft key from above
-  [
-    [PADUA.discover,  [ 1.8,  1.6,  1.4]],
-    [PADUA.compare,   [-1.8,  1.4,  0.8]],
-    [PADUA.recommend, [ 0.0, -1.8,  1.6]],
-    [PADUA.review,    [ 1.2,  0.4, -1.8]],
-  ].forEach(([color, pos]) => {
-    const light = new THREE.PointLight(color, 12, 8, 1.6);
-    light.position.set(pos[0], pos[1], pos[2]);
+  const LABEL_W = 1.6;
+  const LABEL_H = 0.4;
+  const NORMAL_OFFSET = 0.01; // hover just outside the face
+
+  sideTriples.forEach(([p1, p2, p3, face]) => {
+    const center = new THREE.Vector3().add(p1).add(p2).add(p3).multiplyScalar(1 / 3);
+
+    const edge1 = new THREE.Vector3().subVectors(p2, p1);
+    const edge2 = new THREE.Vector3().subVectors(p3, p1);
+    const normal = new THREE.Vector3().crossVectors(edge1, edge2).normalize();
+
+    // Position label plane at face center, slightly outward along normal
+    const planePos = center.clone().add(normal.clone().multiplyScalar(NORMAL_OFFSET));
+
+    // Build the plane geometry — make it face outward (default plane faces +Z)
+    const planeGeom = new THREE.PlaneGeometry(LABEL_W, LABEL_H);
+
+    const tex = makeLabelTexture(face.text, face.color);
+    const planeMat = new THREE.MeshBasicMaterial({
+      map: tex,
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+
+    const labelMesh = new THREE.Mesh(planeGeom, planeMat);
+    labelMesh.position.copy(planePos);
+
+    // Orient so plane normal matches face normal.
+    // PlaneGeometry's default normal is +Z. Use a quaternion to rotate +Z → face normal.
+    const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+    labelMesh.quaternion.copy(q);
+
+    // Position the label lower on the face (closer to the base edge)
+    // by sliding along the up-vector projected onto the face.
+    const faceUp = new THREE.Vector3(0, 1, 0).projectOnPlane(normal).normalize();
+    labelMesh.position.sub(faceUp.clone().multiplyScalar(HEIGHT * 0.18));
+
+    root.add(labelMesh);
+  });
+
+  /* ---------------------------------------------------------------------------
+     Lights: methodology-tinted point lights placed AT the world positions of
+     the three side-face centers but offset outward and high. Plus a soft key
+     and a small ambient.
+     ----------------------------------------------------------------------- */
+  [PADUA.discover, PADUA.compare, PADUA.recommend].forEach((hex, i) => {
+    const angle = (i / 3) * Math.PI * 2;
+    const light = new THREE.PointLight(new THREE.Color(hex), 14, 10, 1.7);
+    light.position.set(Math.cos(angle) * 3.2, 1.2, Math.sin(angle) * 3.2);
     scene.add(light);
   });
 
-  const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
-  keyLight.position.set(2, 4, 3);
-  scene.add(keyLight);
+  const key = new THREE.DirectionalLight(0xffffff, 1.3);
+  key.position.set(2, 4, 3);
+  scene.add(key);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.28));
 
-  const ambient = new THREE.AmbientLight(0xffffff, 0.25);
-  scene.add(ambient);
+  /* ---------------------------------------------------------------------------
+     Soft contact shadow under the base — a faded radial gradient plane on
+     the ground (just for grounding the pyramid visually).
+     ----------------------------------------------------------------------- */
+  const shadowCanvas = document.createElement('canvas');
+  shadowCanvas.width = shadowCanvas.height = 256;
+  const sctx = shadowCanvas.getContext('2d');
+  const grad = sctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grad.addColorStop(0, 'rgba(74,48,140,0.32)');
+  grad.addColorStop(0.6, 'rgba(74,48,140,0.10)');
+  grad.addColorStop(1, 'rgba(74,48,140,0)');
+  sctx.fillStyle = grad;
+  sctx.fillRect(0, 0, 256, 256);
+  const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+  shadowTex.colorSpace = THREE.SRGBColorSpace;
+  const shadowMat = new THREE.MeshBasicMaterial({
+    map: shadowTex,
+    transparent: true,
+    depthWrite: false,
+  });
+  const shadowPlane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), shadowMat);
+  shadowPlane.rotation.x = -Math.PI / 2;
+  shadowPlane.position.y = -HEIGHT / 2 - 0.01;
+  scene.add(shadowPlane);
 
-  // -- responsive sizing
+  /* ---------------------------------------------------------------------------
+     Sizing + parallax
+     ----------------------------------------------------------------------- */
   function resize() {
     const w = mount.clientWidth || 320;
     const h = mount.clientHeight || 320;
@@ -201,58 +340,48 @@ function init() {
     camera.updateProjectionMatrix();
   }
   resize();
-
   if (window.ResizeObserver) {
     new ResizeObserver(resize).observe(mount);
   } else {
     window.addEventListener('resize', resize);
   }
 
-  // -- mouse parallax
-  const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+  const pointer = { x: 0, tx: 0 };
   function onPointer(e) {
     const r = mount.getBoundingClientRect();
     const cx = r.left + r.width / 2;
-    const cy = r.top + r.height / 2;
     const isTouch = e.touches && e.touches[0];
     const x = isTouch ? e.touches[0].clientX : e.clientX;
-    const y = isTouch ? e.touches[0].clientY : e.clientY;
     pointer.tx = ((x - cx) / r.width) * 2;
-    pointer.ty = ((y - cy) / r.height) * 2;
   }
-  function resetPointer() {
-    pointer.tx = 0;
-    pointer.ty = 0;
-  }
+  function resetPointer() { pointer.tx = 0; }
   window.addEventListener('pointermove', onPointer, { passive: true });
   window.addEventListener('pointerleave', resetPointer, { passive: true });
 
-  // -- pause when off-screen
+  /* ---------------------------------------------------------------------------
+     Pause when off-screen
+     ----------------------------------------------------------------------- */
   let visible = true;
   if (window.IntersectionObserver) {
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-    }, { threshold: 0 }).observe(mount);
+    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0 }).observe(mount);
   }
 
-  // -- loop
+  /* ---------------------------------------------------------------------------
+     Animate: spin around Y, tiny parallax nudge based on mouse X
+     ----------------------------------------------------------------------- */
   const clock = new THREE.Clock();
   function tick() {
     requestAnimationFrame(tick);
     if (!visible) return;
-
     const dt = Math.min(0.05, clock.getDelta());
-    pointer.x += (pointer.tx - pointer.x) * 0.06;
-    pointer.y += (pointer.ty - pointer.y) * 0.06;
+
+    pointer.x += (pointer.tx - pointer.x) * 0.05;
 
     if (!reduceMotion) {
-      tetra.rotation.y += dt * 0.18;
-      tetra.rotation.x += dt * 0.06;
-      core.rotation.y -= dt * 0.22;
-      core.rotation.x += dt * 0.09;
+      root.rotation.y += dt * 0.45;
     }
-    tetra.rotation.y += pointer.x * 0.0025;
-    tetra.rotation.x += pointer.y * 0.0015;
+    // pointer nudges spin speed slightly (subtle, not draggable)
+    root.rotation.y += pointer.x * 0.004;
 
     renderer.render(scene, camera);
   }
