@@ -20,15 +20,17 @@
 import * as THREE from 'three';
 
 const PADUA = {
+  // Methodology accents (still used by the inner light per-face if desired)
   discover:  '#4a308c',
   compare:   '#ab2178',
   recommend: '#eb2e4d',
-  review:    '#f59436',
-  yellow:    '#f5d534',
-  teal:      '#007282',
-  ink:       '#16121f',
-  paper:     '#faf8f4',
-  glow:      '#ff3d8b',  // bright magenta — the inner-glow color
+
+  // Cube-aesthetic palette
+  faceBase:    '#1f1430',  // cool dark purple-blue base for every face
+  innerGlow:   '#ff3d8b',  // hot magenta-pink inner light
+  innerCore:   '#ffaadd',  // near-white pink core
+  edge:        '#ff88cc',  // edge highlight color
+  ink:         '#0a0612',
 };
 
 const FACE_ANGLE_OFFSET = -0.42;  // ~24° offset so hover lands a 3/4 view, not flat-on
@@ -114,66 +116,138 @@ function buildPyramidGeometry(baseRadius, height) {
   };
 }
 
-function makeFaceTexture(colorHex, text) {
+function makeFaceTexture(text) {
   const size = 1024;
   const cv = document.createElement('canvas');
   cv.width = cv.height = size;
   const ctx = cv.getContext('2d');
 
-  // Base fill
-  ctx.fillStyle = colorHex;
+  // 1. Cool dark purple-blue base
+  ctx.fillStyle = PADUA.faceBase;
   ctx.fillRect(0, 0, size, size);
 
-  // Subtle procedural grain — gives the face that dusty "rendered" texture
-  // we saw on the cube reference. Sparse, low-opacity speckle.
-  const grainCount = 2200;
+  // 2. Inner glow bleed-through (centered radial gradient, magenta tint)
+  const glow = ctx.createRadialGradient(size / 2, size * 0.55, 0, size / 2, size * 0.55, size * 0.55);
+  glow.addColorStop(0, 'rgba(255, 105, 180, 0.42)');
+  glow.addColorStop(0.4, 'rgba(255, 80, 160, 0.18)');
+  glow.addColorStop(1, 'rgba(255, 105, 180, 0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, size, size);
+
+  // 3. Cloudy wisps — soft blobs at random positions, magenta tinted
+  for (let i = 0; i < 22; i++) {
+    const x = Math.random() * size;
+    const y = size * 0.3 + Math.random() * size * 0.55;
+    const r = 60 + Math.random() * 110;
+    ctx.globalAlpha = 0.05 + Math.random() * 0.07;
+    const wisp = ctx.createRadialGradient(x, y, 0, x, y, r);
+    wisp.addColorStop(0, '#ff66cc');
+    wisp.addColorStop(1, 'rgba(255, 102, 204, 0)');
+    ctx.fillStyle = wisp;
+    ctx.fillRect(0, 0, size, size);
+  }
+  ctx.globalAlpha = 1;
+
+  // 4. Fine grain — dusty texture
+  const grainCount = 2500;
   for (let i = 0; i < grainCount; i++) {
     const x = Math.random() * size;
     const y = Math.random() * size;
-    const r = 0.6 + Math.random() * 1.2;
+    const r = 0.5 + Math.random() * 1.1;
     const v = Math.random();
-    ctx.globalAlpha = 0.06 + Math.random() * 0.06;
-    ctx.fillStyle = v > 0.5 ? '#ffffff' : '#000000';
+    ctx.globalAlpha = 0.05 + Math.random() * 0.06;
+    ctx.fillStyle = v > 0.6 ? '#ffaadd' : (v > 0.3 ? '#ffffff' : '#000000');
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
   }
   ctx.globalAlpha = 1;
 
-  // Soft vignette toward the base — reads as ambient occlusion from the
-  // ground shadow, anchors the visual weight.
-  const vig = ctx.createLinearGradient(0, size * 0.55, 0, size);
+  // 5. Bottom vignette — ambient occlusion at the base
+  const vig = ctx.createLinearGradient(0, size * 0.5, 0, size);
   vig.addColorStop(0, 'rgba(0,0,0,0)');
-  vig.addColorStop(1, 'rgba(0,0,0,0.18)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.38)');
   ctx.fillStyle = vig;
   ctx.fillRect(0, 0, size, size);
 
-  // Auto-fit label
+  // 6. Top edge highlight — faint specular along the apex
+  const topHi = ctx.createLinearGradient(0, 0, 0, size * 0.3);
+  topHi.addColorStop(0, 'rgba(255, 170, 220, 0.16)');
+  topHi.addColorStop(1, 'rgba(255, 170, 220, 0)');
+  ctx.fillStyle = topHi;
+  ctx.fillRect(0, 0, size, size);
+
+  // 7. Label — glowing, like backlit from inside
   const upper = text.toUpperCase();
-  const targetY = size * 0.82;
+  const targetY = size * 0.78;
   const maxWidth = size * 0.78;
-  let fontPx = 140;
-  ctx.fillStyle = '#ffffff';
+  let fontPx = 150;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  if ('letterSpacing' in ctx) ctx.letterSpacing = '4px';
+  if ('letterSpacing' in ctx) ctx.letterSpacing = '5px';
   do {
-    ctx.font = `600 ${fontPx}px "Geist", "Inter", system-ui, -apple-system, sans-serif`;
+    ctx.font = `400 ${fontPx}px "Geist", "Inter", system-ui, -apple-system, sans-serif`;
     if (ctx.measureText(upper).width <= maxWidth) break;
     fontPx -= 6;
   } while (fontPx > 60);
+
+  // Outer soft glow pass — broad blur
+  ctx.shadowColor = '#ff66cc';
+  ctx.shadowBlur = 40;
+  ctx.fillStyle = 'rgba(255, 200, 230, 0.55)';
   ctx.fillText(upper, size / 2, targetY);
 
+  // Inner brighter pass — tighter blur
+  ctx.shadowBlur = 16;
+  ctx.fillStyle = 'rgba(255, 240, 250, 0.95)';
+  ctx.fillText(upper, size / 2, targetY);
+  ctx.shadowBlur = 0;
+
   // Brand dot
-  const dotR = 11;
+  ctx.shadowColor = '#ffffff';
+  ctx.shadowBlur = 14;
   ctx.beginPath();
-  ctx.arc(size / 2, targetY - fontPx - 32, dotR, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255,255,255,0.92)';
+  ctx.arc(size / 2, targetY - fontPx - 30, 11, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.95)';
   ctx.fill();
+  ctx.shadowBlur = 0;
 
   const tex = new THREE.CanvasTexture(cv);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+/* -----------------------------------------------------------------------------
+   Build a cloudy noise canvas for the rotating interior wisp mesh.
+   --------------------------------------------------------------------------- */
+function makeCloudTexture() {
+  const size = 512;
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  const ctx = cv.getContext('2d');
+  ctx.clearRect(0, 0, size, size);
+
+  // Many soft magenta blobs at varying scale
+  for (let i = 0; i < 60; i++) {
+    const x = Math.random() * size;
+    const y = Math.random() * size;
+    const r = 30 + Math.random() * 110;
+    ctx.globalAlpha = 0.06 + Math.random() * 0.10;
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+    const tint = Math.random();
+    const color = tint > 0.6 ? '#ffaadd' : (tint > 0.3 ? '#ff66cc' : '#aa66ee');
+    grad.addColorStop(0, color);
+    grad.addColorStop(1, 'rgba(255, 102, 204, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+  }
+  ctx.globalAlpha = 1;
+
+  const tex = new THREE.CanvasTexture(cv);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 4;
   tex.needsUpdate = true;
   return tex;
 }
@@ -250,28 +324,32 @@ async function init() {
   const HEIGHT = 2.6;
   const { geom, sides } = buildPyramidGeometry(BASE_RADIUS, HEIGHT);
 
-  // Face materials use a slight transmission so the inner glow can leak
-  // through. higher roughness picks up the dusty grain.
-  const makeFaceMat = (colorHex, label) => new THREE.MeshPhysicalMaterial({
+  // Face materials: cool purple-blue glass with the texture (containing the
+  // baked-in glow + wisps + label) on top. Higher transmission so the inner
+  // emissive bleeds through. Sheen adds a velvety rim highlight along edges.
+  const makeFaceMat = (label) => new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: makeFaceTexture(colorHex, label),
+    map: makeFaceTexture(label),
     metalness: 0.0,
-    roughness: 0.55,
-    transmission: 0.12,
-    thickness: 0.5,
+    roughness: 0.45,
+    transmission: 0.35,
+    thickness: 0.9,
     ior: 1.45,
-    clearcoat: 0.55,
-    clearcoatRoughness: 0.4,
-    envMapIntensity: 0.85,
+    clearcoat: 0.5,
+    clearcoatRoughness: 0.3,
+    sheen: 0.8,
+    sheenRoughness: 0.5,
+    sheenColor: new THREE.Color(PADUA.edge),
+    envMapIntensity: 0.7,
     flatShading: true,
     side: THREE.DoubleSide,
   });
 
   const materials = [
-    makeFaceMat(PADUA.discover,  'Quality'),
-    makeFaceMat(PADUA.compare,   'Value'),
-    makeFaceMat(PADUA.recommend, 'Turnaround'),
-    new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.85, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
+    makeFaceMat('Quality'),
+    makeFaceMat('Value'),
+    makeFaceMat('Turnaround'),
+    new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.95, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
   ];
 
   const pyramid = new THREE.Mesh(geom, materials);
@@ -280,14 +358,41 @@ async function init() {
   root.add(pyramid);
   scene.add(root);
 
+  // Edge lines — emissive bright magenta along each face boundary. With
+  // bloom they read as luminous edges defining the form.
+  const edgeGeom = new THREE.EdgesGeometry(geom, 1);
+  const edgeMat = new THREE.LineBasicMaterial({
+    color: new THREE.Color(PADUA.edge),
+    transparent: true,
+    opacity: 0.65,
+  });
+  const edgeLines = new THREE.LineSegments(edgeGeom, edgeMat);
+  pyramid.add(edgeLines);
+
+  // Rotating cloud mesh — sits inside the pyramid. Additive blending so it
+  // adds light rather than blocks it. Rotates slowly for subtle "wisps
+  // moving inside the form" effect, visible through the transmissive faces.
+  const cloudGeom = new THREE.IcosahedronGeometry(0.95, 3);
+  const cloudMat = new THREE.MeshBasicMaterial({
+    map: makeCloudTexture(),
+    transparent: true,
+    opacity: 0.55,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const cloud = new THREE.Mesh(cloudGeom, cloudMat);
+  root.add(cloud);
+
   /* --------------------------------------------------------------------------
-     Inner emissive core — this is what bloom amplifies into a halo.
+     Inner emissive core — smaller + brighter than before so the bloom reads
+     as a CONCENTRATED point of light inside the pyramid (not a diffuse fill).
      -------------------------------------------------------------------------- */
-  const CORE_BASE_INTENSITY = 6.0;
-  const coreGeom = new THREE.IcosahedronGeometry(0.55, 2);
+  const CORE_BASE_INTENSITY = 10.0;
+  const coreGeom = new THREE.IcosahedronGeometry(0.32, 3);
   const coreMat = new THREE.MeshStandardMaterial({
     color: 0x000000,
-    emissive: new THREE.Color(PADUA.glow),
+    emissive: new THREE.Color(PADUA.innerCore),
     emissiveIntensity: CORE_BASE_INTENSITY,
     roughness: 1,
     metalness: 0,
@@ -295,9 +400,8 @@ async function init() {
   const core = new THREE.Mesh(coreGeom, coreMat);
   root.add(core);
 
-  // Methodology-tinted point light at the core's position — actually
-  // illuminates the inside of the faces.
-  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.glow), 14, 7, 1.4);
+  // Point light at the core — illuminates the inside of the faces from inside.
+  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 22, 7, 1.5);
   coreLight.position.set(0, 0, 0);
   root.add(coreLight);
 
@@ -310,36 +414,37 @@ async function init() {
   );
 
   /* --------------------------------------------------------------------------
-     External lights — a soft key + fill so the front-presenting face
-     reads cleanly. Kept dim so the inner emissive carries the visual mass.
+     External lights — kept very dim. The inner emissive is the primary
+     light source; these only add a touch of definition.
      -------------------------------------------------------------------------- */
-  const key = new THREE.DirectionalLight(0xffffff, 1.1);
+  const key = new THREE.DirectionalLight(0xffffff, 0.4);
   key.position.set(2.5, 4, 3);
   scene.add(key);
 
-  const fill = new THREE.DirectionalLight(0xffffff, 0.35);
+  const fill = new THREE.DirectionalLight(new THREE.Color('#8855dd'), 0.18);
   fill.position.set(-3, 1, 2);
   scene.add(fill);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+  scene.add(new THREE.AmbientLight(new THREE.Color('#3a2851'), 0.4));
 
   /* --------------------------------------------------------------------------
-     Soft contact shadow under the base.
+     Ground falloff — magenta-tinted glow under the base (the inner light
+     spills onto the floor). Not a hard shadow, just an ambient warm pool.
      -------------------------------------------------------------------------- */
   const shadowCv = document.createElement('canvas');
   shadowCv.width = shadowCv.height = 256;
   const sctx = shadowCv.getContext('2d');
   const grad = sctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-  grad.addColorStop(0, 'rgba(22,18,31,0.40)');
-  grad.addColorStop(0.55, 'rgba(22,18,31,0.12)');
-  grad.addColorStop(1, 'rgba(22,18,31,0)');
+  grad.addColorStop(0, 'rgba(255, 61, 139, 0.30)');
+  grad.addColorStop(0.4, 'rgba(255, 61, 139, 0.10)');
+  grad.addColorStop(1, 'rgba(255, 61, 139, 0)');
   sctx.fillStyle = grad;
   sctx.fillRect(0, 0, 256, 256);
   const shadowTex = new THREE.CanvasTexture(shadowCv);
   shadowTex.colorSpace = THREE.SRGBColorSpace;
   const shadowPlane = new THREE.Mesh(
-    new THREE.PlaneGeometry(5.5, 5.5),
-    new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false }),
+    new THREE.PlaneGeometry(6, 6),
+    new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }),
   );
   shadowPlane.rotation.x = -Math.PI / 2;
   shadowPlane.position.y = -HEIGHT / 2 - 0.01;
@@ -368,9 +473,9 @@ async function init() {
     composer.addPass(new RenderPass(scene, camera));
     bloomPass = new UnrealBloomPass(
       new THREE.Vector2(mount.clientWidth || 320, mount.clientHeight || 320),
-      0.95,   // strength
-      0.7,    // radius
-      0.08    // threshold — anything brighter than this glows
+      0.6,    // strength — lower because the dark bg already amplifies perceived brightness
+      0.85,   // radius — wider spread for that hazy halo
+      0.25    // threshold — only the bright bits (core, edges, text glow) bloom
     );
     composer.addPass(bloomPass);
     composer.addPass(new OutputPass());
@@ -467,10 +572,11 @@ async function init() {
     // Decay the click-flash and apply it to emissive + bloom
     flash *= 0.92;
     if (flash < 0.001) flash = 0;
-    coreMat.emissiveIntensity = CORE_BASE_INTENSITY * (1 + flash * 2.2);
-    coreLight.intensity = 14 * (1 + flash * 2.0);
+    const breathe = !reduceMotion ? (Math.sin(clock.elapsedTime * 1.2) * 0.08 + 1) : 1;
+    coreMat.emissiveIntensity = CORE_BASE_INTENSITY * breathe * (1 + flash * 1.8);
+    coreLight.intensity = 22 * breathe * (1 + flash * 1.6);
     if (bloomPass) {
-      bloomPass.strength = 0.95 + flash * 0.6;
+      bloomPass.strength = 0.6 * breathe + flash * 0.5;
     }
 
     if (targetY !== null) {
@@ -483,6 +589,11 @@ async function init() {
     // Counter-spin the core slightly for visual life
     core.rotation.y -= dt * 0.6;
     core.rotation.x += dt * 0.3;
+
+    // Cloud spins slower than the core and the pyramid for that lazy-wisp feel
+    cloud.rotation.y += dt * 0.18;
+    cloud.rotation.x += dt * 0.07;
+    cloud.rotation.z -= dt * 0.04;
 
     if (composer) composer.render();
     else renderer.render(scene, camera);

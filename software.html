@@ -395,11 +395,19 @@ h2.section-title em {
    UNATTAINABLE TRIANGLE — signature brand moment
    ===================================================================== */
 .triangle-section {
-  background: var(--paper-warm);
+  background:
+    radial-gradient(circle at 75% 50%, rgba(255, 61, 139, 0.10) 0%, transparent 55%),
+    radial-gradient(circle at 25% 100%, rgba(74, 48, 140, 0.18) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0612 0%, #14101e 100%);
+  color: var(--text-on-dark);
   padding: 110px 32px 90px;
   position: relative;
   overflow: hidden;
 }
+.triangle-section .eyebrow { color: var(--compare); }
+.triangle-section .triangle-lede { color: rgba(255, 255, 255, 0.72); }
+.triangle-section h2.section-title { color: #ffffff; }
+.triangle-section h2.section-title em { color: rgba(255, 255, 255, 0.85); }
 .triangle-section::before {
   content: "";
   position: absolute; top: -20%; left: 50%;
@@ -449,10 +457,10 @@ h2.section-title em {
   align-items: center;
   padding: 20px 24px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.65);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(22, 18, 31, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 4px solid var(--m-color, var(--discover));
   color: inherit;
   text-decoration: none;
@@ -467,9 +475,11 @@ h2.section-title em {
 .triangle-panel__item.is-active,
 .triangle-panel__item:focus-visible {
   transform: translateX(6px);
-  background: white;
+  background: rgba(255, 255, 255, 0.08);
   border-color: var(--m-color);
-  box-shadow: 0 16px 40px -20px color-mix(in srgb, var(--m-color, var(--discover)) 60%, transparent);
+  box-shadow:
+    0 0 40px -8px color-mix(in srgb, var(--m-color, var(--discover)) 55%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--m-color, var(--discover)) 25%, transparent);
   outline: none;
 }
 
@@ -497,14 +507,14 @@ h2.section-title em {
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.15;
-  color: var(--text-dark);
+  color: #ffffff;
 }
 
 .triangle-panel__desc {
   font-family: var(--font-body);
   font-size: 14.5px;
   line-height: 1.5;
-  color: var(--text-mid);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 /* ---- 3D mount ---- */
@@ -519,15 +529,16 @@ h2.section-title em {
 .triangle-3d-stage::before {
   content: "";
   position: absolute;
-  inset: -8%;
+  inset: -15%;
   z-index: 0;
   background: radial-gradient(circle at 50% 50%,
-    rgba(22, 18, 31, 0.18) 0%,
-    rgba(22, 18, 31, 0.06) 35%,
-    transparent 70%);
+    rgba(255, 61, 139, 0.14) 0%,
+    rgba(255, 61, 139, 0.05) 30%,
+    rgba(74, 48, 140, 0.02) 60%,
+    transparent 80%);
   pointer-events: none;
   border-radius: 50%;
-  filter: blur(8px);
+  filter: blur(24px);
 }
 .triangle-3d-stage > * { position: relative; z-index: 1; }
 #padua-tri3d {
