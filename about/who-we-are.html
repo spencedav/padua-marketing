@@ -466,10 +466,8 @@ h2.section-title {
   width: 100%;
   height: auto;
   max-width: 480px;
-  /* mix-blend-mode: multiply makes the image's white/light background fade
-     into whatever's behind it (page bg + halo) — the illustration's colored
-     content (text + central sphere) reads as cut out instead of pasted on. */
-  mix-blend-mode: multiply;
+  /* True transparency now comes from the cutout-images.js color-key
+     processing; mix-blend-mode no longer needed. */
   filter: drop-shadow(0 14px 32px rgba(22,18,31,0.10));
 }
 .feature-block.why .feature-art { --art-tint: var(--discover); }
@@ -971,7 +969,7 @@ h2.section-title {
   <div class="container">
     <div class="feature-block why">
       <div class="feature-art">
-        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/69363dff23a85b83ba6c2f65_0da60cacc5f7165fed6b8103cdc2ef03_our-why-2x.png" alt="Padua's Our Why illustration — the motivation behind everything we do">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/69363dff23a85b83ba6c2f65_0da60cacc5f7165fed6b8103cdc2ef03_our-why-2x.png" alt="Padua's Our Why illustration — the motivation behind everything we do" crossorigin="anonymous" data-cutout>
       </div>
       <div class="feature-content">
         <div class="eyebrow why-eb">Our Why</div>
@@ -991,7 +989,7 @@ h2.section-title {
   <div class="container">
     <div class="feature-block how alt">
       <div class="feature-art">
-        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/693667d840442f25e9d46d59_padua-how-2x.png" alt="Padua How illustration — our operating model">
+        <img src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/693667d840442f25e9d46d59_padua-how-2x.png" alt="Padua How illustration — our operating model" crossorigin="anonymous" data-cutout>
       </div>
       <div class="feature-content">
         <div class="eyebrow how-eb">Padua How</div>
@@ -1147,6 +1145,10 @@ h2.section-title {
     </p>
   </div>
 </footer>
+
+<!-- Strip the near-uniform background from the Why/How illustrations so they
+     read as cut out and float in the section bg. -->
+<script type="module" src="/_components/scripts/cutout-images.js"></script>
 
 </body>
 </html>
