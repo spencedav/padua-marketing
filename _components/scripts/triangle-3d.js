@@ -73,15 +73,16 @@ function buildPyramidGeometry(baseRadius, height) {
     ...b0, ...b1, ...b2, // base (outward = -Y; CCW viewed from below)
   ]);
 
-  // UVs aligned to the position order above:
-  //   base_i -> (0, 0)  bottom-left of canvas
-  //   apex   -> (0.5, 1) top-center of canvas
-  //   base_{i+1} -> (1, 0) bottom-right of canvas
+  // UVs aligned to the position order above. Note the U values: when each
+  // face is presented to the camera, base_i ends up on screen-RIGHT and
+  // base_{i+1} on screen-LEFT. To keep the canvas left→right reading on
+  // screen left→right (not mirrored), base_i takes u=1 and base_{i+1} takes
+  // u=0. The apex stays centered at u=0.5.
   const uvs = new Float32Array([
-    0, 0,   0.5, 1,   1, 0, // side 0
-    0, 0,   0.5, 1,   1, 0, // side 1
-    0, 0,   0.5, 1,   1, 0, // side 2
-    0, 0,   1, 0,     0.5, 1, // base (unused — base material has no map)
+    1, 0,   0.5, 1,   0, 0, // side 0
+    1, 0,   0.5, 1,   0, 0, // side 1
+    1, 0,   0.5, 1,   0, 0, // side 2
+    0, 0,   1, 0,    0.5, 1, // base (unused — base material has no map)
   ]);
 
   const geom = new THREE.BufferGeometry();
@@ -173,9 +174,9 @@ function init() {
 
   // -- scene + camera
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-  camera.position.set(0, 1.1, 6.0);
-  camera.lookAt(0, -0.1, 0);
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  camera.position.set(0, 1.5, 6.4);
+  camera.lookAt(0, -0.2, 0);
 
   try {
     scene.environment = buildEnvironment(renderer);
@@ -199,42 +200,33 @@ function init() {
     cv.width = cv.height = size;
     const ctx = cv.getContext('2d');
 
-    // Background: full bleed in the face color so even the bits outside the
-    // triangle (which the GPU never samples) match — keeps mips clean.
+    // Solid face color, no inner highlight — cleaner read.
     ctx.fillStyle = colorHex;
     ctx.fillRect(0, 0, size, size);
 
-    // Add a subtle inner glow so the face has some shading variation
-    const grad = ctx.createRadialGradient(size * 0.5, size * 0.7, size * 0.05, size * 0.5, size * 0.7, size * 0.7);
-    grad.addColorStop(0, 'rgba(255,255,255,0.18)');
-    grad.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, size, size);
-
-    // Auto-fit text — uppercase, white, centered low on the canvas where the
-    // UV triangle is widest. The face triangle in UV has width = (1 - v) at
-    // any v; we paint at v ≈ 0.28 (canvas y ≈ 0.72) where width ≈ 72% of the
-    // canvas. The font size shrinks if the text would overflow that width.
+    // Auto-fit text near the base of the triangle. The UV triangle has
+    // width = (1 - v); at canvas y ≈ 0.84 (v ≈ 0.16) the triangle is ~84%
+    // of the canvas wide, so the label can be big and still safely fit.
     const upper = text.toUpperCase();
-    const targetY = size * 0.72;
-    const maxWidth = size * 0.70;
-    let fontPx = 110;
+    const targetY = size * 0.82;
+    const maxWidth = size * 0.78;
+    let fontPx = 140;
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    if ('letterSpacing' in ctx) ctx.letterSpacing = '6px';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '4px';
     do {
       ctx.font = `600 ${fontPx}px "Geist", "Inter", system-ui, -apple-system, sans-serif`;
       if (ctx.measureText(upper).width <= maxWidth) break;
       fontPx -= 6;
-    } while (fontPx > 48);
+    } while (fontPx > 60);
     ctx.fillText(upper, size / 2, targetY);
 
-    // Small dot above the text — matches the brand chip vocabulary
-    const dotR = 10;
+    // Brand dot above the label
+    const dotR = 11;
     ctx.beginPath();
-    ctx.arc(size / 2, targetY - fontPx - 30, dotR, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.arc(size / 2, targetY - fontPx - 32, dotR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
     ctx.fill();
 
     const tex = new THREE.CanvasTexture(cv);
