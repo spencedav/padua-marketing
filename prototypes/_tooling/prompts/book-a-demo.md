@@ -10,9 +10,14 @@
 | `canonical-footer.html` ✅ already there | — |
 | `book-a-demo-page.html` | `padua-marketing/prototypes/reference/book-a-demo/page.html` |
 
-## After generation — TWO PLACEHOLDERS to replace
+## HubSpot integration — uses existing live-site Meetings embed (no new setup)
 
-Form has `{PORTAL_ID}` and `{FORM_GUID}` placeholders. After you create the Demo Request form in HubSpot, send me both values and I'll swap them in before deploying.
+The current Padua /book-a-demo page on Webflow uses HubSpot's Meetings widget for Brett Canning's calendar:
+```
+https://meetings.hubspot.com/brett-canning?embed=true
+```
+
+Visitors pick a time directly in Brett's calendar — like Calendly but via HubSpot. We reuse this exact embed. **No HubSpot setup, no new form to create.** Bookings continue to flow into Brett's calendar + HubSpot CRM exactly as today.
 
 ## Generation prompt — paste into a new chat
 
@@ -79,42 +84,27 @@ PROPOSED STRUCTURE:
    - Two-column layout: left = "what you'll see" bullets + trust line, 
      right = the form (or full-width centered form with bullets above)
 
-3. Demo request form — HUBSPOT FORM SUBMISSION
+3. Demo booking widget — HUBSPOT MEETINGS EMBED (reuses Brett Canning's 
+   existing calendar — same as the current live site)
 
-   Use this EXACT form opening tag (DO NOT change the placeholders — 
-   they will be replaced post-generation):
+   Use this EXACT embed block (matches the current live-site setup):
 
-   <form 
-     class="demo-form" 
-     action="https://forms.hubspot.com/uploads/form/v2/{PORTAL_ID}/{FORM_GUID}" 
-     method="POST" 
-     enctype="multipart/form-data">
+   <div class="meetings-iframe-container" 
+        data-src="https://meetings.hubspot.com/brett-canning?embed=true">
+   </div>
+   <script type="text/javascript" 
+           src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js">
+   </script>
 
-   Form fields (use these EXACT name attributes — HubSpot expects them):
+   The HubSpot Meetings widget renders an inline calendar inside the 
+   div. Visitors pick a time slot and book directly. The booking lands 
+   in Brett Canning's calendar + the HubSpot CRM as a new contact event.
 
-   - First name: <input name="firstname" type="text" required>
-   - Last name: <input name="lastname" type="text" required>
-   - Work email: <input name="email" type="email" required>
-   - Business / Licensee: <input name="company" type="text" required>
-   - I am a (select): 
-     <select name="role_or_audience" required>
-       <option value="">Select one</option>
-       <option value="Adviser">Adviser</option>
-       <option value="Licensee">Licensee / Dealer Group</option>
-       <option value="Platform or Super Fund">Platform or Super Fund</option>
-       <option value="Investment Manager">Investment Manager / Fund Administrator</option>
-       <option value="Mortgage Broker">Mortgage Broker</option>
-       <option value="Other">Other</option>
-     </select>
-   - What would you like to discuss (optional): 
-     <textarea name="message"></textarea>
-   - Submit: <button type="submit" class="btn btn-spectrum">Request a demo</button>
-
-   HubSpot returns its default thank-you redirect after submission.
-
-   Style the form fields to match v3 prototype's .contact-form pattern 
-   (the dark-background, rounded-corner version on a spectrum-gradient 
-   section).
+   Style the surrounding wrapper to match the v3 prototype aesthetic:
+   - Rounded card container around the embed
+   - Subtle drop-shadow
+   - Spectrum-gradient accent or methodology-color background behind
+   - Min-height ~700px (the widget is tall)
 
 4. Trust strip at bottom (optional but recommended):
    - "100% Australian onshore"
@@ -143,12 +133,11 @@ OUTPUT REQUIREMENTS:
 - All internal hrefs use real URLs
 
 VERIFY BEFORE OUTPUT:
-- Form action contains the literal placeholders {PORTAL_ID} and 
-  {FORM_GUID} (not real values)
-- Form field name attributes are HubSpot-standard
-- "I am a" dropdown has the 6 options listed above (no inventions)
+- HubSpot Meetings widget data-src is exactly:
+  https://meetings.hubspot.com/brett-canning?embed=true
+- The MeetingsEmbedCode.js script tag is included
 - No invented features, demo lengths, or guarantees
 - No active nav class
 ````
 
-Save as `padua-marketing/book-a-demo.html` and tell me. Send the HubSpot Portal ID + Form GUID with it and I'll swap the placeholders before deploying.
+Save as `padua-marketing/book-a-demo.html` and tell me — no extra HubSpot config needed since we're reusing Brett's existing calendar widget.

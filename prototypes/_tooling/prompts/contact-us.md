@@ -10,15 +10,14 @@
 | `canonical-footer.html` ✅ already there | — |
 | `contact-us-page.html` | `padua-marketing/prototypes/reference/contact-us/page.html` |
 
-## After generation — TWO PLACEHOLDERS to replace
+## HubSpot integration — uses existing live-site iframe (no new setup)
 
-The generated form will have placeholders `{PORTAL_ID}` and `{FORM_GUID}` in the `<form action="...">` URL. After you create the Contact form in HubSpot:
+The current Padua /contact-us page on Webflow uses HubSpot's iframe form embed:
+```
+https://share.hsforms.com/1cldVqo2QQj-MogO67ZkVqgbxqnx
+```
 
-1. Note your HubSpot **Portal ID** (e.g., `26442345` — appears in HubSpot URL or Account settings)
-2. Note the **Form GUID** for the Contact form (a long string like `abc12345-67de-89fg-h1ij-23klmn456789`)
-3. Replace both placeholders in the final HTML before deploying
-
-I (Claude Code) will do this swap mechanically when you give me the two values — just paste them when you say "saved" and I'll handle it.
+We reuse this exact iframe in the new page. **No HubSpot setup, no new form to create, no IDs to track.** Lead-flow continues to land in HubSpot CRM exactly as it does today.
 
 ## Generation prompt — paste into a new chat
 
@@ -99,34 +98,27 @@ PROPOSED STRUCTURE:
 
    RIGHT side: contact form (see below)
 
-4. Contact form — HUBSPOT FORM SUBMISSION
+4. Contact form — HUBSPOT IFRAME EMBED (reuses the existing live-site 
+   HubSpot form — no new HubSpot setup needed)
 
-   The form must submit to HubSpot's form submission endpoint. Use this 
-   EXACT form opening tag:
+   Use this EXACT iframe embed (the same HubSpot share-form URL the 
+   current Padua site uses):
 
-   <form 
-     class="contact-form" 
-     action="https://forms.hubspot.com/uploads/form/v2/{PORTAL_ID}/{FORM_GUID}" 
-     method="POST" 
-     enctype="multipart/form-data">
+   <div class="contact-form-wrap">
+     <iframe 
+       src="https://share.hsforms.com/1cldVqo2QQj-MogO67ZkVqgbxqnx" 
+       class="hubspot-iframe" 
+       title="Contact Padua Solutions"
+       style="width:100%; min-height:600px; border:0; display:block;"
+       loading="lazy"
+       allow="autoplay; encrypted-media">
+     </iframe>
+   </div>
 
-   These placeholders {PORTAL_ID} and {FORM_GUID} will be replaced with 
-   real values after HubSpot form is created. Do NOT change them in the 
-   output. Output them literally as shown.
-
-   Form fields (use these EXACT name attributes — HubSpot expects them):
-   - First name: <input name="firstname" type="text" required>
-   - Last name: <input name="lastname" type="text" required>
-   - Work email: <input name="email" type="email" required>
-   - Company / Licensee: <input name="company" type="text">
-   - Message: <textarea name="message" required></textarea>
-   - Submit: <button type="submit" class="btn btn-spectrum">Send message</button>
-
-   HubSpot returns its default thank-you redirect after submission. Don't 
-   add custom JS submit handling — let HubSpot handle it.
-
-   Style the form fields to match the v3 prototype's .contact-form 
-   styling (dark background, rounded corners, focus states).
+   Style the surrounding wrapper to match the v3 prototype's .contact-form 
+   container styling (dark background or rounded card around the iframe). 
+   The form inside the iframe is HubSpot-styled — that's expected and 
+   matches the current live experience.
 
 5. Footer (canonical)
 
@@ -148,13 +140,11 @@ OUTPUT REQUIREMENTS:
 - Email uses mailto: link (mailto:hello@paduasolutions.com.au)
 
 VERIFY BEFORE OUTPUT:
-- Form action contains the literal placeholders {PORTAL_ID} and 
-  {FORM_GUID} (not real values, not removed)
-- Form field name attributes are HubSpot-standard (firstname, lastname, 
-  email, company, message)
+- HubSpot iframe src URL is exactly:
+  https://share.hsforms.com/1cldVqo2QQj-MogO67ZkVqgbxqnx
 - No invented contacts — only Brett Canning (+ Samuel if certain)
 - No invented phone numbers beyond the real ones above
 - Active nav on Contact (not Advisers & Licensees, not About)
 ````
 
-Save as `padua-marketing/contact-us.html` and tell me. Send me the HubSpot Portal ID + Form GUID at the same time and I'll swap the placeholders before deploying.
+Save as `padua-marketing/contact-us.html` and tell me — no extra HubSpot config needed since we're using the existing iframe.
