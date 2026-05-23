@@ -1,0 +1,129 @@
+/* =============================================================================
+   PADUA-TEAM-CARD — pattern
+   =============================================================================
+   Headshot + name + optional role, used on /about/our-people and any future
+   "meet the team" sections (careers, partner profiles, etc.).
+
+   Structure:
+     <div class="padua-team-grid">
+       <article class="padua-team-card">
+         <div class="padua-team-card__photo">
+           <img src="..." alt="...">
+         </div>
+         <div class="padua-team-card__body">
+           <p class="padua-team-card__eyebrow">Co-founder</p>  (optional)
+           <h3 class="padua-team-card__name">Anne-Marie Esler</h3>
+           <p class="padua-team-card__role">Head of Concierge</p>  (optional)
+         </div>
+       </article>
+       ...
+     </div>
+
+   Grid variants:
+     (default)            — 4 columns desktop, 3/2/2 responsive
+     .padua-team-grid--5  — 5 columns desktop (for larger leadership teams)
+
+   Card variants:
+     .padua-team-card--founder  — subtle pink ring/glow for emphasis
+   =========================================================================== */
+
+.padua-team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3, 22px);
+  justify-items: center;
+}
+
+.padua-team-grid--5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.padua-team-card {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+}
+
+.padua-team-card__photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--radius-lg, 22px);
+  background: var(--paper-warm, #f1ede4);
+  border: 1px solid var(--line, rgba(22, 18, 31, 0.08));
+  box-shadow: 0 14px 28px -20px rgba(22, 18, 31, 0.18);
+  transition: transform var(--duration-base, 280ms) var(--ease-out, ease),
+              box-shadow var(--duration-base, 280ms) var(--ease-out, ease);
+}
+
+.padua-team-card:hover .padua-team-card__photo {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -20px rgba(22, 18, 31, 0.28);
+}
+
+.padua-team-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;  /* shift up so the face is the focal point */
+  transition: transform 600ms var(--ease-out, ease);
+}
+
+.padua-team-card:hover .padua-team-card__photo img {
+  transform: scale(1.03);
+}
+
+.padua-team-card__body {
+  padding: 14px 4px 0;
+  text-align: center;
+}
+
+.padua-team-card__eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--compare);
+  margin: 0 0 6px;
+}
+
+.padua-team-card__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+  color: var(--text-dark);
+  margin: 0;
+  font-variation-settings: "opsz" 32;
+}
+
+.padua-team-card__role {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--compare);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+/* Founder variant: subtle pink emphasis on the photo frame */
+.padua-team-card--founder .padua-team-card__photo {
+  border: 1px solid color-mix(in srgb, var(--compare) 22%, transparent);
+  box-shadow: 0 18px 36px -20px color-mix(in srgb, var(--compare) 35%, transparent);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .padua-team-grid,
+  .padua-team-grid--5 { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 767px) {
+  .padua-team-grid,
+  .padua-team-grid--5 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 479px) {
+  .padua-team-grid,
+  .padua-team-grid--5 { gap: 14px; }
+  .padua-team-card { max-width: 160px; }
+  .padua-team-card__name { font-size: 17px; }
+}

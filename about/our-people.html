@@ -48,6 +48,7 @@
 <link rel="stylesheet" href="/_components/patterns/methodology-pill.css">
 <link rel="stylesheet" href="/_components/patterns/partner-logo-grid.css">
 <link rel="stylesheet" href="/_components/patterns/feature-card.css">
+<link rel="stylesheet" href="/_components/patterns/team-card.css">
 <link rel="stylesheet" href="/_components/patterns/cta-banner.css">
 
 <style>
@@ -308,76 +309,8 @@ h2.section-title {
 
 .section-head { margin-bottom: 56px; }
 
-/* =====================================================================
-   TEAM CARDS (C3) — tightened: smaller cards, more per row, face-focused
-   ===================================================================== */
-.team-grid {
-  display: grid;
-  gap: 22px;
-  justify-items: center;
-}
-.team-grid-3 { grid-template-columns: repeat(4, 1fr); }
-.team-grid-4 { grid-template-columns: repeat(5, 1fr); }
-
-.team-card {
-  position: relative;
-  width: 100%;
-  max-width: 220px;
-}
-.team-card-photo {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: var(--paper-warm);
-  border: 1px solid var(--line);
-  box-shadow: 0 14px 28px -20px rgba(22,18,31,0.18);
-  transition: transform .35s ease, box-shadow .35s ease;
-}
-.team-card:hover .team-card-photo {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 40px -20px rgba(22,18,31,0.28);
-}
-.team-card-photo img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center 22%;  /* shift up so the face is the focal point */
-  transition: transform .6s ease;
-}
-.team-card:hover .team-card-photo img { transform: scale(1.03); }
-
-.team-card-body {
-  padding: 14px 4px 0;
-  text-align: center;
-}
-.team-card-eyebrow {
-  font-size: 10.5px; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--compare);
-  margin-bottom: 6px;
-}
-.team-card-name {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 1.15;
-  letter-spacing: -0.018em;
-  color: var(--text-dark);
-  font-variation-settings: "opsz" 32;
-}
-.team-card-role {
-  margin-top: 6px;
-  font-size: 13.5px;
-  color: var(--compare);
-  font-weight: 500;
-  letter-spacing: 0.005em;
-}
-
-/* Board: subtle "founder" highlight on first two */
-.team-card-founder .team-card-photo {
-  border: 1px solid rgba(171,33,120,0.22);
-  box-shadow: 0 22px 44px -22px rgba(171,33,120,0.28);
-}
+/* Team cards now come from _components/patterns/team-card.css (padua-team-grid,
+   padua-team-card). See its file for the API. */
 
 /* =====================================================================
    VALUES / CULTURE STRIP
@@ -520,8 +453,6 @@ h2.section-title {
    RESPONSIVE — Webflow breakpoints: 991, 767, 479
    ===================================================================== */
 @media (max-width: 991px) {
-  .team-grid-4 { grid-template-columns: repeat(3, 1fr); }
-  .team-grid-3 { grid-template-columns: repeat(3, 1fr); }
   .culture { grid-template-columns: 1fr; gap: 40px; }
   .footer-top { grid-template-columns: 1fr 1fr; }
   .section { padding: 80px 28px; }
@@ -538,12 +469,7 @@ h2.section-title {
   .careers-teaser { padding: 60px 22px 8px; }
   .cta-wrap { padding: 40px 22px 0; }
 }
-@media (max-width: 767px) {
-  .team-grid-4, .team-grid-3 { grid-template-columns: repeat(2, 1fr); }
-}
 @media (max-width: 479px) {
-  .team-grid-4, .team-grid-3 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .team-card { max-width: 160px; }
   .culture-points { grid-template-columns: 1fr; }
   .section { padding: 52px 18px; }
   .hero-team { padding: 56px 18px 64px; }
@@ -694,57 +620,57 @@ h2.section-title {
       <p class="section-lede">Our founders and board set the direction — and stay close to the work. They're the reason Padua is family-led, Kiama-headquartered, and 100% Australian onshore.</p>
     </div>
 
-    <div class="team-grid team-grid-3">
+    <div class="padua-team-grid">
 
       <!-- Anne-Marie Esler (co-founder) -->
-      <div class="team-card team-card-founder">
-        <div class="team-card-photo">
+      <div class="padua-team-card padua-team-card--founder">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699546a176bf5d4e8d486bc1_anne-marie.jpg" alt="Anne-Marie Esler, co-founder of Padua Solutions">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-eyebrow">Co-founder</div>
-          <div class="team-card-name">Anne-Marie Esler</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__eyebrow">Co-founder</div>
+          <div class="padua-team-card__name">Anne-Marie Esler</div>
         </div>
       </div>
 
       <!-- Matthew Esler (co-founder) -->
-      <div class="team-card team-card-founder">
-        <div class="team-card-photo">
+      <div class="padua-team-card padua-team-card--founder">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699517dc75824922aa5497b7_matthew-esler.jpg" alt="Matthew Esler, co-founder of Padua Solutions">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-eyebrow">Co-founder</div>
-          <div class="team-card-name">Matthew Esler</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__eyebrow">Co-founder</div>
+          <div class="padua-team-card__name">Matthew Esler</div>
         </div>
       </div>
 
       <!-- Gareth Turner -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699523b8048443520bcdfe10_gareth-turner.jpg" alt="Gareth Turner, board member at Padua Solutions">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Gareth Turner</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Gareth Turner</div>
         </div>
       </div>
 
       <!-- Peter O'Connell -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/6995392e34a6ed7d726f2e09_peter-oconnell.jpg" alt="Peter O'Connell, board member at Padua Solutions">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Peter O'Connell</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Peter O'Connell</div>
         </div>
       </div>
 
       <!-- Matt Sheehan -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69953ee30dbb7f90bf16eabd_matt-sheehan-2023.jpg" alt="Matt Sheehan, board member at Padua Solutions">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Matt Sheehan</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Matt Sheehan</div>
         </div>
       </div>
 
@@ -763,49 +689,49 @@ h2.section-title {
       <p class="section-lede">The leaders running concierge, sales, research and hypercare across the business. Every adviser working with us is supported by their teams.</p>
     </div>
 
-    <div class="team-grid team-grid-4">
+    <div class="padua-team-grid padua-team-grid--5">
 
       <!-- Helen Roelofsen -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69950dbf21bc65020713efab_helen-roelofsen.jpg" alt="Helen Roelofsen, Head of Concierge Services at Padua">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Helen Roelofsen</div>
-          <div class="team-card-role">Head of Concierge Services</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Helen Roelofsen</div>
+          <div class="padua-team-card__role">Head of Concierge Services</div>
         </div>
       </div>
 
       <!-- Brett Canning -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699553829289fe67d59523c8_brett-canning.jpg" alt="Brett Canning, Head of Sales & Relationship Management at Padua">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Brett Canning</div>
-          <div class="team-card-role">Head of Sales &amp; Relationship Management</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Brett Canning</div>
+          <div class="padua-team-card__role">Head of Sales &amp; Relationship Management</div>
         </div>
       </div>
 
       <!-- Rudy Haddad -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699555f26d98951e7f901b19_rudy-haddad.jpg" alt="Rudy Haddad, Head of Research, Data & Technical Advice at Padua">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Rudy Haddad</div>
-          <div class="team-card-role">Head of Research, Data &amp; Technical Advice</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Rudy Haddad</div>
+          <div class="padua-team-card__role">Head of Research, Data &amp; Technical Advice</div>
         </div>
       </div>
 
       <!-- Erin Egan -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69963d3531bc6e9dc9985058_erin-egan-crop.jpg" alt="Erin Egan, Head of HyperCare at Padua">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Erin Egan</div>
-          <div class="team-card-role">Head of HyperCare</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Erin Egan</div>
+          <div class="padua-team-card__role">Head of HyperCare</div>
         </div>
       </div>
 
@@ -824,38 +750,38 @@ h2.section-title {
       <p class="section-lede">A few of the people you'll meet across our delivery, technology and operations teams.</p>
     </div>
 
-    <div class="team-grid team-grid-3">
+    <div class="padua-team-grid">
 
       <!-- Simon Dawe -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/69954c938b3a30e2efeadc61_simon-dawe.jpg" alt="Simon Dawe, Delivery Executive at Padua">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Simon Dawe</div>
-          <div class="team-card-role">Delivery Executive</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Simon Dawe</div>
+          <div class="padua-team-card__role">Delivery Executive</div>
         </div>
       </div>
 
       <!-- Josh Marley -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699512e79b5ea6f88d78bf88_josh-marley.jpg" alt="Josh Marley, Padua team">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Josh Marley</div>
-          <div class="team-card-role">Padua Team</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Josh Marley</div>
+          <div class="padua-team-card__role">Padua Team</div>
         </div>
       </div>
 
       <!-- Amir Moghami -->
-      <div class="team-card">
-        <div class="team-card-photo">
+      <article class="padua-team-card">
+        <div class="padua-team-card__photo">
           <img src="https://cdn.prod.website-files.com/654b0db04fb918f226e44702/699635f08eb8418ba375d975_amir-moghami.jpg" alt="Amir Moghami, Padua team">
         </div>
-        <div class="team-card-body">
-          <div class="team-card-name">Amir Moghami</div>
-          <div class="team-card-role">Padua Team</div>
+        <div class="padua-team-card__body">
+          <div class="padua-team-card__name">Amir Moghami</div>
+          <div class="padua-team-card__role">Padua Team</div>
         </div>
       </div>
 

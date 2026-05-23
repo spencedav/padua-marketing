@@ -166,6 +166,28 @@ trio on /software, the values grid on /careers, the principles on /who-we-are.
 
 Variants: `--dark`, `--featured`. Numeric badge: `__icon--num`.
 
+### `padua-team-card`
+Headshot + name + optional role/eyebrow. Used on /about/our-people for
+Board, Leadership, and Spotlight sections.
+
+```html
+<div class="padua-team-grid">
+  <article class="padua-team-card padua-team-card--founder">
+    <div class="padua-team-card__photo">
+      <img src="…" alt="Anne-Marie Esler">
+    </div>
+    <div class="padua-team-card__body">
+      <p class="padua-team-card__eyebrow">Co-founder</p>
+      <div class="padua-team-card__name">Anne-Marie Esler</div>
+    </div>
+  </article>
+  …
+</div>
+```
+
+Grid variant: `padua-team-grid--5` for 5 columns (larger leadership teams).
+Card variant: `padua-team-card--founder` adds a subtle pink ring.
+
 ### `padua-cta`
 Full-width call-to-action banner — Padua's signature page closer. Ships with
 its own button primitives (`.padua-btn`, `.padua-btn--primary`, `.padua-btn--ghost`).
@@ -203,6 +225,7 @@ _components/
     ├── methodology-pill.css
     ├── partner-logo-grid.css
     ├── feature-card.css
+    ├── team-card.css
     └── cta-banner.css
 ```
 
