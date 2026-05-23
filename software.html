@@ -536,13 +536,14 @@ h2.section-title em {
 #padua-tri3d canvas {
   width: 100% !important;
   height: 100% !important;
-  /* CSS-layer transparency. Three.js's bloom + OutputPass pipeline forces
-     alpha=1 across the canvas no matter what we do at the WebGL layer.
-     mix-blend-mode: lighten composites the canvas onto the section bg
-     via per-channel max() — so pure-black canvas pixels become invisible
-     (section bg shows through) while the pyramid and its bloom halo
-     remain visible because they're brighter than the section bg. No box. */
-  mix-blend-mode: lighten;
+  /* Canvas is now genuinely transparent at the WebGL layer (no
+     postprocessing). CSS drop-shadow follows the alpha-defined pyramid
+     silhouette to produce the halo, since we no longer have bloom. */
+  filter:
+    drop-shadow(0 0 4px rgba(255, 220, 240, 0.6))
+    drop-shadow(0 0 18px rgba(255, 105, 180, 0.55))
+    drop-shadow(0 0 50px rgba(255, 61, 139, 0.35))
+    drop-shadow(0 0 110px rgba(106, 50, 180, 0.30));
 }
 
 @media (max-width: 900px) {

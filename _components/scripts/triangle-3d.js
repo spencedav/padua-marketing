@@ -301,24 +301,22 @@ async function init() {
     return;
   }
 
-  // Opaque canvas with pure-black clear color. The CSS mix-blend-mode:
-  // lighten on the canvas element makes any pure-black pixels invisible
-  // (because max(0, section_bg) = section_bg), so the pyramid + bloom halo
-  // appear to float in the section background with no visible box. This is
-  // a way more robust approach than fighting Three.js's postprocessing
-  // alpha pipeline, which forces alpha=1 in several places we can't reach.
+  // Transparent canvas — direct rendering, no postprocessing, so alpha is
+  // preserved exactly as the materials write it. The pyramid's faces are
+  // opaque (alpha=1), everything outside them is clear (alpha=0). Section
+  // background shows through the transparent areas.
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: false, powerPreference: 'high-performance' });
   } catch (err) {
     showError(mount, 'WebGL not available');
     return;
   }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 1.3; // a bit hotter since we no longer have bloom amplification
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.setClearColor(0x000000, 1.0); // pure black; CSS blend hides it
+  renderer.setClearColor(0x000000, 0); // fully transparent
 
   const canvas = renderer.domElement;
   canvas.style.display = 'block';
@@ -474,47 +472,14 @@ async function init() {
     Math.atan2(-s.normal.x, s.normal.z) + FACE_ANGLE_OFFSET
   );
 
-  /* --------------------------------------------------------------------------
-     EffectComposer + UnrealBloomPass — with alpha preservation. Two fixes
-     versus the default setup so the canvas stays transparent:
-       1. Render target uses RGBAFormat + HalfFloatType (so alpha survives
-          across passes at high precision).
-       2. The bloom pass's internal materialCopy (the additive composite
-          that combines bloom into the readBuffer) is patched to use a
-          custom blend equation: RGB additive, alpha = destination
-          (preserves the original scene's transparency).
-     -------------------------------------------------------------------------- */
-  let composer = null;
-  let bloomPass = null;
-  try {
-    const [
-      { EffectComposer },
-      { RenderPass },
-      { UnrealBloomPass },
-      { OutputPass },
-    ] = await Promise.all([
-      import('three/addons/postprocessing/EffectComposer.js'),
-      import('three/addons/postprocessing/RenderPass.js'),
-      import('three/addons/postprocessing/UnrealBloomPass.js'),
-      import('three/addons/postprocessing/OutputPass.js'),
-    ]);
-
-    const w0 = mount.clientWidth || 320;
-    const h0 = mount.clientHeight || 320;
-    composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-
-    bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(w0, h0),
-      1.4,   // strength
-      0.85,  // radius
-      0.30,  // threshold — only bright bits glow
-    );
-    composer.addPass(bloomPass);
-    composer.addPass(new OutputPass());
-  } catch (err) {
-    console.warn('[padua-tri3d] bloom unavailable, falling back to plain render', err);
-  }
+  // No EffectComposer / no UnrealBloomPass. Postprocessing was the source of
+  // the canvas-alpha contamination (OutputPass + internal bloom passes force
+  // alpha=1, creating the visible box). Direct renderer.render() preserves
+  // the materials' alpha exactly, so the canvas is genuinely transparent.
+  // The CSS drop-shadow on the canvas element handles the outer halo by
+  // following the canvas's alpha-defined silhouette.
+  const composer = null;
+  const bloomPass = null;
 
   function resize() {
     const w = mount.clientWidth || 320;
