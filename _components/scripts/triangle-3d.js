@@ -16,13 +16,14 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js';
 
 const PADUA = {
-  discover:  0x4a308c,
-  compare:   0xab2178,
-  recommend: 0xeb2e4d,
-  review:    0xf59436,
-  yellow:    0xf5d534,
-  teal:      0x007282,
-  ink:       0x16121f,
+  discover:  '#4a308c',
+  compare:   '#ab2178',
+  recommend: '#eb2e4d',
+  review:    '#f59436',
+  yellow:    '#f5d534',
+  teal:      '#007282',
+  ink:       '#16121f',
+  paper:     '#faf8f4',
 };
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -68,8 +69,19 @@ function buildPyramidGeometry(baseRadius, height) {
     ...b0, ...b2, ...b1, // base
   ]);
 
+  // UVs: for each triangle, the two base verts go to the bottom corners of the
+  // texture and the apex maps to the top center. This puts the canvas's
+  // bottom-center area (where we'll paint text) inside the visible triangle.
+  const uvs = new Float32Array([
+    0, 0,  1, 0,  0.5, 1, // side 0
+    0, 0,  1, 0,  0.5, 1, // side 1
+    0, 0,  1, 0,  0.5, 1, // side 2
+    0, 0,  1, 0,  0.5, 1, // base (unused — base material has no map)
+  ]);
+
   const geom = new THREE.BufferGeometry();
   geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geom.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
   geom.computeVertexNormals();
 
   // Material groups: each side gets its own material index; base is index 3
@@ -171,10 +183,67 @@ function init() {
   const HEIGHT = 2.6;
   const { geom, sides } = buildPyramidGeometry(BASE_RADIUS, HEIGHT);
 
-  // 4 materials — 3 spectrum side faces + 1 ink base. DoubleSide guards
-  // against any winding-order edge cases on the hand-built geometry.
-  const makeFaceMat = (color) => new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(color),
+  /* -----------------------------------------------------------------------
+     Paint a face texture: methodology-color background + uppercase white
+     label drawn near the canvas's bottom-center, where the visible triangle
+     lives in UV space. Returns a CanvasTexture.
+     --------------------------------------------------------------------- */
+  function makeFaceTexture(colorHex, text) {
+    const size = 1024;
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = size;
+    const ctx = cv.getContext('2d');
+
+    // Background: full bleed in the face color so even the bits outside the
+    // triangle (which the GPU never samples) match — keeps mips clean.
+    ctx.fillStyle = colorHex;
+    ctx.fillRect(0, 0, size, size);
+
+    // Add a subtle inner glow so the face has some shading variation
+    const grad = ctx.createRadialGradient(size * 0.5, size * 0.7, size * 0.05, size * 0.5, size * 0.7, size * 0.7);
+    grad.addColorStop(0, 'rgba(255,255,255,0.18)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, size, size);
+
+    // Auto-fit text — uppercase, white, centered low on the canvas where the
+    // UV triangle is widest. The face triangle in UV has width = (1 - v) at
+    // any v; we paint at v ≈ 0.28 (canvas y ≈ 0.72) where width ≈ 72% of the
+    // canvas. The font size shrinks if the text would overflow that width.
+    const upper = text.toUpperCase();
+    const targetY = size * 0.72;
+    const maxWidth = size * 0.70;
+    let fontPx = 110;
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '6px';
+    do {
+      ctx.font = `600 ${fontPx}px "Geist", "Inter", system-ui, -apple-system, sans-serif`;
+      if (ctx.measureText(upper).width <= maxWidth) break;
+      fontPx -= 6;
+    } while (fontPx > 48);
+    ctx.fillText(upper, size / 2, targetY);
+
+    // Small dot above the text — matches the brand chip vocabulary
+    const dotR = 10;
+    ctx.beginPath();
+    ctx.arc(size / 2, targetY - fontPx - 30, dotR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.fill();
+
+    const tex = new THREE.CanvasTexture(cv);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 8;
+    tex.needsUpdate = true;
+    return tex;
+  }
+
+  // 4 materials — 3 spectrum side faces (each a colored canvas texture with
+  // its label baked in) + 1 ink base. DoubleSide guards winding order.
+  const makeFaceMat = (colorHex, label) => new THREE.MeshPhysicalMaterial({
+    color: 0xffffff,
+    map: makeFaceTexture(colorHex, label),
     metalness: 0.0,
     roughness: 0.32,
     clearcoat: 0.7,
@@ -185,10 +254,10 @@ function init() {
   });
 
   const materials = [
-    makeFaceMat(PADUA.discover),   // face 0
-    makeFaceMat(PADUA.compare),    // face 1
-    makeFaceMat(PADUA.recommend),  // face 2
-    new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.8, metalness: 0, flatShading: true, side: THREE.DoubleSide }), // base
+    makeFaceMat(PADUA.discover,  'Quality'),
+    makeFaceMat(PADUA.compare,   'Cost'),
+    makeFaceMat(PADUA.recommend, 'Turnaround'),
+    new THREE.MeshStandardMaterial({ color: PADUA.ink, roughness: 0.8, metalness: 0, flatShading: true, side: THREE.DoubleSide }),
   ];
 
   const pyramid = new THREE.Mesh(geom, materials);
