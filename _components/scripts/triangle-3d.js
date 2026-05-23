@@ -135,66 +135,106 @@ function makeFaceTexture(spectrumHex, text) {
   cv.width = cv.height = size;
   const ctx = cv.getContext('2d');
 
-  // 1. Deep, cool-shifted base — face's spectrum color darkened toward black
-  //    so the bright bits (glow, label) read against a near-dark surface.
-  ctx.fillStyle = darken(spectrumHex, 0.32);
+  // --------------------------------------------------------------------------
+  // The cube reference has a CONCENTRATED bright sun-spot through a mostly
+  // dark, textured face. We build that up in layers: deep dark base → big
+  // shadow patches → cloudy mid-tone variation → concentrated bright sun
+  // behind the label → fine grain → strong corner vignette → label.
+  // --------------------------------------------------------------------------
+
+  // 1. Deep dark base — close to black with a hint of the spectrum hue
+  ctx.fillStyle = darken(spectrumHex, 0.18);
   ctx.fillRect(0, 0, size, size);
 
-  // 2. Inner glow bleed-through — radial gradient in the face's spectrum
-  //    color, brightest at the inner center. Reads as light pushing through
-  //    from inside the form.
-  const glow = ctx.createRadialGradient(size / 2, size * 0.55, 0, size / 2, size * 0.55, size * 0.55);
-  glow.addColorStop(0, `${spectrumHex}cc`);  // ~80% alpha at center
-  glow.addColorStop(0.4, `${spectrumHex}55`); // ~33% mid
-  glow.addColorStop(1, `${spectrumHex}00`);   // 0% edge
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, size, size);
-
-  // 3. Cloudy wisps — soft blobs at random positions, tinted toward the
-  //    face's spectrum color but with a hint of pink for warmth.
-  for (let i = 0; i < 22; i++) {
+  // 2. Big soft shadow blobs — large dark patches that vary the surface,
+  //    reading as wrinkled / cracked crystal rather than flat paint.
+  for (let i = 0; i < 14; i++) {
     const x = Math.random() * size;
-    const y = size * 0.3 + Math.random() * size * 0.55;
-    const r = 60 + Math.random() * 110;
-    ctx.globalAlpha = 0.05 + Math.random() * 0.07;
+    const y = Math.random() * size;
+    const r = 140 + Math.random() * 220;
+    ctx.globalAlpha = 0.25 + Math.random() * 0.30;
+    const blob = ctx.createRadialGradient(x, y, 0, x, y, r);
+    blob.addColorStop(0, '#000000');
+    blob.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = blob;
+    ctx.fillRect(0, 0, size, size);
+  }
+  ctx.globalAlpha = 1;
+
+  // 3. Mid-scale cloud wisps — random positions, tinted with the spectrum
+  //    color or a warm magenta. Creates visible "fog" inside the surface.
+  for (let i = 0; i < 32; i++) {
+    const x = Math.random() * size;
+    const y = Math.random() * size;
+    const r = 50 + Math.random() * 130;
+    ctx.globalAlpha = 0.07 + Math.random() * 0.11;
     const wisp = ctx.createRadialGradient(x, y, 0, x, y, r);
-    wisp.addColorStop(0, '#ff66cc');
-    wisp.addColorStop(1, 'rgba(255, 102, 204, 0)');
+    const tint = Math.random();
+    const wispColor = tint > 0.55 ? '#ff88cc' : (tint > 0.25 ? spectrumHex : '#ffaadd');
+    wisp.addColorStop(0, wispColor);
+    wisp.addColorStop(1, wispColor + '00');
     ctx.fillStyle = wisp;
     ctx.fillRect(0, 0, size, size);
   }
   ctx.globalAlpha = 1;
 
-  // 4. Fine grain — dusty texture
-  const grainCount = 2500;
-  for (let i = 0; i < grainCount; i++) {
+  // 4. CONCENTRATED inner sun — bright magenta-white spot behind where the
+  //    label will sit, falling off quickly. This is the "light source" you
+  //    see through the face, brightest in the middle.
+  const sunX = size * 0.5;
+  const sunY = size * 0.72;  // behind the label
+  const sun = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, size * 0.34);
+  sun.addColorStop(0, 'rgba(255, 240, 250, 0.95)');
+  sun.addColorStop(0.08, 'rgba(255, 200, 230, 0.85)');
+  sun.addColorStop(0.25, `${spectrumHex}dd`);
+  sun.addColorStop(0.5, `${spectrumHex}77`);
+  sun.addColorStop(1, `${spectrumHex}00`);
+  ctx.fillStyle = sun;
+  ctx.fillRect(0, 0, size, size);
+
+  // 5. Vertical streaks — subtle directional noise like brushed metal or
+  //    glass scratches. Sparse and faint.
+  for (let i = 0; i < 80; i++) {
     const x = Math.random() * size;
-    const y = Math.random() * size;
-    const r = 0.5 + Math.random() * 1.1;
-    const v = Math.random();
-    ctx.globalAlpha = 0.05 + Math.random() * 0.06;
-    ctx.fillStyle = v > 0.6 ? '#ffaadd' : (v > 0.3 ? '#ffffff' : '#000000');
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
+    const h = 40 + Math.random() * 200;
+    const y = Math.random() * (size - h);
+    const w = 0.6 + Math.random() * 1.2;
+    ctx.globalAlpha = 0.025 + Math.random() * 0.04;
+    ctx.fillStyle = Math.random() > 0.5 ? '#ffffff' : '#000000';
+    ctx.fillRect(x, y, w, h);
   }
   ctx.globalAlpha = 1;
 
-  // 5. Bottom vignette — ambient occlusion at the base
-  const vig = ctx.createLinearGradient(0, size * 0.5, 0, size);
-  vig.addColorStop(0, 'rgba(0,0,0,0)');
-  vig.addColorStop(1, 'rgba(0,0,0,0.38)');
+  // 6. Fine speckle grain — more visible than before
+  const grainCount = 4500;
+  for (let i = 0; i < grainCount; i++) {
+    const x = Math.random() * size;
+    const y = Math.random() * size;
+    const v = Math.random();
+    ctx.globalAlpha = 0.07 + Math.random() * 0.10;
+    ctx.fillStyle = v > 0.6 ? '#ffaadd' : (v > 0.3 ? '#ffffff' : '#000000');
+    ctx.fillRect(x, y, 1, 1);
+  }
+  ctx.globalAlpha = 1;
+
+  // 7. Strong corner vignette — radial dark falloff, makes the form's edges
+  //    feel dimmer than the center where the sun is.
+  const vig = ctx.createRadialGradient(size / 2, size / 2, size * 0.25, size / 2, size / 2, size * 0.78);
+  vig.addColorStop(0, 'rgba(0, 0, 0, 0)');
+  vig.addColorStop(0.6, 'rgba(0, 0, 0, 0.25)');
+  vig.addColorStop(1, 'rgba(0, 0, 0, 0.7)');
   ctx.fillStyle = vig;
   ctx.fillRect(0, 0, size, size);
 
-  // 6. Top edge highlight — faint specular along the apex
-  const topHi = ctx.createLinearGradient(0, 0, 0, size * 0.3);
-  topHi.addColorStop(0, 'rgba(255, 170, 220, 0.16)');
-  topHi.addColorStop(1, 'rgba(255, 170, 220, 0)');
+  // 8. Top edge highlight — narrow band of light along the upper edge, like
+  //    a specular catching the rim near the apex.
+  const topHi = ctx.createLinearGradient(0, 0, 0, size * 0.35);
+  topHi.addColorStop(0, 'rgba(255, 200, 230, 0.22)');
+  topHi.addColorStop(1, 'rgba(255, 200, 230, 0)');
   ctx.fillStyle = topHi;
   ctx.fillRect(0, 0, size, size);
 
-  // 7. Label — glowing, like backlit from inside
+  // 9. Label — multi-pass glow so it reads as backlit from the sun behind it
   const upper = text.toUpperCase();
   const targetY = size * 0.78;
   const maxWidth = size * 0.78;
@@ -208,24 +248,24 @@ function makeFaceTexture(spectrumHex, text) {
     fontPx -= 6;
   } while (fontPx > 60);
 
-  // Outer soft glow pass — broad blur
+  // Outer soft glow — broad blur, pink
   ctx.shadowColor = '#ff66cc';
-  ctx.shadowBlur = 40;
+  ctx.shadowBlur = 48;
   ctx.fillStyle = 'rgba(255, 200, 230, 0.55)';
   ctx.fillText(upper, size / 2, targetY);
 
-  // Inner brighter pass — tighter blur
-  ctx.shadowBlur = 16;
-  ctx.fillStyle = 'rgba(255, 240, 250, 0.95)';
+  // Inner crisp text — bright, almost white
+  ctx.shadowBlur = 14;
+  ctx.fillStyle = 'rgba(255, 245, 250, 0.98)';
   ctx.fillText(upper, size / 2, targetY);
   ctx.shadowBlur = 0;
 
-  // Brand dot
+  // Brand dot — small white dot above the text
   ctx.shadowColor = '#ffffff';
-  ctx.shadowBlur = 14;
+  ctx.shadowBlur = 16;
   ctx.beginPath();
-  ctx.arc(size / 2, targetY - fontPx - 30, 11, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255,255,255,0.95)';
+  ctx.arc(size / 2, targetY - fontPx - 32, 11, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
   ctx.fill();
   ctx.shadowBlur = 0;
 
@@ -398,23 +438,11 @@ async function init() {
      it into a diffuse halo. Sits inside the geometry where faces hide its
      literal shape; only its LIGHT bleeds through.
      -------------------------------------------------------------------------- */
-  // Without bloom postprocessing the emissive doesn't amplify, so we dial
-  // intensity back to a realistic "small bright dot" value.
-  const CORE_BASE_INTENSITY = 5.0;
-  const coreGeom = new THREE.IcosahedronGeometry(0.14, 3);
-  const coreMat = new THREE.MeshStandardMaterial({
-    color: 0x000000,
-    emissive: new THREE.Color(PADUA.innerCore),
-    emissiveIntensity: CORE_BASE_INTENSITY,
-    roughness: 1,
-    metalness: 0,
-  });
-  const core = new THREE.Mesh(coreGeom, coreMat);
-  root.add(core);
-
-  // Point light at the core — illuminates the inside of the faces. This is
-  // what gives the "lit from within" feel since we no longer have bloom.
-  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 26, 7, 1.6);
+  // No visible inner mesh — the user saw the small icosahedron as a "dot"
+  // showing through the glass. The inner-glow effect is now done entirely
+  // through the concentrated bright spot baked into each face's canvas
+  // texture, plus a point light that illuminates the faces from inside.
+  const coreLight = new THREE.PointLight(new THREE.Color(PADUA.innerGlow), 30, 8, 1.5);
   coreLight.position.set(0, 0, 0);
   root.add(coreLight);
 
@@ -551,12 +579,11 @@ async function init() {
     requestAnimationFrame(tick);
     const dt = Math.min(0.05, clock.getDelta());
 
-    // Decay the click-flash and apply it to emissive + point light
+    // Decay the click-flash and apply it to the point light
     flash *= 0.92;
     if (flash < 0.001) flash = 0;
     const breathe = !reduceMotion ? (Math.sin(clock.elapsedTime * 1.2) * 0.08 + 1) : 1;
-    coreMat.emissiveIntensity = CORE_BASE_INTENSITY * breathe * (1 + flash * 1.8);
-    coreLight.intensity = 26 * breathe * (1 + flash * 1.6);
+    coreLight.intensity = 30 * breathe * (1 + flash * 1.6);
 
     if (targetY !== null) {
       const delta = shortestDelta(root.rotation.y, targetY);
@@ -565,9 +592,7 @@ async function init() {
       root.rotation.y += dt * 0.38;
     }
 
-    // Counter-spin the core slightly for visual life
-    core.rotation.y -= dt * 0.6;
-    core.rotation.x += dt * 0.3;
+    // (no core mesh to counter-spin anymore)
 
     renderer.render(scene, camera);
   }
