@@ -536,8 +536,13 @@ h2.section-title em {
 #padua-tri3d canvas {
   width: 100% !important;
   height: 100% !important;
-  /* UnrealBloomPass now handles the glow. canvas clearColor matches the
-     section bg (#0a0612) so the canvas reads as continuous dark space. */
+  /* CSS-layer transparency. Three.js's bloom + OutputPass pipeline forces
+     alpha=1 across the canvas no matter what we do at the WebGL layer.
+     mix-blend-mode: lighten composites the canvas onto the section bg
+     via per-channel max() — so pure-black canvas pixels become invisible
+     (section bg shows through) while the pyramid and its bloom halo
+     remain visible because they're brighter than the section bg. No box. */
+  mix-blend-mode: lighten;
 }
 
 @media (max-width: 900px) {

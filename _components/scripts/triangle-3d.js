@@ -301,12 +301,15 @@ async function init() {
     return;
   }
 
-  // alpha:true + transparent clear → canvas is truly transparent. The bloom
-  // pass's materialCopy is patched below to preserve alpha so the halo doesn't
-  // turn transparent pixels opaque.
+  // Opaque canvas with pure-black clear color. The CSS mix-blend-mode:
+  // lighten on the canvas element makes any pure-black pixels invisible
+  // (because max(0, section_bg) = section_bg), so the pyramid + bloom halo
+  // appear to float in the section background with no visible box. This is
+  // a way more robust approach than fighting Three.js's postprocessing
+  // alpha pipeline, which forces alpha=1 in several places we can't reach.
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: false, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
   } catch (err) {
     showError(mount, 'WebGL not available');
     return;
@@ -315,7 +318,7 @@ async function init() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.setClearColor(0x000000, 0); // fully transparent
+  renderer.setClearColor(0x000000, 1.0); // pure black; CSS blend hides it
 
   const canvas = renderer.domElement;
   canvas.style.display = 'block';
@@ -498,11 +501,7 @@ async function init() {
 
     const w0 = mount.clientWidth || 320;
     const h0 = mount.clientHeight || 320;
-    const rt = new THREE.WebGLRenderTarget(w0, h0, {
-      type: THREE.HalfFloatType,
-      format: THREE.RGBAFormat,
-    });
-    composer = new EffectComposer(renderer, rt);
+    composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
     bloomPass = new UnrealBloomPass(
@@ -511,19 +510,6 @@ async function init() {
       0.85,  // radius
       0.30,  // threshold — only bright bits glow
     );
-
-    // ALPHA-PRESERVING blend: additive on RGB, keep destination alpha
-    if (bloomPass.materialCopy) {
-      bloomPass.materialCopy.blending = THREE.CustomBlending;
-      bloomPass.materialCopy.blendEquation = THREE.AddEquation;
-      bloomPass.materialCopy.blendSrc = THREE.OneFactor;
-      bloomPass.materialCopy.blendDst = THREE.OneFactor;
-      bloomPass.materialCopy.blendEquationAlpha = THREE.AddEquation;
-      bloomPass.materialCopy.blendSrcAlpha = THREE.ZeroFactor;
-      bloomPass.materialCopy.blendDstAlpha = THREE.OneFactor;
-      bloomPass.materialCopy.needsUpdate = true;
-    }
-
     composer.addPass(bloomPass);
     composer.addPass(new OutputPass());
   } catch (err) {
