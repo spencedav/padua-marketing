@@ -449,28 +449,30 @@ h2.section-title {
 
 .feature-art {
   position: relative;
-  border-radius: var(--radius-lg);
-  padding: 48px;
-  background: linear-gradient(135deg, var(--art-from, #f6f2eb) 0%, var(--art-to, #efe7da) 100%);
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 1 / 1;
+  /* Subtle methodology halo behind the illustration so it has atmosphere
+     without being framed in a hard rectangle. */
+  background:
+    radial-gradient(60% 55% at 50% 50%,
+      color-mix(in srgb, var(--art-tint, var(--discover)) 14%, transparent) 0%,
+      transparent 70%);
 }
 .feature-art img {
   width: 100%;
   height: auto;
-  max-width: 460px;
-  filter: drop-shadow(0 18px 36px rgba(22,18,31,0.12));
+  max-width: 480px;
+  /* mix-blend-mode: multiply makes the image's white/light background fade
+     into whatever's behind it (page bg + halo) — the illustration's colored
+     content (text + central sphere) reads as cut out instead of pasted on. */
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 14px 32px rgba(22,18,31,0.10));
 }
-.feature-block.why .feature-art {
-  --art-from: #f5edff;
-  --art-to: #ffe6f0;
-}
-.feature-block.how .feature-art {
-  --art-from: #fff3dc;
-  --art-to: #ffe2c4;
-}
+.feature-block.why .feature-art { --art-tint: var(--discover); }
+.feature-block.how .feature-art { --art-tint: var(--review); }
 .feature-content .eyebrow.why-eb { color: var(--discover); }
 .feature-content .eyebrow.how-eb { color: var(--review); }
 .feature-content h2 {
