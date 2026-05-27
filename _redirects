@@ -1,0 +1,3 @@
+# Cloudflare Workers Assets redirects
+# /concierge merged into /ready-set-go (two-track transition page)
+/concierge /ready-set-go 301

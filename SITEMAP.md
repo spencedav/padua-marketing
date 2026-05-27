@@ -9,8 +9,9 @@ Last updated: 2026-05-23. Pages live at `https://padua-marketing.spencer-davis-c
 ├── /services                          (Services overview)
 ├── /advisers-licensees                (Audience landing)
 │   ├── /software                      (Product suite — Padua Home / Discover / Compare / Recommend)
-│   ├── /concierge                     (Managed Transition Mgmt — exec summary)
-│   ├── /ready-set-go                  (Managed Transition Mgmt — full methodology)
+│   ├── /ready-set-go                  (Transition Mgmt — 4-stage methodology + two-track:
+│   │                                   self-managed OR Concierge done-for-you. /concierge
+│   │                                   merged in here 2026-05-28, 301-redirected.)
 │   └── /mortgage-brokers              (Audience-adjacent — features Padua WealthX)
 ├── /product-providers                 (Audience landing — Platforms, Super Funds, Investment Mgrs, Insurance, Consultants)
 ├── /about/
