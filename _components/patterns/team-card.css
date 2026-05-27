@@ -27,21 +27,25 @@
      .padua-team-card--founder  — subtle pink ring/glow for emphasis
    =========================================================================== */
 
+/* Centered flex-wrap with fixed-width cards. This keeps every card the same
+   size and packs them tightly, centered as a group — so a section with an
+   "odd" count (e.g. 5 people) doesn't leave an orphaned card hanging in a
+   column. Cards wrap and re-center automatically at any width. */
 .padua-team-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-3, 22px);
-  justify-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px 20px;
 }
 
-.padua-team-grid--5 {
-  grid-template-columns: repeat(5, 1fr);
-}
+/* --5 is now a no-op alias (flex auto-wraps); kept so existing markup that
+   uses it doesn't break. */
+.padua-team-grid--5 { }
 
 .padua-team-card {
   position: relative;
-  width: 100%;
-  max-width: 220px;
+  flex: 0 0 auto;
+  width: 168px;
 }
 
 .padua-team-card__photo {
@@ -112,18 +116,14 @@
   box-shadow: 0 18px 36px -20px color-mix(in srgb, var(--compare) 35%, transparent);
 }
 
-/* Responsive */
-@media (max-width: 991px) {
-  .padua-team-grid,
-  .padua-team-grid--5 { grid-template-columns: repeat(3, 1fr); }
-}
+/* Responsive — flex-wrap handles column count automatically; we only nudge
+   card size + gap so more fit per row on smaller screens. */
 @media (max-width: 767px) {
-  .padua-team-grid,
-  .padua-team-grid--5 { grid-template-columns: repeat(2, 1fr); }
+  .padua-team-grid { gap: 20px 16px; }
+  .padua-team-card { width: 150px; }
 }
 @media (max-width: 479px) {
-  .padua-team-grid,
-  .padua-team-grid--5 { gap: 14px; }
-  .padua-team-card { max-width: 160px; }
-  .padua-team-card__name { font-size: 17px; }
+  .padua-team-grid { gap: 18px 14px; }
+  .padua-team-card { width: 134px; }
+  .padua-team-card__name { font-size: 16px; }
 }
