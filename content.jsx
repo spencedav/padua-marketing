@@ -43,14 +43,13 @@ const NAV_AUDIENCES = [
       },
       {
         title: 'Modular Components',
-        subtitle: 'Standalone or part of Padua Portal',
-        cols: 2,
         items: [
-          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html', tag: 'both' },
-          { h: 'WealthX', p: 'Open banking', href: 'WealthX.html', tag: 'both' },
-          { h: 'WealthAI', p: 'Video & statements', tag: 'both', href: 'WealthAI.html' },
-          { h: 'WealthReview', p: 'Client dashboard', href: 'WealthReview.html', tag: 'both' },
-          { h: 'WealthData', p: 'Adviser insights', tag: 'standalone', href: 'WealthData.html' },
+          { type: 'label', label: 'Part of the Padua Portal' },
+          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html' },
+          { h: 'WealthX', p: 'Open banking', href: 'WealthX.html' },
+          { h: 'WealthAI', p: 'Video & statements', href: 'WealthAI.html' },
+          { type: 'label', label: 'Standalone' },
+          { h: 'WealthData', p: 'Adviser insights', href: 'WealthData.html' },
         ],
       },
       {
@@ -60,10 +59,6 @@ const NAV_AUDIENCES = [
           { h: 'Transition Management', p: 'End-to-end client transition support', href: 'Transition Management.html' },
         ],
       },
-    ],
-    legend: [
-      { tag: 'both', label: 'Works standalone & in Padua Portal' },
-      { tag: 'standalone', label: 'Standalone only' },
     ],
   },
   {
@@ -83,14 +78,13 @@ const NAV_AUDIENCES = [
       },
       {
         title: 'Modular Components',
-        subtitle: 'Standalone or part of Padua Portal',
-        cols: 2,
         items: [
-          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html', tag: 'both' },
-          { h: 'WealthX', p: 'Open banking', href: 'WealthX.html', tag: 'both' },
-          { h: 'WealthAI', p: 'Personalised member video', tag: 'both', href: 'WealthAI.html' },
-          { h: 'WealthReview', p: 'Member dashboard', href: 'WealthReview.html', tag: 'both' },
-          { h: 'WealthData', p: 'Behavioural insights', tag: 'standalone', href: 'WealthData.html' },
+          { type: 'label', label: 'Part of the Padua Portal' },
+          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html' },
+          { h: 'WealthX', p: 'Open banking', href: 'WealthX.html' },
+          { h: 'WealthAI', p: 'Personalised member video', href: 'WealthAI.html' },
+          { type: 'label', label: 'Standalone' },
+          { h: 'WealthData', p: 'Behavioural insights', href: 'WealthData.html' },
         ],
       },
       {
@@ -100,10 +94,6 @@ const NAV_AUDIENCES = [
           { h: 'Transition Management', p: 'End-to-end client transition support', href: 'Transition Management.html' },
         ],
       },
-    ],
-    legend: [
-      { tag: 'both', label: 'Works standalone & in Padua Portal' },
-      { tag: 'standalone', label: 'Standalone only' },
     ],
   },
   {
@@ -463,7 +453,6 @@ function PaduaNav({ variant = 'streams' }) {
             <a className="nav-mobile-link" href="Padua Portal.html" onClick={() => setMobileOpen(false)}>Portal overview</a>
             <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
             <a className="nav-mobile-link" href="WealthX.html" onClick={() => setMobileOpen(false)}>WealthX</a>
-            <a className="nav-mobile-link" href="WealthReview.html" onClick={() => setMobileOpen(false)}>WealthReview</a>
             <a className="nav-mobile-link" href="WealthAI.html" onClick={() => setMobileOpen(false)}>WealthAI</a>
             <a className="nav-mobile-link" href="WealthData.html" onClick={() => setMobileOpen(false)}>WealthData</a>
           </div>
