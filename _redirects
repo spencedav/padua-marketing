@@ -1,3 +1,30 @@
 # Cloudflare Workers Assets redirects
-# /concierge merged into /ready-set-go (two-track transition page)
-/concierge /ready-set-go 301
+# ---------------------------------------------------------------------------
+# Legacy pages were consolidated into their redesign equivalents pre-launch.
+# Every deleted URL has a 301 here (both the clean form and the .html form)
+# so external links + search-engine SEO stay intact.
+# ---------------------------------------------------------------------------
+
+# Booking + contact — both legacy entrypoints now land on the redesign
+# Contact page (which hosts the HubSpot meeting embed with Brett).
+/contact-us                                  /Contact            301
+/contact-us.html                             /Contact.html       301
+/book-a-demo                                 /Contact            301
+/book-a-demo.html                            /Contact.html       301
+/concierge                                   /Contact            301
+/ready-set-go                                /Contact            301
+/ready-set-go.html                           /Contact.html       301
+
+# Solution / product overview pages — fold into Padua Portal overview.
+/services                                    /Padua%20Portal     301
+/services.html                               /Padua%20Portal.html 301
+/mortgage-brokers                            /Padua%20Portal     301
+/mortgage-brokers.html                       /Padua%20Portal.html 301
+/what-constitutes-a-strategy-at-padua        /Padua%20Portal     301
+/what-constitutes-a-strategy-at-padua.html   /Padua%20Portal.html 301
+
+# About subdirectory — fold legacy /about/* into the redesign equivalents.
+/about/who-we-are                            /Who%20we%20are     301
+/about/who-we-are.html                       /Who%20we%20are.html 301
+/about/careers                               /Careers            301
+/about/careers.html                          /Careers.html       301
