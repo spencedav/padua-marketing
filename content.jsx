@@ -134,7 +134,8 @@ const NAV_ABOUT_SECTIONS = [
     title: 'Company',
     items: [
       { h: 'Who we are', p: 'Our mission and values', href: 'Who we are.html' },
-      { h: 'Our people' },
+      // No redesign "Our people" page yet → fall back to the existing page.
+      { h: 'Our people', href: 'about/our-people.html' },
       { h: 'Careers', href: 'Careers.html' },
     ],
   },
@@ -145,12 +146,8 @@ const NAV_ABOUT_SECTIONS = [
       { h: 'Resources', p: 'Whitepapers & reports', href: 'Resources.html' },
     ],
   },
-  {
-    title: 'Trust',
-    items: [
-      { h: 'Security & compliance', p: 'ISO 27001 certified' },
-    ],
-  },
+  // (Trust / "Security & compliance" section removed — no page exists for it
+  //  in either the redesign or the old site, so it had nowhere to link.)
 ];
 
 // Tiny chevron used on dropdown triggers
@@ -375,7 +372,7 @@ function PaduaNav({ variant = 'streams' }) {
                     <ul className="nav-dd-list">
                       {section.items.map((it) => (
                         <li key={it.h}>
-                          <a href="#" className="nav-dd-item" role="menuitem">
+                          <a href={it.href || '#'} className="nav-dd-item" role="menuitem">
                             <span className="nav-dd-h">{it.h}</span>
                             {it.p && <span className="nav-dd-p">{it.p}</span>}
                           </a>
@@ -395,8 +392,8 @@ function PaduaNav({ variant = 'streams' }) {
         </div>
 
         <div className="nav-actions">
-          <a href="#" className="btn btn-ghost-dark">Sign in</a>
-          <a href="#contact" className="btn btn-spectrum">Book a demo</a>
+          <a href="https://home.paduasolutions.com/" className="btn btn-ghost-dark">Sign in</a>
+          <a href="Contact.html" className="btn btn-spectrum">Book a demo</a>
         </div>
       </div>
 
@@ -667,15 +664,29 @@ const PADUA_CONTENT = {
     cols: [
       {
         h: 'Advisers & Licensees',
-        links: ['Padua Advice Portal', 'Advice Guides', 'Paraplanning services', 'Transition management', 'RAFA & cold storage'],
+        links: [
+          { label: 'Padua Advice Portal', href: 'Padua Portal.html' },
+          { label: 'Paraplanning services', href: 'Paraplanning.html' },
+          { label: 'Transition management', href: 'Transition Management.html' },
+        ],
       },
       {
         h: 'Other streams',
-        links: ['Platforms & Super Funds', 'Investment Managers', 'Fund Administrators', 'Media & Advertising'],
+        links: [
+          { label: 'Platforms & Super Funds', href: 'product-providers.html' },
+          { label: 'Investment Managers', href: 'product-providers.html' },
+          { label: 'Media & Advertising', href: 'product-providers.html' },
+        ],
       },
       {
         h: 'Company',
-        links: ['About Padua', 'Our people', 'News & insights', 'Careers', 'Contact'],
+        links: [
+          { label: 'About Padua', href: 'Who we are.html' },
+          { label: 'Our people', href: 'about/our-people.html' },
+          { label: 'News & insights', href: 'News & Insights.html' },
+          { label: 'Careers', href: 'Careers.html' },
+          { label: 'Contact', href: 'Contact.html' },
+        ],
       },
     ],
     legal: '© 2026 Padua Solutions Pty Ltd. ABN 93 167 243 745. All rights reserved.',
@@ -770,7 +781,7 @@ function PaduaFooter() {
             <div className="footer-col" key={col.h}>
               <h4>{col.h}</h4>
               {col.links.map((l) => (
-                <a key={l} href="#">{l}</a>
+                <a key={l.label} href={l.href || '#'}>{l.label}</a>
               ))}
             </div>
           ))}
@@ -780,8 +791,8 @@ function PaduaFooter() {
           <div className="footer-bot-right">
             <div className="footer-cert">ISO 27001 Certified</div>
             <div className="footer-cert">100% Onshore</div>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+            <a href="privacy-policy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
           </div>
         </div>
         <p className="acknowledgement">{f.acknowledgement}</p>
