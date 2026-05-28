@@ -32,7 +32,7 @@ function DirectionB({ show, navVariant }) {
                   Through the <strong>Padua Advice Platform</strong>. A connected suite of software and services purpose-built for the Australian advice industry.
                 </p>
                 <div className="hero-cta-row">
-                  <a className="btn btn-spectrum" href="book-a-demo.html">Book a demo →</a>
+                  <a className="btn btn-spectrum" href="Contact.html">Book a demo →</a>
                   <a className="hero-link" href="#watch">Watch the 2-minute video</a>
                 </div>
               </div>
@@ -109,7 +109,7 @@ function DirectionB({ show, navVariant }) {
                   <div className="stream-tag">{s.tag}</div>
                   <h3>{s.h}</h3>
                   <p>{s.p}</p>
-                  <div className="stream-link">{s.cta}</div>
+                  {s.cta && <div className="stream-link">{s.cta}</div>}
                 </a>
               ))}
             </div>

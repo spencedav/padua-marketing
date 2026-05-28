@@ -251,7 +251,7 @@ function DirectionA({ show, navVariant }) {
                   {s.tag && <div className="stream-tag">{s.tag}</div>}
                   <h3>{s.h}</h3>
                   <p>{s.p}</p>
-                  <span className="stream-link">{s.cta}</span>
+                  {s.cta && <span className="stream-link">{s.cta}</span>}
                 </a>
               ))}
             </div>

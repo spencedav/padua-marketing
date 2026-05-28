@@ -681,11 +681,13 @@ const PADUA_CONTENT = {
     title: 'Purpose-built for every part of the advice ecosystem.',
     lede: 'Pick the stream that fits your business. Each is built on the same core platform, with workflows, tools and data tailored to what you need.',
     items: [
+      // Per design: cards are clickable as a whole; the explicit
+      // "Explore the portal / Explore solutions" CTA was redundant
+      // with the card heading + hover affordance, so omitted.
       {
         tag: '',
         h: 'Advisers & Licensees',
         p: 'The Padua Advice Portal. A modular, AI-augmented advice platform with experienced Advice Guides supporting every step.',
-        cta: 'Explore the portal',
         href: 'Padua Portal.html',
         featured: true,
       },
@@ -693,14 +695,12 @@ const PADUA_CONTENT = {
         tag: '',
         h: 'Platforms & Super Funds',
         p: 'Data integration, modelling tools, member engagement video and open banking technology for platform operators and super funds.',
-        cta: 'Explore solutions',
         href: 'product-providers.html',
       },
       {
         tag: '',
         h: 'Investment Managers',
         p: 'Fund administration tooling, investment analytics, market data and adviser advertising channels.',
-        cta: 'Explore solutions',
         href: 'product-providers.html',
       },
     ],

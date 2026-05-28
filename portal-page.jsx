@@ -522,7 +522,7 @@ function PortalCta() {
           {c.title[1]}
         </h2>
         <p className="portal-cta-sub">{c.sub}</p>
-        <a className="btn btn-cta-light" href="book-a-demo.html">{c.btn} →</a>
+        <a className="btn btn-cta-light" href="Contact.html">{c.btn} →</a>
       </div>
     </section>
   );
