@@ -579,6 +579,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  font-size: 14px; /* match section eyebrows on other pages (base 11px too small) */
 }
 .dir-b .eyebrow::before {
   content: "";
@@ -1354,6 +1355,7 @@
   width: auto;
   flex-shrink: 0;
   object-fit: contain;
+  margin-right: 64px; /* per-item spacing → track is gap:0 so -50% loops seamlessly */
   filter: grayscale(1);
   opacity: 0.6;
   transition: opacity .25s ease, filter .25s ease;
