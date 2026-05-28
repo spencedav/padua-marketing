@@ -264,27 +264,12 @@ body.dir-b .for-a { display: none !important; }
 }
 .river-svg-wrap:hover .river-svg { transform: rotateX(2deg); }
 
-/* The messenger — one arrowhead orbiting clockwise; offset-rotate keeps
-   the tip aligned with the direction of travel. Keep this duration in
-   sync with ORBIT_MS in the EARSWheel component. */
-@keyframes river-messenger-orbit {
-  from { offset-distance: 0%;   }
-  to   { offset-distance: 100%; }
-}
-.river-messenger {
-  offset-path: path('M 280 60 A 220 220 0 1 1 279.99 60');
-  offset-rotate: auto;
-  animation: river-messenger-orbit 16s linear infinite;
-  transform-origin: center;
-}
-
-/* The comet trail — same orbit, each dot lagging via negative delay */
-.river-trail-dot {
-  offset-path: path('M 280 60 A 220 220 0 1 1 279.99 60');
-  offset-rotate: auto;
-  animation: river-messenger-orbit 16s linear infinite;
-  pointer-events: none;
-}
+/* The messenger arrow + comet trail orbit via SVG-native <animateTransform>
+   in the EARSWheel component (see content.jsx). CSS offset-path was the
+   first cut, but it stranded the <g> at the SVG origin in some browsers,
+   surfacing as a stray arrow spinning outside the river. The SVG
+   animateTransform pattern is older, more boring, and bulletproof. */
+.river-trail-dot { pointer-events: none; }
 
 /* Ambient halo — gentle breath baseline, intensified during greeting */
 @keyframes river-halo-ambient {

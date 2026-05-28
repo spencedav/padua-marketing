@@ -428,8 +428,12 @@ function EARSWheel() {
     betterWay: React.useRef(null),
   };
 
+  // One source of truth for the orbit period — JS scheduler + SVG animation
+  // both read from this so they cannot drift out of sync.
+  const ORBIT_SECONDS = 16;
+
   React.useEffect(() => {
-    const ORBIT_MS = 16000; // must match `animation-duration` of .river-messenger
+    const ORBIT_MS = ORBIT_SECONDS * 1000;
     const ns = 'http://www.w3.org/2000/svg';
     const colors = {
       empathy: '#4a308c', agility: '#ab2178', reliability: '#eb2e4d', simplicity: '#f59436',
@@ -509,11 +513,15 @@ function EARSWheel() {
   ];
 
   // 6 fading trail dots, each slightly behind the messenger on the same orbit.
-  // Negative animation-delay shifts each one to an earlier point in the loop.
+  // We use SVG-native <animateTransform> with a negative `begin` to start each
+  // dot mid-cycle, which gives the visible "lag" behind the messenger arrow.
+  // (We moved away from CSS offset-path because Safari quirks parking <g>
+  // elements at the SVG origin, which surfaced as a stray arrow OUTSIDE the
+  // river spinning in place.)
   const trail = Array.from({ length: 6 }, (_, i) => ({
     r:       (4.5 - (i + 1) * 0.5).toFixed(1),
     opacity: (0.55 - (i + 1) * 0.08).toFixed(2),
-    delay:   `${-(i + 1) * 0.12}s`,
+    begin:   `${-(i + 1) * 0.12}s`,
   }));
 
   return (
@@ -566,23 +574,48 @@ function EARSWheel() {
         <circle cx="280" cy="280" r="220" fill="none" stroke="url(#river-basin-depth)" strokeWidth="24" />
         <circle cx="280" cy="280" r="220" fill="none" stroke="url(#river-sheen)"       strokeWidth="24" opacity="0.6" />
 
-        {/* Comet trail — short fading dots lagging behind the messenger */}
+        {/* Comet trail — short fading dots lagging behind the messenger.
+            Each dot sits at the top of the river circle (280, 60) and is
+            rotated around the river centre (280, 280) via SVG animateTransform;
+            negative `begin` delays put each one further behind the messenger. */}
         <g className="river-trail">
           {trail.map((d, i) => (
             <circle
               key={`trail-${i}`}
               className="river-trail-dot"
+              cx="280"
+              cy="60"
               r={d.r}
               fill="#3a9aa8"
               opacity={d.opacity}
-              style={{ animationDelay: d.delay }}
-            />
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 280 280"
+                to="360 280 280"
+                dur={`${ORBIT_SECONDS}s`}
+                begin={d.begin}
+                repeatCount="indefinite"
+              />
+            </circle>
           ))}
         </g>
 
-        {/* The single messenger arrow */}
+        {/* The single messenger arrow.
+            Arrow path is drawn at the top of the river (280, 60), tip pointing
+            east — the tangent direction of clockwise motion at the top. Rotating
+            the <g> around (280, 280) sweeps it cleanly around the circle. */}
         <g className="river-messenger">
-          <path d="M -10 -7 L 8 0 L -10 7 L -6 0 Z" fill="#3a9aa8" opacity="0.95" />
+          <path d="M 270 53 L 288 60 L 270 67 L 274 60 Z" fill="#3a9aa8" opacity="0.95" />
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 280 280"
+            to="360 280 280"
+            dur={`${ORBIT_SECONDS}s`}
+            repeatCount="indefinite"
+          />
         </g>
 
         {/* Greeting-ripple layer (populated imperatively on each station pass) */}
@@ -713,7 +746,7 @@ const PADUA_CONTENT = {
       eyebrow: 'The Padua Portal · The rise of the advice platform',
       h: 'The software platform we use, available to you too.',
       p: 'A connected suite of tools that maps the entire advice journey. Use the full Portal end-to-end, or pick the modules that fit alongside your existing systems.',
-      flow: ['WealthX', 'WealthReview', 'SteveAI', 'WealthAI'],
+      flow: ['WealthX', 'SteveAI', 'WealthReview', 'WealthAI'],
       cta: 'Watch the 2-minute tour',
     },
     services: [
