@@ -37,8 +37,8 @@ function AboutValues() {
           <h2 className="section-title">EARS, the Padua Way.</h2>
           <p className="section-lede">Empathy. Agility. Reliability. Simplicity. <span className="padua-way">One way. Same way. Better way.</span> The values that shape who we hire, how we work and the standard we hold ourselves to.</p>
         </div>
-        <div className="about-ears-wheel">
-          <img src="assets/ears-wheel.png" alt="The EARS values wheel: Empathy, Agility, Reliability and Simplicity, the Padua Way (One way, Same way, Better way)." />
+        <div className="about-ears-wheel" role="img" aria-label="The EARS values as a circular river: Empathy, Agility, Reliability and Simplicity, the Padua Way (One way, Same way, Better way).">
+          <EARSWheel />
         </div>
         <div className="about-values-grid">
           {ABOUT_VALUES.map((v) => (

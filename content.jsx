@@ -403,74 +403,174 @@ function PaduaNav({ variant = 'streams' }) {
   );
 }
 
-// ===== EARS Wheel SVG (shared, used by About in both directions) =====
+// ===== EARS Circular River (shared, used by About in both directions) =====
+// Four pillars positioned at the cardinal points of a teal-tinted "river"
+// circle; small drops drift around the path; stations softly bloom; clicking
+// a station emits a ripple. Palette aligned to the official Padua spec:
+// Empathy=Discover, Agility=Compare, Reliability=Recommend, Simplicity=Review.
 function EARSWheel() {
-  const ref = React.useRef(null);
-  const [inView, setInView] = React.useState(false);
+  // Pre-baked drop config so React renders deterministic SVG on first paint
+  // (re-randomising every render would jitter the layout on each re-render).
+  const drops = React.useMemo(
+    () =>
+      Array.from({ length: 24 }, (_, i) => {
+        // Cheap deterministic pseudo-random: sin-based so it's stable across
+        // renders but varied per index.
+        const a = Math.sin(i * 12.9898) * 43758.5453;
+        const b = Math.sin(i * 78.233) * 43758.5453;
+        const c = Math.sin(i * 39.336) * 43758.5453;
+        const rnd = (x) => x - Math.floor(x);
+        const r = (rnd(a) * 2.5 + 1.5).toFixed(1);
+        const opacity = (rnd(b) * 0.4 + 0.45).toFixed(2);
+        const duration = rnd(c) * 6 + 12;
+        const delay = -rnd(a * b) * duration;
+        return { r, opacity, duration: duration.toFixed(1), delay: delay.toFixed(1) };
+      }),
+    []
+  );
 
-  React.useEffect(() => {
-    const node = ref.current;
-    if (!node || typeof IntersectionObserver === 'undefined') {
-      setInView(true);
-      return undefined;
+  const rippleLayer = React.useRef(null);
+  const onStationClick = React.useCallback((cx, cy, color) => {
+    const layer = rippleLayer.current;
+    if (!layer) return;
+    const ns = 'http://www.w3.org/2000/svg';
+    for (let i = 0; i < 3; i += 1) {
+      const c = document.createElementNS(ns, 'circle');
+      c.setAttribute('cx', cx);
+      c.setAttribute('cy', cy);
+      c.setAttribute('r', 48);
+      c.setAttribute('stroke', color);
+      c.setAttribute('fill', 'none');
+      c.setAttribute('class', 'river-ripple');
+      c.style.animationDelay = `${i * 0.18}s`;
+      layer.appendChild(c);
+      setTimeout(() => c.remove(), 1800);
     }
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setInView(true);
-            obs.disconnect();
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-    obs.observe(node);
-    return () => obs.disconnect();
   }, []);
 
+  // Palette: brand-aligned station colours. `color` is the CSS-var used for
+  // JSX `fill` (resolves at paint), `hex` is the literal used by the ripple's
+  // imperatively-set stroke (setAttribute doesn't evaluate var()).
+  const stations = [
+    { key: 'empathy',     name: 'Empathy',     cx: 280, cy: 60,  color: 'var(--discover)',  hex: '#4a308c' },
+    { key: 'agility',     name: 'Agility',     cx: 500, cy: 280, color: 'var(--compare)',   hex: '#ab2178' },
+    { key: 'reliability', name: 'Reliability', cx: 280, cy: 500, color: 'var(--recommend)', hex: '#eb2e4d' },
+    { key: 'simplicity',  name: 'Simplicity',  cx: 60,  cy: 280, color: 'var(--review)',    hex: '#f59436' },
+  ];
+
   return (
-    <svg
-      ref={ref}
-      className={`ears-wheel${inView ? ' is-in-view' : ''}`}
-      viewBox="0 0 400 400"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Padua's EARS values: Empathy, Agility, Reliability, Simplicity"
-    >
-      {/* Quadrants, each gets a class for individual build animation */}
-      <g className="wheel-quadrants">
-        <path className="wheel-q wheel-q-e" d="M 200 200 L 200 30 A 170 170 0 0 1 370 200 Z" fill="#4a308c"/>
-        <path className="wheel-q wheel-q-a" d="M 200 200 L 370 200 A 170 170 0 0 1 200 370 Z" fill="#ab2178"/>
-        <path className="wheel-q wheel-q-r" d="M 200 200 L 200 370 A 170 170 0 0 1 30 200 Z" fill="#eb2e4d"/>
-        <path className="wheel-q wheel-q-s" d="M 200 200 L 30 200 A 170 170 0 0 1 200 30 Z" fill="#f59436"/>
-      </g>
+    <div className="river-svg-wrap">
+      <svg
+        className="river-svg"
+        viewBox="0 0 560 560"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-label="Padua's EARS values as a circular river: Empathy, Agility, Reliability, Simplicity — One way, Same way, Better way."
+      >
+        <defs>
+          {/* River gradient sweeps each station's brand colour around the loop */}
+          <linearGradient id="river-grad" gradientUnits="userSpaceOnUse" x1="60" y1="280" x2="500" y2="280">
+            <stop offset="0%"   stopColor="var(--review)"    stopOpacity="0.4" />
+            <stop offset="25%"  stopColor="var(--discover)"  stopOpacity="0.45" />
+            <stop offset="50%"  stopColor="var(--compare)"   stopOpacity="0.45" />
+            <stop offset="75%"  stopColor="var(--recommend)" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="var(--review)"    stopOpacity="0.4" />
+          </linearGradient>
+          {/* Inner-shadow gradient for basin depth */}
+          <radialGradient id="river-basin-depth" cx="50%" cy="50%" r="50%">
+            <stop offset="80%"  stopColor="#000" stopOpacity="0" />
+            <stop offset="100%" stopColor="#000" stopOpacity="0.08" />
+          </radialGradient>
+          {/* Subtle highlight on top of water */}
+          <linearGradient id="river-sheen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#fff" stopOpacity="0.18" />
+            <stop offset="50%"  stopColor="#fff" stopOpacity="0" />
+            <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <marker id="river-tip" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </marker>
+        </defs>
 
-      {/* Dividers */}
-      <g className="wheel-dividers">
-        <line x1="200" y1="40" x2="200" y2="360" className="wheel-divider"/>
-        <line x1="40" y1="200" x2="360" y2="200" className="wheel-divider"/>
-      </g>
+        {/* Decorative outer tick ring, frames the composition */}
+        <g className="river-tick-ring">
+          <circle cx="280" cy="280" r="258" fill="none" stroke="var(--line)" strokeWidth="0.5" strokeDasharray="1 7" />
+        </g>
 
-      {/* Letters */}
-      <g className="wheel-labels">
-        <text x="280" y="115" className="wheel-letter">E</text>
-        <text x="280" y="285" className="wheel-letter">A</text>
-        <text x="120" y="285" className="wheel-letter">R</text>
-        <text x="120" y="115" className="wheel-letter">S</text>
-        <text x="280" y="150" className="wheel-name">EMPATHY</text>
-        <text x="280" y="245" className="wheel-name">AGILITY</text>
-        <text x="120" y="245" className="wheel-name">RELIABILITY</text>
-        <text x="120" y="150" className="wheel-name">SIMPLICITY</text>
-      </g>
+        {/* Station halos (large, blurred, sit BEHIND the river for the bleed) */}
+        {stations.map((s, i) => (
+          <circle
+            key={`halo-${s.key}`}
+            className={`river-halo h${i + 1}`}
+            cx={s.cx}
+            cy={s.cy}
+            r="60"
+            fill={s.color}
+          />
+        ))}
 
-      {/* Hub, gentle pulse */}
-      <g className="wheel-hub">
-        <circle className="wheel-hub-ring" cx="200" cy="200" r="46" fill="none" stroke="#1a1525" strokeOpacity="0.08" strokeWidth="1"/>
-        <circle cx="200" cy="200" r="46" fill="white"/>
-        <text x="200" y="195" className="wheel-hub-label">OUR</text>
-        <text x="200" y="212" className="wheel-hub-label">VALUES</text>
-      </g>
-    </svg>
+        {/* River bed (water body) */}
+        <circle cx="280" cy="280" r="220" fill="none" stroke="url(#river-grad)" strokeWidth="24" opacity="0.55" />
+        <circle cx="280" cy="280" r="220" fill="none" stroke="url(#river-basin-depth)" strokeWidth="24" />
+        <circle cx="280" cy="280" r="220" fill="none" stroke="url(#river-sheen)" strokeWidth="24" opacity="0.6" />
+
+        {/* Soft secondary current (slow, counter-pulse) */}
+        <circle className="river-current-soft" cx="280" cy="280" r="222" fill="none" stroke="var(--teal)" strokeWidth="1.5" strokeLinecap="round" />
+        {/* Primary current line */}
+        <circle className="river-current" cx="280" cy="280" r="220" fill="none" stroke="var(--teal)" strokeWidth="2.5" strokeLinecap="round" />
+
+        {/* Flow direction arrows between station pairs (clockwise) */}
+        <path className="river-flow-arrow" d="M 435 125 A 220 220 0 0 1 475 175" fill="none" stroke="var(--teal)" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#river-tip)" />
+        <path className="river-flow-arrow a2" d="M 475 385 A 220 220 0 0 1 435 435" fill="none" stroke="var(--teal)" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#river-tip)" />
+        <path className="river-flow-arrow a3" d="M 175 475 A 220 220 0 0 1 125 435" fill="none" stroke="var(--teal)" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#river-tip)" />
+        <path className="river-flow-arrow a4" d="M 85 175 A 220 220 0 0 1 125 125" fill="none" stroke="var(--teal)" strokeWidth="2.5" strokeLinecap="round" markerEnd="url(#river-tip)" />
+
+        {/* Drifting drops along the circle */}
+        <g className="river-drops">
+          {drops.map((d, i) => (
+            <circle
+              key={`drop-${i}`}
+              className="river-drop"
+              r={d.r}
+              fill="var(--teal)"
+              opacity={d.opacity}
+              style={{ animationDuration: `${d.duration}s`, animationDelay: `${d.delay}s` }}
+            />
+          ))}
+        </g>
+
+        {/* Click-ripple layer (populated imperatively on station click) */}
+        <g ref={rippleLayer} />
+
+        {/* Guiding labels with leader ticks (the Padua Way mantra) */}
+        <line className="river-tick" x1="455" y1="105" x2="478" y2="82" />
+        <text className="river-outer-q" x="478" y="72">ONE WAY</text>
+        <line className="river-tick" x1="455" y1="455" x2="478" y2="478" />
+        <text className="river-outer-q" x="478" y="498">SAME WAY</text>
+        <line className="river-tick" x1="105" y1="455" x2="82" y2="478" />
+        <text className="river-outer-q" x="82" y="498">BETTER WAY</text>
+
+        {/* Stations */}
+        {stations.map((s) => (
+          <g
+            key={s.key}
+            className="river-station"
+            onClick={() => onStationClick(s.cx, s.cy, s.hex)}
+          >
+            <ellipse className="river-station-shadow" cx={s.cx} cy={s.cy + 52} rx="42" ry="6" fill="#000" />
+            <circle className="river-station-circ" cx={s.cx} cy={s.cy} r="48" fill={s.color} />
+            <text className="river-station-name" x={s.cx} y={s.cy + 5}>{s.name}</text>
+          </g>
+        ))}
+
+        {/* Centre — counter-breath, the question that ties it all together */}
+        <g className="river-center">
+          <ellipse cx="280" cy="362" rx="68" ry="8" fill="#000" opacity="0.06" />
+          <circle cx="280" cy="280" r="82" fill="var(--paper)" stroke="var(--line)" strokeWidth="0.5" />
+          <text className="river-center-ears" x="280" y="266">EARS?</text>
+          <text className="river-center-how"  x="280" y="298">How?</text>
+        </g>
+      </svg>
+    </div>
   );
 }
 

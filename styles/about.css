@@ -97,26 +97,17 @@
    ================================================================ */
 .dir-a .about-values { background: var(--paper); padding: 80px 0; }
 
-/* The EARS wheel image, centered above the four value cards */
+/* The EARS visual, centered above the four value cards.
+   The widget itself (the circular river) is the shared <EARSWheel/> React
+   component — its CSS lives in styles/base.css. Here we just size the wrap. */
 .about-ears-wheel {
   display: flex;
   justify-content: center;
   margin: 0 0 56px;
 }
-.about-ears-wheel img {
-  display: block;
+.about-ears-wheel .river-svg-wrap {
   width: 100%;
   max-width: 440px;
-  height: auto;
-  animation: about-ears-rotate 60s linear infinite;
-  transform-origin: center center;
-}
-@keyframes about-ears-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .about-ears-wheel img { animation: none; }
 }
 
 .about-values-grid {

@@ -644,7 +644,8 @@
 }
 .dir-b .intro-body p strong { color: var(--ink); font-weight: 500; }
 
-/* ===== ABOUT (Modular: small wheel + metric chips) ===== */
+/* ===== ABOUT (Modular: small EARS visual + metric chips) ===== */
+/* Visual itself = the shared EARS River component (styles live in base.css). */
 .dir-b .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -652,32 +653,6 @@
   align-items: center;
 }
 .dir-b .about-wheel { max-width: 380px; }
-.dir-b .about-wheel svg { width: 100%; height: auto; }
-.dir-b .wheel-divider { stroke: var(--paper); stroke-width: 5; }
-.dir-b .wheel-letter {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 48px;
-  fill: white;
-  text-anchor: middle;
-  letter-spacing: -0.02em;
-}
-.dir-b .wheel-name {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  fill: rgba(255,255,255,0.85);
-  text-anchor: middle;
-}
-.dir-b .wheel-hub-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  fill: var(--ink);
-  text-anchor: middle;
-  text-transform: uppercase;
-}
 .dir-b .about-content p {
   font-size: 16px;
   line-height: 1.65;
