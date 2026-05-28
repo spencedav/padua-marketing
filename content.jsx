@@ -31,6 +31,7 @@ const NAV_AUDIENCES = [
     label: 'Advisers & Licensees',
     eyebrow: 'For advisers & licensees',
     blurb: 'Advice software, paraplanning and ongoing support for advice practices and licensees.',
+    href: 'advisers-licensees.html',
     columns: [
       {
         kind: 'featured',
@@ -70,6 +71,7 @@ const NAV_AUDIENCES = [
     label: 'Platforms & Super Funds',
     eyebrow: 'For platforms & super funds',
     blurb: 'Member advice solutions and adviser tooling for platforms and super funds.',
+    href: 'product-providers.html',
     columns: [
       {
         kind: 'featured',
@@ -109,6 +111,7 @@ const NAV_AUDIENCES = [
     label: 'Investment Managers',
     eyebrow: 'For investment managers',
     blurb: 'Distribution, adviser engagement and research support for IMs and asset managers.',
+    href: 'product-providers.html',
     columns: [
       {
         title: 'Advice Services',
@@ -336,7 +339,7 @@ function PaduaNav({ variant = 'streams' }) {
                 <div className="nav-dropdown-inner">
                   <div className="nav-dd-grid">
                     {NAV_AUDIENCES.map((a) => (
-                      <a key={a.key} href="#" className="nav-dd-card" role="menuitem">
+                      <a key={a.key} href={a.href || '#'} className="nav-dd-card" role="menuitem">
                         <div className="nav-dd-card-h">{a.label}</div>
                         <div className="nav-dd-card-p">{a.blurb}</div>
                         <div className="nav-dd-card-cta">Explore →</div>

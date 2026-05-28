@@ -32,7 +32,7 @@ function DirectionB({ show, navVariant }) {
                   Through the <strong>Padua Advice Platform</strong>. A connected suite of software and services purpose-built for the Australian advice industry.
                 </p>
                 <div className="hero-cta-row">
-                  <a className="btn btn-spectrum" href="#contact">Book a demo →</a>
+                  <a className="btn btn-spectrum" href="book-a-demo.html">Book a demo →</a>
                   <a className="hero-link" href="#watch">Watch the 2-minute video</a>
                 </div>
               </div>
@@ -147,7 +147,7 @@ function DirectionB({ show, navVariant }) {
                     </React.Fragment>
                   ))}
                 </div>
-                <a className="eco-cta" href="#">{c.ecosystem.portal.cta}</a>
+                <a className="eco-cta" href="Padua Portal.html">{c.ecosystem.portal.cta}</a>
               </div>
             </div>
 

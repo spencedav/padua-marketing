@@ -147,7 +147,7 @@ function AboutCta() {
         </h2>
         <p className="about-cta-sub">A 30-minute conversation is the fastest way to see if Padua is the right partner for your firm.</p>
         <div className="about-cta-row">
-          <a className="btn btn-cta-dark" href="#book">Book a demo →</a>
+          <a className="btn btn-cta-dark" href="book-a-demo.html">Book a demo →</a>
           <a className="hero-link" href="Careers.html">See open roles</a>
         </div>
       </div>

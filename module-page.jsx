@@ -1375,7 +1375,7 @@ function ModuleCta() {
               </h2>
               <p className="module-cta-sub">A 30-minute demo, tailored to how your practice or platform runs.</p>
               <div className="module-cta-row">
-                <a className="btn btn-cta-dark" href="#contact">{c.cta_demo} →</a>
+                <a className="btn btn-cta-dark" href="book-a-demo.html">{c.cta_demo} →</a>
                 <a className="hero-link" href="Padua Portal.html">Back to the Portal overview</a>
               </div>
             </>
@@ -1450,7 +1450,7 @@ function ModuleRoles() {
           <ul className="module-roles-list">
             {c.items.map((r, i) => (
               <li className="module-role" key={r.title} style={{ transitionDelay: `${i * 80}ms` }}>
-                <a className="module-role-link" href={email ? `mailto:${email}?subject=${encodeURIComponent('Application: ' + r.title)}` : '#contact'}>
+                <a className="module-role-link" href={email ? `mailto:${email}?subject=${encodeURIComponent('Application: ' + r.title)}` : 'Contact.html'}>
                   <div className="module-role-main">
                     <div className="module-role-meta">
                       <span className="module-role-team">{r.team}</span>

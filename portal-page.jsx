@@ -76,9 +76,9 @@ const PORTAL_COPY_BY_AUDIENCE = {
       title: 'Three modules. One connected workflow.',
       sub: 'Use the Portal end-to-end, or bring in the modules that solve your sharpest problem first.',
       items: [
-        { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Pulls together fact-find data, modelling and strategy notes into a first-draft ROA in minutes, then learns your tone of voice as your team uses it.', cta: 'Explore SteveAI', href: '#', accent: 'discover' },
-        { key: 'wealthx', name: 'WealthX', tagline: 'Open banking, built in.', p: 'Pulls live cashflow, super and investment data from 100+ Australian institutions, so the fact-find writes itself and the modelling stays current.', cta: 'Explore WealthX', href: '#', accent: 'teal' },
-        { key: 'wealthreview', name: 'WealthReview', tagline: 'The client dashboard.', p: 'A live, white-labelled view of every client\u2019s strategy, holdings and progress against goals, designed to make ongoing review effortless.', cta: 'Explore WealthReview', href: '#', accent: 'review' },
+        { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Pulls together fact-find data, modelling and strategy notes into a first-draft ROA in minutes, then learns your tone of voice as your team uses it.', cta: 'Explore SteveAI', href: 'SteveAI.html', accent: 'discover' },
+        { key: 'wealthx', name: 'WealthX', tagline: 'Open banking, built in.', p: 'Pulls live cashflow, super and investment data from 100+ Australian institutions, so the fact-find writes itself and the modelling stays current.', cta: 'Explore WealthX', href: 'WealthX.html', accent: 'teal' },
+        { key: 'wealthreview', name: 'WealthReview', tagline: 'The client dashboard.', p: 'A live, white-labelled view of every client\u2019s strategy, holdings and progress against goals, designed to make ongoing review effortless.', cta: 'Explore WealthReview', href: 'WealthReview.html', accent: 'review' },
       ],
     },
     faq: {
@@ -142,9 +142,9 @@ const PORTAL_COPY_BY_AUDIENCE = {
       title: 'Three modules. One connected workflow.',
       sub: 'Embed the full Portal in your platform, or bring in single modules to extend the workflow you already run.',
       items: [
-        { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Agentive AI that runs the fact find and concierge meeting, records transcripts and stays with the member throughout the entire advice journey.', cta: 'Explore SteveAI', href: '#', accent: 'discover' },
-        { key: 'wealthx', name: 'WealthX', tagline: 'Open banking, built in.', p: 'Securely integrates with the member\u2019s banks for direct bank feeds and transparent insights, saving over 30 minutes per fact find.', cta: 'Explore WealthX', href: '#', accent: 'teal' },
-        { key: 'wealthreview', name: 'WealthReview', tagline: 'The member dashboard.', p: 'A live, white-labelled view of every member\u2019s strategy, holdings and progress against goals, populated with post-advice data.', cta: 'Explore WealthReview', href: '#', accent: 'review' },
+        { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Agentive AI that runs the fact find and concierge meeting, records transcripts and stays with the member throughout the entire advice journey.', cta: 'Explore SteveAI', href: 'SteveAI.html', accent: 'discover' },
+        { key: 'wealthx', name: 'WealthX', tagline: 'Open banking, built in.', p: 'Securely integrates with the member\u2019s banks for direct bank feeds and transparent insights, saving over 30 minutes per fact find.', cta: 'Explore WealthX', href: 'WealthX.html', accent: 'teal' },
+        { key: 'wealthreview', name: 'WealthReview', tagline: 'The member dashboard.', p: 'A live, white-labelled view of every member\u2019s strategy, holdings and progress against goals, populated with post-advice data.', cta: 'Explore WealthReview', href: 'WealthReview.html', accent: 'review' },
       ],
     },
     faq: {
@@ -522,7 +522,7 @@ function PortalCta() {
           {c.title[1]}
         </h2>
         <p className="portal-cta-sub">{c.sub}</p>
-        <a className="btn btn-cta-light" href="#book">{c.btn} →</a>
+        <a className="btn btn-cta-light" href="book-a-demo.html">{c.btn} →</a>
       </div>
     </section>
   );

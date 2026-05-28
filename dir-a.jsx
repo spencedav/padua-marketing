@@ -226,7 +226,7 @@ function DirectionA({ show, navVariant }) {
                 <h2 className="section-title">{c.about.title}</h2>
                 <p>{c.about.p1}</p>
                 <p dangerouslySetInnerHTML={{ __html: c.about.p2 }} />
-                <a className="btn btn-outline" href="#">{c.about.cta} →</a>
+                <a className="btn btn-outline" href="Who we are.html">{c.about.cta} →</a>
               </div>
             </div>
           </div>
@@ -289,7 +289,7 @@ function DirectionA({ show, navVariant }) {
                     </React.Fragment>
                   ))}
                 </div>
-                <a className="eco-cta" href="#">{c.ecosystem.portal.cta}</a>
+                <a className="eco-cta" href="Padua Portal.html">{c.ecosystem.portal.cta}</a>
               </div>
             </div>
 
