@@ -886,6 +886,20 @@
   transform: translateY(20px);
   transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1);
 }
+/* Flourish-embed variant: same card chrome, but sized to host the live
+   interactive viz instead of a flat PNG. Inner iframe is forced to 100%
+   width because Flourish's default min-width can overflow on small panes. */
+.module-what-chart-flourish {
+  background: var(--paper-soft, #fffdf8);
+  padding: 12px;
+}
+.module-what-chart-flourish .flourish-embed { min-height: 480px; }
+.module-what-chart-flourish .flourish-embed iframe {
+  width: 100% !important;
+  min-height: 480px;
+  border: 0;
+  display: block;
+}
 .module-what.is-in-view .module-what-chart {
   opacity: 1;
   transform: translateY(0);

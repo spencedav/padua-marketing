@@ -345,11 +345,12 @@ const MODULE_COPY_BY_KEY = {
     intro: 'Take the hassle out of transitioning your clients\u2019 investments, consolidating platforms, and purchasing or selling a book. Our technology creates the efficiency and scalability; our team project-manages the entire transition for you.',
     cta_demo: 'Book a transition demo',
     cta_portal: '',
-    chartImage: 'assets/book-analysis-chart.png',
+    chartFlourishId: '21548567',
+    chartCaption: 'Sample, Fee comparison across in-scope platforms',
 
     what: {
       eyebrow: 'Book Analysis Services',
-      lead: 'Before anything moves, the Padua team analyses every client account in the book. We turn raw platform and portfolio data into interactive, decision-ready charts. The transition plan is grounded in real numbers, not assumptions.',
+      lead: 'Before anything moves, the Padua team analyses every client account in the book. We prepare a structured workbook using platform and portfolio data, covering account details, key assumptions, fee comparisons, transition considerations and client-level indicators. The result is a clear, data-backed view of the book before implementation planning begins.',
       cols: [
         { stat: 'On\u00a0your\u00a0mark', label: 'Fee comparison', p: 'A platform fee comparison in $ and %, existing platforms versus the recommended scenario. Cost and benefit enhancements made obvious.' },
         { stat: 'Ready', label: 'Analysis', p: 'A detailed account-by-account analysis: existing versus recommended, tax impact and CRM data gaps, summarised in interactive charts.' },
@@ -360,7 +361,7 @@ const MODULE_COPY_BY_KEY = {
     flow: {
       eyebrow: 'Transition Management Services',
       title: 'Ready. Set. Go.',
-      sub: 'A three-phase framework that takes a transition from analysis to implementation with no advice downtime.',
+      sub: 'A framework that takes a transition from analysis through to implementation with no advice downtime.',
       steps: [
         { n: '01', h: 'On your mark, Fee comparison', p: 'A clear $ and % comparison of existing platforms and investments versus the recommended scenario. The conversation starts with real numbers.' },
         { n: '02', h: 'Ready, Analysis', p: 'Account-by-account analysis, tax impact and CRM gap identification, summarised in interactive dashboards your advisers can actually use.' },
@@ -375,7 +376,7 @@ const MODULE_COPY_BY_KEY = {
       items: [
         { h: 'Fee comparison upfront', p: 'A clear dollar and percent comparison of existing versus recommended, so the advice firm starts with real numbers.' },
         { h: 'Interactive analysis dashboards', p: 'Per-client and per-book transition effectiveness, summarised in charts and graphs rather than spreadsheets.' },
-        { h: 'Implementation packs', p: 'SOA, application and transition documentation produced for every client by the Padua team.' },
+        { h: 'Implementation packs', p: 'A complete set of SOA, product research and implementation support prepared for every client by the Padua team.' },
         { h: 'CRM integration', p: 'We push completed advice and implementation documentation back into the client folder, where the integration is supported.' },
         { h: 'Dashboard progress view', p: 'A user-friendly, dashboard-style view of every transition across the book. Advisers and licensees always know where things stand.' },
         { h: 'Project-managed end-to-end', p: 'A dedicated Australian transition lead runs the work from On Your Mark through to Go-Live.' },
@@ -967,10 +968,19 @@ function ModuleWhat() {
           <p className="module-lead-copy">{c.lead}</p>
         </div>
         {MODULE.triangle && <PaduaTriangle />}
-        {MODULE.chartImage && (
+        {/* Chart options: Flourish embed (preferred — interactive) takes
+            precedence; falls back to a static PNG for modules that don't
+            yet have a Flourish viz set up. */}
+        {MODULE.chartFlourishId && (
+          <div className="module-what-chart module-what-chart-flourish">
+            <FlourishEmbed id={MODULE.chartFlourishId} />
+            <div className="module-what-chart-caption">{MODULE.chartCaption || 'Interactive chart'}</div>
+          </div>
+        )}
+        {MODULE.chartImage && !MODULE.chartFlourishId && (
           <div className="module-what-chart">
             <img src={MODULE.chartImage} alt="Sample platform fee comparison across nine platforms" />
-            <div className="module-what-chart-caption">Sample · Fee comparison across in-scope platforms</div>
+            <div className="module-what-chart-caption">{MODULE.chartCaption || 'Sample · Fee comparison across in-scope platforms'}</div>
           </div>
         )}
         <div className="module-stat-grid">
@@ -984,6 +994,31 @@ function ModuleWhat() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Flourish embed loader. Injects the official Flourish embed script once
+// on first mount, then lets the library wire up the iframe inside the
+// data-src container. Subsequent <FlourishEmbed/> instances re-trigger
+// loadEmbed() so dashes added later still hydrate. Used today for the
+// Transition Management book-analysis chart.
+function FlourishEmbed({ id }) {
+  React.useEffect(() => {
+    const src = 'https://public.flourish.studio/resources/embed.js';
+    if (!document.querySelector(`script[src="${src}"]`)) {
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      document.body.appendChild(s);
+    } else if (window.Flourish && window.Flourish.loadEmbed) {
+      window.Flourish.loadEmbed();
+    }
+  }, [id]);
+  return (
+    <div
+      className="flourish-embed flourish-chart"
+      data-src={`visualisation/${id}`}
+    />
   );
 }
 
