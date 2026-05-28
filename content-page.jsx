@@ -3,33 +3,56 @@
 // One shared template, content selected via window.__PADUA_CONTENT
 // =======================================================
 
+// ---- Hand-curated, recent + signature pieces (top of each listing) ------
+// Manually featured. Everything else is bridged automatically from the
+// Webflow-sourced articles list (see articles.jsx -> window.PADUA_ARTICLES).
+const CURATED_NEWS = [
+  { kind: 'article',  title: 'Division 296: A practical guide',                                              href: 'https://www.financialstandard.com.au/', date: '4 May 2026', image: 'assets/division-296.jpg', source: 'Financial Standard', authors: 'Anne-Marie Esler & Rudy Haddad' },
+  { kind: 'event',    title: 'Matt Esler speaks at SIAA 2026: the technology-enabled advice plenary',     href: 'https://www.linkedin.com/company/3641071/', date: '20 May 2026', image: 'assets/siaa2026-matt.jpg', source: 'SIAA Conference', authors: 'Park Hyatt Melbourne' },
+  { kind: 'event',    title: 'Anne-Marie Esler on AI, Tech and the Emerging Client Experience',            href: 'https://www.linkedin.com/company/3641071/', date: '29 Apr - 1 May 2026', image: 'assets/empowerher-noosa.png', source: 'CFS EmpowerHer Summit', authors: 'Noosa' },
+];
+const CURATED_RESOURCES = [
+  { kind: 'report',     title: 'Federal Budget 2026-27: Padua branded analysis', href: 'assets/federal-budget-2026-27-branded.docx', date: '13 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-cover.png' },
+  { kind: 'whitepaper', title: 'Federal Budget 2026-27: adviser whitepaper',     href: 'assets/federal-budget-2026-27-whitepaper.docx', date: '12 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-whitepaper-cover.png' },
+  { kind: 'whitepaper', title: 'EOFY superannuation strategies 2025-26',         href: 'assets/eofy-super-strategies.pdf', date: '21 Apr 2026', authors: 'Rudy Haddad', image: 'assets/eofy-super-cover.png' },
+];
+
+// Format an ISO date the same way curated entries are written ("4 May 2025").
+function formatBridgedDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// Map a bridged article (from window.PADUA_ARTICLES) into the listing-card
+// shape used by the renderer below.
+function bridgedToCard(a) {
+  return {
+    kind: a.kind,
+    title: a.title,
+    href: '/news-insights/' + a.slug,
+    date: formatBridgedDate(a.date),
+    image: a.hero_image_url || undefined,
+    source: a.source || undefined,
+    authors: a.author || undefined,
+  };
+}
+
+const BRIDGED = (typeof window !== 'undefined' && window.PADUA_ARTICLES) || [];
+const BRIDGED_NEWS      = BRIDGED.filter((a) => a.kind !== 'report').map(bridgedToCard);
+const BRIDGED_RESOURCES = BRIDGED.filter((a) => a.kind === 'report').map(bridgedToCard);
+
 const CONTENT_COPY_BY_KEY = {
   news: {
     title: 'News & Insights',
     intro: 'Articles, podcasts, events and conference moments from across the Padua team and our partners in the Australian advice industry.',
-    items: [
-      { kind: 'article',  title: 'Division 296: A practical guide',                                              href: 'https://www.financialstandard.com.au/', date: '4 May 2026', image: 'assets/division-296.jpg', source: 'Financial Standard', authors: 'Anne-Marie Esler & Rudy Haddad' },
-      { kind: 'event',    title: 'Matt Esler speaks at SIAA 2026: the technology-enabled advice plenary',     href: 'https://www.linkedin.com/company/3641071/', date: '20 May 2026', image: 'assets/siaa2026-matt.jpg', source: 'SIAA Conference', authors: 'Park Hyatt Melbourne' },
-      { kind: 'event',    title: 'Anne-Marie Esler on AI, Tech and the Emerging Client Experience',            href: 'https://www.linkedin.com/company/3641071/', date: '29 Apr – 1 May 2026', image: 'assets/empowerher-noosa.png', source: 'CFS EmpowerHer Summit', authors: 'Noosa' },
-      { kind: 'podcast',  title: 'Unlocking the potential of your CRM with Matt Esler',                        href: '#', date: '' },
-      { kind: 'article',  title: 'Given the tools, advisers recommend more diverse strategies',                href: '#', date: '' },
-      { kind: 'article',  title: 'Achieving the unattainable triangle of advice generation: quality, time & value', href: '#', date: '' },
-      { kind: 'article',  title: 'Perspective on long-term investing: questioning the \u2018time in\u2019 the market axiom', href: '#', date: '' },
-      { kind: 'article',  title: 'The role of research houses in the advice process',                          href: '#', date: '' },
-    ],
+    items: [...CURATED_NEWS, ...BRIDGED_NEWS],
   },
   resources: {
     title: 'Whitepapers & Reports',
     intro: 'Federal Budget analysis, practical tax guides, market commentary and downloadable reports from across the Padua team.',
-    items: [
-      { kind: 'report', title: 'Federal Budget 2026–27: Padua branded analysis', href: 'assets/federal-budget-2026-27-branded.docx', date: '13 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-cover.png' },
-      { kind: 'whitepaper', title: 'Federal Budget 2026–27: adviser whitepaper', href: 'assets/federal-budget-2026-27-whitepaper.docx', date: '12 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-whitepaper-cover.png' },
-      { kind: 'whitepaper', title: 'EOFY superannuation strategies 2025–26', href: 'assets/eofy-super-strategies.pdf', date: '21 Apr 2026', authors: 'Rudy Haddad', image: 'assets/eofy-super-cover.png' },
-      { kind: 'report',     title: 'Report placeholder',    href: '#', date: '' },
-      { kind: 'report',     title: 'Report placeholder',    href: '#', date: '' },
-      { kind: 'report',     title: 'Report placeholder',    href: '#', date: '' },
-      { kind: 'whitepaper', title: 'Whitepaper placeholder', href: '#', date: '' },
-    ],
+    items: [...CURATED_RESOURCES, ...BRIDGED_RESOURCES],
   },
 };
 
