@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# The tweaks dev panel is not on production builds anymore, but block its
+# source file from being indexed either way.
+Disallow: /tweaks-panel.jsx
+
+# Asset payloads (no SEO value)
+Disallow: /styles/
+Disallow: /fonts/
+Disallow: /_components/
+
+Sitemap: https://www.paduasolutions.com/sitemap.xml
