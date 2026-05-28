@@ -5,6 +5,20 @@
 
 function ContactPage() {
   const [values, setTweak] = useTweaks(window.__PADUA_TWEAKS_DEFAULTS);
+
+  // The HubSpot Meetings script scans for .meetings-iframe-container at page
+  // load — but React renders that container AFTER the script has already run,
+  // so the calendar comes up blank. Re-inject the embed script once this
+  // component has mounted, so it scans again, finds the now-present container,
+  // and builds Brett's booking iframe.
+  React.useEffect(() => {
+    const s = document.createElement('script');
+    s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    s.async = true;
+    document.body.appendChild(s);
+    return () => { s.remove(); };
+  }, []);
+
   return (
     <>
       <PaduaNav variant={values.navVariant} />
