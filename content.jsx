@@ -701,7 +701,7 @@ const PADUA_CONTENT = {
     eyebrow: 'About Padua',
     title: 'Helping advisers do their best work, so more Australians can access quality advice.',
     p1: 'We are 100% onshore, Australian owned, and ISO 27001 certified. Your client data never leaves Australia.',
-    p2: 'Our team combines experienced advice professionals, intelligent workflow and AI to give advisers the operational leverage they need. We live the EARS values in every engagement: Empathy, Agility, Reliability and Simplicity. <span class="padua-way">One way. Same way. Better way.</span>',
+    p2: 'Our team combines experienced advice professionals, intelligent workflow and AI to give advisers the operational leverage they need. We live the EARS values in every engagement: Empathy, Agility, Reliability and Simplicity. <span class="padua-way">One way. Same way. Better way.</span>',
     cta: 'Read our story',
     meta: [
       { l: 'Founded', v: '2014' },
