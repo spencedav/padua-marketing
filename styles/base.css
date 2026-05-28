@@ -148,10 +148,6 @@ img, svg { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
 
-/* ===== DIRECTION SWITCHING ===== */
-body.dir-a .for-b { display: none !important; }
-body.dir-b .for-a { display: none !important; }
-
 /* ===== UTILS ===== */
 .container { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
 .eyebrow {
@@ -173,49 +169,7 @@ body.dir-b .for-a { display: none !important; }
   flex-shrink: 0;
 }
 
-/* ===== DIRECTION SWITCHER (top-left chip, always visible) ===== */
-.dir-switcher {
-  position: fixed;
-  bottom: 16px; left: 16px;
-  z-index: 90;
-  background: rgba(16, 14, 20, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  padding: 5px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4);
-  font-family: var(--font-body);
-}
-.dir-switcher-label {
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: rgba(255,255,255,0.5);
-  padding: 0 10px 0 14px;
-  white-space: nowrap;
-}
-.dir-switcher-btn {
-  padding: 7px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.65);
-  transition: all 0.18s ease;
-  white-space: nowrap;
-}
-.dir-switcher-btn:hover { color: white; }
-.dir-switcher-btn.active {
-  background: var(--spectrum);
-  color: white;
-  font-weight: 600;
-}
-
-/* ===== HERO SUNSET (shared base, both directions use this gradient) ===== */
+/* ===== HERO SUNSET (shared base) ===== */
 .hero-sunset-bg {
   background: var(--hero-gradient);
   background-size: cover;
