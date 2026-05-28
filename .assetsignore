@@ -8,3 +8,12 @@ README.md
 wrangler.json
 prototypes
 prototypes/**
+screenshots
+screenshots/**
+uploads
+uploads/**
+.thumbnail
+*.docx
+SITEMAP.md
+PLAN.md
+DECISIONS.md

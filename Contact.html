@@ -3,30 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Padua. Website redesign, two directions.</title>
+<title>Contact, Padua</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles/base.css">
 <link rel="stylesheet" href="styles/dir-a.css">
-<link rel="stylesheet" href="styles/dir-b.css">
+<link rel="stylesheet" href="styles/contact.css">
 
 <script>
-  // Tweak defaults, host can rewrite this block on disk via __edit_mode_set_keys
   window.__PADUA_TWEAKS_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "direction": "a",
-    "navVariant": "streams",
-    "showHero": true,
-    "showIntro": true,
-    "showAbout": true,
-    "showStreams": true,
-    "showEcosystem": true,
-    "showProof": true
+    "navVariant": "streams"
   }/*EDITMODE-END*/;
 </script>
 </head>
-<body class="dir-a">
+<body class="dir-a contact-body">
 
 <div id="root"></div>
 
@@ -36,9 +28,10 @@
 
 <script type="text/babel" src="tweaks-panel.jsx"></script>
 <script type="text/babel" src="content.jsx"></script>
-<script type="text/babel" src="dir-a.jsx"></script>
-<script type="text/babel" src="dir-b.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
+<script type="text/babel" src="contact-page.jsx"></script>
+
+<!-- HubSpot Meetings Embed -->
+<script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
 
 </body>
 </html>

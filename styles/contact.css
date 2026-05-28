@@ -1,0 +1,62 @@
+/* ================================================================
+   PADUA, Contact page
+   ================================================================ */
+.dir-a.contact-body { background: var(--paper-soft); }
+.contact-page { display: block; }
+
+.dir-a .contact-hero {
+  background: var(--paper-soft);
+  padding: 96px 0 32px;
+}
+.contact-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--compare);
+  display: inline-block;
+  margin-bottom: 22px;
+}
+.contact-h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(48px, 6vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.contact-h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--discover) 0%, var(--compare) 50%, var(--review) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.contact-sub {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-mid);
+  max-width: 60ch;
+  margin: 0;
+}
+
+.dir-a .contact-meetings {
+  background: var(--paper-soft);
+  padding: 24px 0 96px;
+}
+.meetings-iframe-container {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 720px;
+  box-shadow: 0 24px 56px -30px rgba(26,21,37,0.25);
+}
+.meetings-iframe-container iframe {
+  display: block;
+  width: 100% !important;
+  min-height: 720px;
+  border: 0;
+}

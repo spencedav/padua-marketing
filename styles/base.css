@@ -1,0 +1,178 @@
+/* ================================================================
+   PADUA, BASE STYLES (shared between both directions)
+   ================================================================ */
+
+/* ===== QUINCY CF (display) ===== */
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-Light.otf') format('opentype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-LightItalic.otf') format('opentype');
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-RegularItalic.otf') format('opentype');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-Medium.otf') format('opentype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-MediumItalic.otf') format('opentype');
+  font-weight: 500; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-Bold.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('../fonts/QuincyCF-BoldItalic.otf') format('opentype');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+/* ===== BRAND PALETTE (from Padua Primary Colour Palette, 21 Feb 2022) ===== */
+:root {
+  --discover:   #4a308c;
+  --compare:    #ab2178;
+  --recommend:  #eb2e4d;
+  --review:     #f59436;
+  --text-amber: #d97d20;
+  --yellow:     #f5d534;
+  --teal:       #007282;
+  --grey:       #848389;
+  --black:      #000000;
+
+  --spectrum: linear-gradient(135deg,
+    #4a308c 0%,
+    #ab2178 28%,
+    #eb2e4d 52%,
+    #f59436 78%,
+    #f5d534 100%);
+
+  /* Hero sunset sky, calibrated against the brand spectrum */
+  --hero-gradient:
+    radial-gradient(ellipse 100% 70% at 75% 110%, rgba(245,213,52,0.55), transparent 60%),
+    radial-gradient(ellipse 90% 60% at 25% 120%, rgba(235,46,77,0.55), transparent 60%),
+    radial-gradient(ellipse 80% 55% at 50% 130%, rgba(171,33,120,0.65), transparent 70%),
+    linear-gradient(180deg, #1a0d2e 0%, #2a1240 30%, #4a1a4a 55%, #7a2a3e 75%, #b04020 92%, #d97d20 100%);
+
+  --font-display: 'Quincy CF', Georgia, serif;
+  --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --max: 1280px;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; }
+
+/* ===== DIRECTION SWITCHING ===== */
+body.dir-a .for-b { display: none !important; }
+body.dir-b .for-a { display: none !important; }
+
+/* ===== UTILS ===== */
+.container { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+.eyebrow {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+/* ===== LOGO ===== */
+.padua-logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+.padua-logo-img {
+  height: 30px;
+  width: auto;
+  max-width: none;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ===== DIRECTION SWITCHER (top-left chip, always visible) ===== */
+.dir-switcher {
+  position: fixed;
+  bottom: 16px; left: 16px;
+  z-index: 90;
+  background: rgba(16, 14, 20, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 5px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 12px 30px -10px rgba(0,0,0,0.4);
+  font-family: var(--font-body);
+}
+.dir-switcher-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  padding: 0 10px 0 14px;
+  white-space: nowrap;
+}
+.dir-switcher-btn {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.dir-switcher-btn:hover { color: white; }
+.dir-switcher-btn.active {
+  background: var(--spectrum);
+  color: white;
+  font-weight: 600;
+}
+
+/* ===== HERO SUNSET (shared base, both directions use this gradient) ===== */
+.hero-sunset-bg {
+  background: var(--hero-gradient);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.hero-sunset-bg::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 75% 18%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 45% 12%, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 90% 38%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 10% 22%, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 60% 8%, rgba(255,255,255,0.3), transparent);
+  pointer-events: none;
+}
+
+/* ===== RESPONSIVE BREAKPOINT HELPER ===== */
+@media (max-width: 900px) {
+  .container { padding: 0 22px; }
+}
