@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our team — Padua</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------- design tokens ---------- */
+  :root {
+    --bg: #F5F1EA;
+    --text: #1a1a1a;
+    --text-muted: #5f5f5f;
+    --text-subtle: #8a8a8a;
+    --accent: #993556;
+    --portrait-bg: #C9D4E0;
+    --border: rgba(0,0,0,0.06);
+
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --radius-portrait: 12px;
+    --radius-portrait-sm: 10px;
+    --radius-portrait-xs: 8px;
+
+    --container-max: 1180px;
+    --section-gap: 96px;
+    --row-gap: 48px;
+  }
+
+  /* ---------- reset ---------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+
+  /* ---------- layout container ---------- */
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .team-page { padding: 80px 0 120px; }
+
+  /* ---------- section ---------- */
+  .section {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 64px;
+    margin-bottom: var(--section-gap);
+  }
+  .section:last-child { margin-bottom: 0; }
+  .section-intro h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+  .section-intro p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 24ch;
+  }
+
+  /* ---------- founder feature row (top of section 1) ---------- */
+  .founders-feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: var(--row-gap);
+  }
+  .founder {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .founder-portrait {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-portrait);
+    background: var(--portrait-bg);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .founder-portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .founder-meta { padding-top: 8px; min-width: 0; }
+  .founder-badge {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .founder-name {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.15;
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .founder-bio {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* ---------- grids ---------- */
+  .grid {
+    display: grid;
+    gap: 24px 20px;
+  }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .grid-6 { grid-template-columns: repeat(6, 1fr); }
+  .grid-7 { grid-template-columns: repeat(7, 1fr); }
+
+  /* ---------- person card ---------- */
+  .person { text-align: center; }
+  .person-portrait {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--portrait-bg);
+    border-radius: var(--radius-portrait-sm);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .person-portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .person-name {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.2;
+    margin: 0 0 4px;
+    color: var(--text);
+  }
+  .person-role {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* smaller variant for the "meet the team" grid */
+  .person-sm .person-portrait { border-radius: var(--radius-portrait-xs); margin-bottom: 10px; }
+  .person-sm .person-name { font-size: 14px; }
+  .person-sm .person-role { font-size: 11px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 960px) {
+    :root { --section-gap: 72px; --row-gap: 36px; }
+    .section { grid-template-columns: 1fr; gap: 32px; }
+    .section-intro h2 { font-size: 36px; }
+    .section-intro p { max-width: 100%; }
+    .founders-feature { grid-template-columns: 1fr; gap: 24px; }
+    .grid-7 { grid-template-columns: repeat(5, 1fr); }
+    .grid-6 { grid-template-columns: repeat(4, 1fr); }
+    .grid-5 { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .team-page { padding: 56px 0 80px; }
+    .container { padding: 0 20px; }
+    .section-intro h2 { font-size: 30px; }
+    .founder { gap: 16px; }
+    .founder-portrait { width: 96px; height: 96px; }
+    .founder-name { font-size: 19px; }
+    .grid { gap: 20px 14px; }
+    .grid-7, .grid-6, .grid-5 { grid-template-columns: repeat(3, 1fr); }
+    .person-name { font-size: 14px; }
+    .person-role { font-size: 11px; }
+  }
+  @media (max-width: 420px) {
+    .grid-7, .grid-6, .grid-5 { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5af514fb1be24d3a90fcbadc2117217d"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<main class="team-page">
+  <div class="container">
+
+    <!-- ============================== -->
+    <!-- SECTION 1: FOUNDERS + BOARD    -->
+    <!-- ============================== -->
+    <section class="section">
+      <div class="section-intro">
+        <h2>The people who built Padua.</h2>
+        <p>Our founders and board set the direction — and stay close to the work. They're the reason Padua is family-led, Kiama-headquartered, and 100% Australian onshore.</p>
+      </div>
+
+      <div class="section-body">
+        <!-- featured founders -->
+        <div class="founders-feature">
+          <article class="founder">
+            <div class="founder-portrait">
+              <!-- <img src="/images/anne-marie.jpg" alt="Anne-Marie Esler"> -->
+            </div>
+            <div class="founder-meta">
+              <p class="founder-badge">Co-founder</p>
+              <h3 class="founder-name">Anne-Marie Esler</h3>
+              <p class="founder-bio">Family-led, Kiama-headquartered, 100% Australian onshore.</p>
+            </div>
+          </article>
+
+          <article class="founder">
+            <div class="founder-portrait">
+              <!-- <img src="/images/matthew.jpg" alt="Matthew Esler"> -->
+            </div>
+            <div class="founder-meta">
+              <p class="founder-badge">Co-founder</p>
+              <h3 class="founder-name">Matthew Esler</h3>
+              <p class="founder-bio">Sets direction and stays close to the work every day.</p>
+            </div>
+          </article>
+        </div>
+
+        <!-- rest of board in compact grid -->
+        <div class="grid grid-5">
+          <article class="person person-sm">
+            <div class="person-portrait"><!-- <img src="" alt="Gareth Turner"> --></div>
+            <p class="person-name">Gareth Turner</p>
+            <p class="person-role">Board director</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Peter O'Connell</p>
+            <p class="person-role">Board director</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Matt Sheehan</p>
+            <p class="person-role">Board director</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Lisa Wong</p>
+            <p class="person-role">Board director</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Mark Patel</p>
+            <p class="person-role">Board director</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SECTION 2: HEADS OF PRACTICE   -->
+    <!-- ============================== -->
+    <section class="section">
+      <div class="section-intro">
+        <h2>Heads of practice.</h2>
+        <p>The leaders running concierge, sales, research and hypercare across the business. Every adviser working with us is supported by their teams.</p>
+      </div>
+
+      <div class="section-body">
+        <div class="grid grid-5">
+          <article class="person">
+            <div class="person-portrait"></div>
+            <p class="person-name">Helen Roelofsen</p>
+            <p class="person-role">Head of Concierge Services</p>
+          </article>
+          <article class="person">
+            <div class="person-portrait"></div>
+            <p class="person-name">Brett Canning</p>
+            <p class="person-role">Head of Sales &amp; Relationships</p>
+          </article>
+          <article class="person">
+            <div class="person-portrait"></div>
+            <p class="person-name">Rudy Haddad</p>
+            <p class="person-role">Head of Research</p>
+          </article>
+          <article class="person">
+            <div class="person-portrait"></div>
+            <p class="person-name">Simon Dawe</p>
+            <p class="person-role">Delivery Executive</p>
+          </article>
+          <article class="person">
+            <div class="person-portrait"></div>
+            <p class="person-name">Mark Patel</p>
+            <p class="person-role">Head of Technology</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== -->
+    <!-- SECTION 3: MEET THE TEAM       -->
+    <!-- ============================== -->
+    <section class="section">
+      <div class="section-intro">
+        <h2>Meet the team.</h2>
+        <p>A few of the people you'll meet across our delivery, technology and operations teams.</p>
+      </div>
+
+      <div class="section-body">
+        <div class="grid grid-7">
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Josh Marley</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Amir Moghami</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Sarah Lin</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Tom Reid</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Kate Liu</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Dan Park</p>
+          </article>
+          <article class="person person-sm">
+            <div class="person-portrait"></div>
+            <p class="person-name">Eva Chen</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+</body>
+</html>
