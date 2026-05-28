@@ -745,6 +745,29 @@
   height: 170px;
   max-width: 360px;
 }
+/* Connecting lines from the Padua core to each of the six surrounding
+   nodes. Drawn in percentage space so they stay anchored to the visible
+   node positions at any container size. The lines sit BEHIND the
+   core/nodes (z-index 1 vs 2 on those) so the pills cleanly cap the
+   line ends. Animated to fade in once the pillar card reveals. */
+.dir-a .hub-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.2s;
+}
+.dir-a .hero.is-revealed .hub-lines { opacity: 1; }
+.dir-a .hub-lines line {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 1;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 2 4;
+}
 .dir-a .hub-core {
   position: absolute;
   left: 50%; top: 50%;

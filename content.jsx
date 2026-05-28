@@ -998,7 +998,7 @@ function PaduaFooter() {
 // SHARED, Hero carousel + pillar visuals (used by both A and B)
 // =====================================================
 
-function HeroCarousel({ pillars, autoAdvance = true, intervalMs = 4800 }) {
+function HeroCarousel({ pillars, autoAdvance = true, intervalMs = 6500 }) {
   const [active, setActive] = React.useState(0);
   React.useEffect(() => {
     if (!autoAdvance) return undefined;
@@ -1038,8 +1038,20 @@ function HeroCarousel({ pillars, autoAdvance = true, intervalMs = 4800 }) {
 }
 
 function PillarHub() {
+  // Connecting lines from the Padua core to each of the six nodes, drawn in
+  // percentage space so the lines stay anchored to the visible node positions
+  // regardless of how the .hub container is sized. preserveAspectRatio="none"
+  // + vector-effect: non-scaling-stroke keeps the stroke crisp.
   return (
     <div className="hub">
+      <svg className="hub-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="50" y1="50" x2="10" y2="6"  />
+        <line x1="50" y1="50" x2="90" y2="6"  />
+        <line x1="50" y1="50" x2="10" y2="94" />
+        <line x1="50" y1="50" x2="90" y2="94" />
+        <line x1="50" y1="50" x2="2"  y2="50" />
+        <line x1="50" y1="50" x2="98" y2="50" />
+      </svg>
       <div className="hub-core">Padua</div>
       <span className="hub-node hub-node-1">Xplan</span>
       <span className="hub-node hub-node-2">Your CRM</span>
