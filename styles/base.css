@@ -75,6 +75,69 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --max: 1280px;
+
+  /* =========================================================
+     COMPONENT-LIBRARY TOKENS (ported from _components/tokens.css)
+     The redesign pages don't load the library; these tokens
+     unlock the same polish primitives (frosted glass, methodology
+     glow, atmospheric halos) without a full pattern refactor.
+
+     Naming + alpha steps follow the library convention:
+       -05  ≈  5%  · barely-there background wash
+       -10  ≈ 10%  · soft section halo / pill background
+       -15  ≈ 15%  · visible pill bg / accent halo
+       -25  ≈ 25%  · stronger glow (active states)
+     ========================================================= */
+
+  /* Hex-alpha glow tokens, one set per methodology colour */
+  --discover-05:  #4a308c0d;  --discover-10:  #4a308c1a;  --discover-15:  #4a308c26;  --discover-25:  #4a308c40;
+  --compare-05:   #ab21780d;  --compare-10:   #ab21781a;  --compare-15:   #ab217826;  --compare-25:   #ab217840;
+  --recommend-05: #eb2e4d0d;  --recommend-10: #eb2e4d1a;  --recommend-15: #eb2e4d26;  --recommend-25: #eb2e4d40;
+  --review-05:    #f594360d;  --review-10:    #f594361a;  --review-15:    #f5943626;  --review-25:    #f5943640;
+  --yellow-05:    #f5d5340d;  --yellow-10:    #f5d5341a;  --yellow-15:    #f5d53426;  --yellow-25:    #f5d53440;
+  --teal-05:      #0072820d;  --teal-10:      #0072821a;  --teal-15:      #00728226;  --teal-25:      #00728240;
+
+  /* Frosted-glass surfaces */
+  --glass-bg-paper: rgba(250, 248, 244, 0.72);
+  --glass-bg-ink:   rgba(22, 18, 31, 0.72);
+  --glass-bg-warm:  rgba(241, 237, 228, 0.6);
+  --glass-blur-sm:  blur(8px);
+  --glass-blur-md:  blur(14px);
+  --glass-blur-lg:  blur(20px);
+  --glass-border-light: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-border-dark:  1px solid rgba(22, 18, 31, 0.08);
+
+  /* Atmospheric halos — soft radial washes for section backgrounds */
+  --halo-discover:  radial-gradient(60% 50% at 50% 50%, var(--discover-15)  0%, transparent 70%);
+  --halo-compare:   radial-gradient(60% 50% at 50% 50%, var(--compare-15)   0%, transparent 70%);
+  --halo-recommend: radial-gradient(60% 50% at 50% 50%, var(--recommend-15) 0%, transparent 70%);
+  --halo-review:    radial-gradient(60% 50% at 50% 50%, var(--review-15)    0%, transparent 70%);
+  --halo-teal:      radial-gradient(60% 50% at 50% 50%, var(--teal-15)      0%, transparent 70%);
+  --halo-spectrum:
+    radial-gradient(45% 40% at 18% 25%, var(--discover-15)  0%, transparent 65%),
+    radial-gradient(40% 35% at 82% 20%, var(--compare-15)   0%, transparent 65%),
+    radial-gradient(50% 45% at 70% 80%, var(--review-15)    0%, transparent 65%),
+    radial-gradient(35% 30% at 25% 85%, var(--recommend-15) 0%, transparent 65%);
+
+  /* Fade-edge masks for full-bleed strips / marquees */
+  --fade-edges-h: linear-gradient(90deg, transparent 0%, #000 8% 92%, transparent 100%);
+  --fade-edges-v: linear-gradient(180deg, transparent 0%, #000 8% 92%, transparent 100%);
+
+  /* Motion — calm, no bounces, matches the rest of the system */
+  --ease-out:      cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 180ms;
+  --duration-base: 280ms;
+  --duration-slow: 480ms;
+
+  /* Spacing scale */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-5: 24px;  --space-6: 32px;
+  --space-7: 48px;  --space-8: 64px;  --space-9: 96px;
+
+  /* Radius */
+  --radius:    14px;
+  --radius-lg: 22px;
 }
 
 /* ===== RESET ===== */
