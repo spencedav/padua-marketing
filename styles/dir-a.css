@@ -1031,7 +1031,9 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
 }
 .dir-a .stream::before {
   content: "";
@@ -1039,7 +1041,25 @@
   top: 0; left: 0; right: 0;
   height: 4px;
   background: var(--spectrum);
+  z-index: 2;
 }
+/* Methodology halo bleeding up from the bottom-right corner.
+   Calm at rest, intensifies on hover. Each card gets its own brand colour. */
+.dir-a .stream::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--halo-discover); /* overridden per card below */
+  opacity: 0.55;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+.dir-a .stream > * { position: relative; z-index: 1; }
+.dir-a .streams-grid > .stream:nth-child(1)::after { background: radial-gradient(70% 60% at 85% 100%, var(--discover-15)  0%, transparent 70%); }
+.dir-a .streams-grid > .stream:nth-child(2)::after { background: radial-gradient(70% 60% at 85% 100%, var(--compare-15)   0%, transparent 70%); }
+.dir-a .streams-grid > .stream:nth-child(3)::after { background: radial-gradient(70% 60% at 85% 100%, var(--review-15)    0%, transparent 70%); }
+.dir-a .stream:hover::after { opacity: 1; }
 .dir-a .stream:hover {
   transform: translateY(-3px);
   border-color: rgba(26,21,37,0.18);
@@ -1297,7 +1317,9 @@
   padding: 28px 30px;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: border-color var(--duration-base) var(--ease-out),
+              transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
   position: relative;
   overflow: hidden;
 }
@@ -1307,10 +1329,30 @@
   top: 0; left: 0; right: 0;
   height: 4px;
   background: var(--spectrum);
+  z-index: 2;
 }
+/* Methodology-tinted halo: invisible at rest, fades in on hover. The two
+   service cards (Paraplanning, Transition) get Compare + Recommend; the two
+   standalone cards (WealthData, Media & Advertising) get Teal + Yellow. */
+.dir-a .eco-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+.dir-a .eco-card > * { position: relative; z-index: 1; }
+.dir-a .eco-tier-grid > .eco-card:nth-child(1)::after { background: radial-gradient(80% 70% at 80% 110%, var(--compare-15)   0%, transparent 70%); }
+.dir-a .eco-tier-grid > .eco-card:nth-child(2)::after { background: radial-gradient(80% 70% at 80% 110%, var(--recommend-15) 0%, transparent 70%); }
+.dir-a .eco-tier-grid + .eco-tier-label + .eco-tier-grid > .eco-card:nth-child(1)::after { background: radial-gradient(80% 70% at 80% 110%, var(--teal-15)   0%, transparent 70%); }
+.dir-a .eco-tier-grid + .eco-tier-label + .eco-tier-grid > .eco-card:nth-child(2)::after { background: radial-gradient(80% 70% at 80% 110%, var(--yellow-15) 0%, transparent 70%); }
+.dir-a .eco-card:hover::after { opacity: 1; }
 .dir-a .eco-card:hover {
   border-color: rgba(26,21,37,0.2);
   transform: translateY(-2px);
+  box-shadow: 0 20px 40px -28px rgba(0,0,0,0.18);
 }
 .dir-a .eco-card h4 {
   font-family: var(--font-display);

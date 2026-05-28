@@ -720,11 +720,28 @@
   border-radius: 8px;
   padding: 28px 26px;
   position: relative;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) var(--ease-out);
   cursor: pointer;
   display: flex; flex-direction: column;
   overflow: hidden;
 }
+/* Methodology-tinted halo bleeding from the corner; each card carries a
+   different brand colour, surfacing on hover. */
+.dir-b .stream::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+.dir-b .stream > * { position: relative; z-index: 1; }
+.dir-b .streams-panel > .stream:nth-child(1)::after { background: radial-gradient(70% 60% at 85% 100%, var(--discover-15) 0%, transparent 70%); }
+.dir-b .streams-panel > .stream:nth-child(2)::after { background: radial-gradient(70% 60% at 85% 100%, var(--compare-15)  0%, transparent 70%); }
+.dir-b .streams-panel > .stream:nth-child(3)::after { background: radial-gradient(70% 60% at 85% 100%, var(--review-15)   0%, transparent 70%); }
+.dir-b .stream:hover::after { opacity: 1; }
 .dir-b .stream:hover {
   transform: translateY(-2px);
   border-color: var(--line-2);
@@ -1044,8 +1061,27 @@
   border-radius: 10px;
   padding: 26px 28px;
   display: flex; flex-direction: column;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color var(--duration-base) var(--ease-out),
+              background  var(--duration-base) var(--ease-out);
+  position: relative;
+  overflow: hidden;
 }
+/* Methodology-tinted halo, low alpha so it reads on the dark dir-b surface */
+.dir-b .eco-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+  pointer-events: none;
+  z-index: 0;
+}
+.dir-b .eco-card > * { position: relative; z-index: 1; }
+.dir-b .eco-tier-grid > .eco-card:nth-child(1)::after { background: radial-gradient(80% 70% at 80% 110%, var(--compare-25)   0%, transparent 70%); }
+.dir-b .eco-tier-grid > .eco-card:nth-child(2)::after { background: radial-gradient(80% 70% at 80% 110%, var(--recommend-25) 0%, transparent 70%); }
+.dir-b .eco-tier-grid + .eco-tier-label + .eco-tier-grid > .eco-card:nth-child(1)::after { background: radial-gradient(80% 70% at 80% 110%, var(--teal-25)   0%, transparent 70%); }
+.dir-b .eco-tier-grid + .eco-tier-label + .eco-tier-grid > .eco-card:nth-child(2)::after { background: radial-gradient(80% 70% at 80% 110%, var(--yellow-25) 0%, transparent 70%); }
+.dir-b .eco-card:hover::after { opacity: 1; }
 .dir-b .eco-card:hover {
   border-color: rgba(255,255,255,0.18);
   background: rgba(255,255,255,0.05);
