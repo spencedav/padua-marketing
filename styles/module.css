@@ -30,15 +30,30 @@
   --m-panel-mid:  var(--teal);
   --m-panel-to:   #008a93;
 }
+/* NOTE: class names below are legacy accent labels; the COLOUR each resolves
+   to is now mapped to the official Padua palette (per the brand colour PDF).
+   Off-palette navy/gold/forest values have been removed entirely. */
+
+/* WealthReview → Review (orange). [class name "review" now matches its colour] */
 .dir-a .module-review {
-  --m-accent: var(--compare);
+  --m-accent: var(--review);
   --m-accent-2: var(--text-amber);
   --m-accent-3: var(--yellow);
-  --m-panel-from: #7a2a3e;
+  --m-panel-from: #5a3d10;
   --m-panel-mid:  var(--text-amber);
   --m-panel-to:   var(--review);
 }
+/* Paraplanning → Compare (magenta). */
 .dir-a .module-magenta {
+  --m-accent: var(--compare);
+  --m-accent-2: var(--recommend);
+  --m-accent-3: var(--review);
+  --m-panel-from: #3a0a2a;
+  --m-panel-mid:  var(--compare);
+  --m-panel-to:   var(--recommend);
+}
+/* Transition management → Recommend (red). [legacy name "amber"] */
+.dir-a .module-amber {
   --m-accent: var(--recommend);
   --m-accent-2: var(--review);
   --m-accent-3: var(--yellow);
@@ -46,37 +61,33 @@
   --m-panel-mid:  var(--compare);
   --m-panel-to:   var(--recommend);
 }
-.dir-a .module-amber {
-  --m-accent: #2d2a6e;
-  --m-accent-2: #4a45a8;
-  --m-accent-3: #6e6acc;
-  --m-panel-from: #0d0a2a;
-  --m-panel-mid:  #2d2a6e;
-  --m-panel-to:   #4a45a8;
-}
+/* WealthData → Teal. [legacy name "navy"] */
 .dir-a .module-navy {
-  --m-accent: #1e3a5f;
-  --m-accent-2: #2c5282;
-  --m-accent-3: #4a90b8;
-  --m-panel-from: #0a1929;
-  --m-panel-mid:  #1e3a5f;
-  --m-panel-to:   #2c5282;
+  --m-accent: var(--teal);
+  --m-accent-2: #008a93;
+  --m-accent-3: var(--yellow);
+  --m-panel-from: #003e48;
+  --m-panel-mid:  var(--teal);
+  --m-panel-to:   #008a93;
 }
+/* WealthAI → Bright Yellow accent (text uses readable text-amber). [legacy "gold"] */
 .dir-a .module-gold {
-  --m-accent: #b88a1f;
-  --m-accent-2: #d9a830;
-  --m-accent-3: #f5d534;
-  --m-panel-from: #1d1208;
-  --m-panel-mid:  #5a3d10;
-  --m-panel-to:   #b88a1f;
+  --m-accent: var(--text-amber);
+  --m-accent-2: var(--review);
+  --m-accent-3: var(--yellow);
+  --m-panel-from: #5a3d10;
+  --m-panel-mid:  var(--text-amber);
+  --m-panel-to:   var(--yellow);
 }
+/* Careers → Spectrum: text accent = Discover purple, gradient spans the full
+   brand spectrum (purple → magenta → red → orange → yellow). [legacy "forest"] */
 .dir-a .module-forest {
-  --m-accent: #2d6e6e;
-  --m-accent-2: #468585;
-  --m-accent-3: #6fb1a3;
-  --m-panel-from: #0d2a2a;
-  --m-panel-mid:  #1f4f4f;
-  --m-panel-to:   #3a8585;
+  --m-accent: var(--discover);
+  --m-accent-2: var(--recommend);
+  --m-accent-3: var(--yellow);
+  --m-panel-from: #2a1a52;
+  --m-panel-mid:  var(--compare);
+  --m-panel-to:   var(--review);
 }
 
 /* Each module's primary CTA picks up its own gradient. SteveAI = purple→yellow,
@@ -1563,7 +1574,7 @@
   stroke-dasharray: 1100;
   stroke-dashoffset: 1100;
   animation: nv-draw 2.4s ease-out forwards;
-  filter: drop-shadow(0 2px 8px rgba(74,144,184,0.4));
+  filter: drop-shadow(0 2px 8px rgba(0,114,130,0.4));
 }
 @keyframes nv-draw { to { stroke-dashoffset: 0; } }
 @keyframes nv-fade-in { to { opacity: 1; } }
@@ -1684,14 +1695,14 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #2eb872;
+  background: var(--teal); /* on-palette 'active' status (was off-spec green) */
   border: 2px solid var(--paper);
-  box-shadow: 0 0 0 0 rgba(46, 184, 114, 0.45);
+  box-shadow: 0 0 0 0 rgba(0, 114, 130, 0.45);
   animation: status-pulse 2.4s ease-in-out infinite;
 }
 @keyframes status-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 184, 114, 0.45); }
-  50%      { box-shadow: 0 0 0 6px rgba(46, 184, 114, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 114, 130, 0.45); }
+  50%      { box-shadow: 0 0 0 6px rgba(0, 114, 130, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .module-cta-person-status { animation: none; }

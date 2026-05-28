@@ -828,14 +828,14 @@ function ModuleArtwork({ accent, offset, tweaks }) {
           {/* Soft area fill */}
           <path
             d="M 50 400 L 150 360 L 250 340 L 350 280 L 450 230 L 550 200 L 650 140 L 750 90 L 750 500 L 50 500 Z"
-            fill="rgba(74,144,184,0.12)"
+            fill="rgba(0,138,147,0.14)"
             className="nv-area"
           />
           {/* Main growing line */}
           <path
             d="M 50 400 L 150 360 L 250 340 L 350 280 L 450 230 L 550 200 L 650 140 L 750 90"
             fill="none"
-            stroke="rgba(160,200,230,0.95)"
+            stroke="rgba(150,220,225,0.95)"
             strokeWidth="2.5"
             strokeLinejoin="round"
             className="nv-line"
