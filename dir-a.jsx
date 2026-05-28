@@ -369,7 +369,7 @@ function DirectionA({ show, navVariant }) {
             <div className="logo-marquee">
               <div className="logo-track">
                 {[...c.proof.logos, ...c.proof.logos].map((logo, i) => (
-                  <span className="logo-pill" key={i} aria-hidden={i >= c.proof.logos.length}>{logo}</span>
+                  <img className="logo-img" key={i} src={logo.src} alt={logo.name} aria-hidden={i >= c.proof.logos.length} loading="lazy" />
                 ))}
               </div>
             </div>

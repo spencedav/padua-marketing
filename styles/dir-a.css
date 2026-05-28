@@ -1611,6 +1611,21 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
+/* Real partner logo images — uniform height, greyscale at rest, full colour
+   on hover. Reads more professional than text. */
+.dir-a .logo-img {
+  height: 34px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: opacity .25s ease, filter .25s ease;
+}
+.dir-a .logo-img:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
 
 /* ===== FOOTER (light variant) ===== */
 .dir-a .footer {

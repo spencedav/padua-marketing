@@ -646,7 +646,17 @@ const PADUA_CONTENT = {
     ],
     logosEyebrow: 'Trusted across Australian advice',
     logosIntro: 'Working with leading licensees, platforms, super funds and investment managers.',
-    logos: ['Count', 'CFS', 'BT Panorama', 'North', 'Morningstar', 'MLC / Expand', 'Findex', 'Euroz Hartleys', 'WT Financial Group', 'Canaccord'],
+    // Real partner logos (carried over from the prior site) — images read
+    // more professional than text pills. White-on-light logos omitted.
+    logos: [
+      { name: 'Invest Blue',  src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bc7c2c651309362b971_Invest-Blue-logo.png' },
+      { name: 'Count',        src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432967106c4a51312feed5_count-logo.svg' },
+      { name: 'Fitzpatricks', src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432b303137cb430dca61eb_Fitzpatricks.png' },
+      { name: 'Findex',       src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/656fe30d79afcd6c258603aa_findex-logo.svg' },
+      { name: 'Emerge',       src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/65432bf4453f23c395598081_emerge-paper.png' },
+      { name: 'Finchley Kent',src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/67e60ac854180ce450ef9d0d_Finchley_Kent_Logo%20copy.png' },
+      { name: 'LFG',          src: 'https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/67e60b13efcc5d785d51f02a_LFG-Transparent.png' },
+    ],
   },
   contact: {
     eyebrow: 'Get in touch',
