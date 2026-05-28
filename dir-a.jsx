@@ -247,7 +247,7 @@ function DirectionA({ show, navVariant }) {
 
             <div className="streams-grid" data-reveal>
               {c.streams.items.map((s) => (
-                <a className={`stream${s.featured ? ' stream-featured' : ''}`} key={s.h} href="#">
+                <a className={`stream${s.featured ? ' stream-featured' : ''}`} key={s.h} href={s.href || '#'}>
                   {s.tag && <div className="stream-tag">{s.tag}</div>}
                   <h3>{s.h}</h3>
                   <p>{s.p}</p>
@@ -301,7 +301,7 @@ function DirectionA({ show, navVariant }) {
                 <div className="eco-card" key={s.h}>
                   <h4>{s.h}</h4>
                   <p>{s.p}</p>
-                  <a className="eco-cta" href="#">Learn more</a>
+                  <a className="eco-cta" href={s.href || '#'}>Learn more</a>
                 </div>
               ))}
             </div>
@@ -314,7 +314,7 @@ function DirectionA({ show, navVariant }) {
                 <div className="eco-card" key={s.h}>
                   <h4>{s.h}</h4>
                   <p>{s.p}</p>
-                  <a className="eco-cta" href="#">Learn more</a>
+                  <a className="eco-cta" href={s.href || '#'}>Learn more</a>
                 </div>
               ))}
             </div>

@@ -543,6 +543,7 @@ const PADUA_CONTENT = {
         h: 'Advisers & Licensees',
         p: 'The Padua Advice Portal. A modular, AI-augmented advice platform with experienced Advice Guides supporting every step.',
         cta: 'Explore the portal',
+        href: 'Padua Portal.html',
         featured: true,
       },
       {
@@ -550,12 +551,14 @@ const PADUA_CONTENT = {
         h: 'Platforms & Super Funds',
         p: 'Data integration, modelling tools, member engagement video and open banking technology for platform operators and super funds.',
         cta: 'Explore solutions',
+        href: 'product-providers.html',
       },
       {
         tag: '',
         h: 'Investment Managers',
         p: 'Fund administration tooling, investment analytics, market data and adviser advertising channels.',
         cta: 'Explore solutions',
+        href: 'product-providers.html',
       },
     ],
   },
@@ -574,20 +577,24 @@ const PADUA_CONTENT = {
       {
         h: 'Paraplanning',
         p: 'Onshore paraplanners and Advice Guides prepare SOAs, research and modelling. The fastest path to scaling your advice capacity without scaling your team.',
+        href: 'Paraplanning.html',
       },
       {
         h: 'Transition Management',
         p: 'End-to-end support for moving clients between platforms and providers. Implementation handled, reporting clear, clients kept informed throughout.',
+        href: 'Transition Management.html',
       },
     ],
     standalone: [
       {
         h: 'WealthData',
         p: 'Adviser, superannuation and SMSF insights powering smarter decisions across the advice industry.',
+        href: 'WealthData.html',
       },
       {
         h: 'Media & Advertising',
         p: "Reach Australia's advice market through Padua's owned channels and adviser networks.",
+        href: 'product-providers.html',
       },
     ],
   },

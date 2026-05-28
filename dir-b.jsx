@@ -103,7 +103,7 @@ function DirectionB({ show, navVariant }) {
               {c.streams.items.map((s) => (
                 <a
                   key={s.h}
-                  href="#"
+                  href={s.href || '#'}
                   className={`stream${s.featured ? ' stream-featured' : ''}`}
                 >
                   <div className="stream-tag">{s.tag}</div>
@@ -159,7 +159,7 @@ function DirectionB({ show, navVariant }) {
                 <div className="eco-card" key={s.h}>
                   <h4>{s.h}</h4>
                   <p>{s.p}</p>
-                  <a className="eco-cta" href="#">Learn more</a>
+                  <a className="eco-cta" href={s.href || '#'}>Learn more</a>
                 </div>
               ))}
             </div>
@@ -172,7 +172,7 @@ function DirectionB({ show, navVariant }) {
                 <div className="eco-card" key={s.h}>
                   <h4>{s.h}</h4>
                   <p>{s.p}</p>
-                  <a className="eco-cta" href="#">Learn more</a>
+                  <a className="eco-cta" href={s.href || '#'}>Learn more</a>
                 </div>
               ))}
             </div>
