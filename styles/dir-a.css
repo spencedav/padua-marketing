@@ -1786,11 +1786,19 @@
 .dir-a .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
 /* Mobile drawer overlay — closed by default. Always rendered so the
-   slide-in transition has something to animate from. */
+   slide-in transition has something to animate from.
+   Positioned BELOW the nav (top: 60px = mobile .nav-inner height) so the
+   sticky nav bar with the hamburger-to-X button stays visible. Without
+   this, the drawer covered the nav and there was no visible close
+   affordance — content also visually clipped against the iOS status
+   bar area at the very top of the screen. */
 .dir-a .nav-mobile-overlay {
   position: fixed;
-  inset: 0;
-  z-index: 200;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 90;
   pointer-events: none;
   visibility: hidden;
   transition: visibility 0s linear .3s;
@@ -1814,7 +1822,9 @@
 }
 .dir-a .nav-mobile-overlay.is-open .nav-mobile-scrim { opacity: 1; }
 
-/* The drawer itself — slides in from the right. */
+/* The drawer itself — slides in from the right.
+   Now sits inside the overlay which starts below the nav, so we use a
+   modest top padding instead of 80px (no need to clear a covered nav). */
 .dir-a .nav-mobile-drawer {
   position: absolute;
   top: 0; right: 0; bottom: 0;
@@ -1824,7 +1834,7 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
-  padding: 80px 28px 28px;
+  padding: 32px 28px 32px;
   overflow-y: auto;
   overscroll-behavior: contain;
   transform: translateX(100%);
