@@ -178,11 +178,11 @@ body.dir-b .for-a { display: none !important; }
 }
 
 /* ============================================================
-   EARS CIRCULAR RIVER (shared component)
-   Used by dir-a + dir-b homepage About sections and the
-   standalone "Who we are" page. Brand-palette aligned: stations
-   pick up Discover / Compare / Recommend / Review tokens, the
-   "water" current uses Teal.
+   EARS CIRCULAR RIVER — Messenger edition (shared component)
+   Used by dir-a + dir-b homepage About sections and the standalone
+   "Who we are" page. Brand-palette aligned: stations pick up
+   Discover / Compare / Recommend / Review tokens; the messenger
+   + trail use a brand-teal tint.
    ============================================================ */
 .river-svg-wrap {
   position: relative;
@@ -201,57 +201,76 @@ body.dir-b .for-a { display: none !important; }
 }
 .river-svg-wrap:hover .river-svg { transform: rotateX(2deg); }
 
-/* Current line — slow drift */
-@keyframes river-flow { to { stroke-dashoffset: -80; } }
-.river-current      { stroke-dasharray: 6 18; animation: river-flow 6s linear infinite; }
-.river-current-soft { stroke-dasharray: 2 22; animation: river-flow 9s linear infinite reverse; opacity: 0.5; }
-
-/* Drops drifting along the circle. The offset-path traces the river circle. */
-@keyframes river-drift { from { offset-distance: 0%; } to { offset-distance: 100%; } }
-.river-drop {
+/* The messenger — one arrowhead orbiting clockwise; offset-rotate keeps
+   the tip aligned with the direction of travel. Keep this duration in
+   sync with ORBIT_MS in the EARSWheel component. */
+@keyframes river-messenger-orbit {
+  from { offset-distance: 0%;   }
+  to   { offset-distance: 100%; }
+}
+.river-messenger {
   offset-path: path('M 280 60 A 220 220 0 1 1 279.99 60');
   offset-rotate: auto;
-  animation: river-drift 14s linear infinite;
+  animation: river-messenger-orbit 16s linear infinite;
+  transform-origin: center;
 }
 
-/* Station ambient halo — staggered breath */
-@keyframes river-halo-breathe {
-  0%, 100% { opacity: 0.25; transform: scale(1); }
-  50%      { opacity: 0.55; transform: scale(1.18); }
+/* The comet trail — same orbit, each dot lagging via negative delay */
+.river-trail-dot {
+  offset-path: path('M 280 60 A 220 220 0 1 1 279.99 60');
+  offset-rotate: auto;
+  animation: river-messenger-orbit 16s linear infinite;
+  pointer-events: none;
+}
+
+/* Ambient halo — gentle breath baseline, intensified during greeting */
+@keyframes river-halo-ambient {
+  0%, 100% { opacity: 0.18; transform: scale(1);    }
+  50%      { opacity: 0.32; transform: scale(1.1);  }
 }
 .river-halo {
   transform-origin: center;
   transform-box: fill-box;
-  animation: river-halo-breathe 5s ease-in-out infinite;
+  animation: river-halo-ambient 5s ease-in-out infinite;
   pointer-events: none;
-  filter: blur(8px);
+  filter: blur(10px);
 }
 .river-halo.h1 { animation-delay: 0s; }
 .river-halo.h2 { animation-delay: 1.25s; }
 .river-halo.h3 { animation-delay: 2.5s; }
 .river-halo.h4 { animation-delay: 3.75s; }
 
-/* Station body — subtle scale on hover only, no bob */
+/* Station body — calm baseline, scales on hover */
 .river-station        { cursor: pointer; transition: filter 0.3s; }
 .river-station:hover  { filter: brightness(1.15); }
 .river-station-circ   {
   transform-origin: center;
   transform-box: fill-box;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .river-station:hover .river-station-circ { transform: scale(1.1); }
 .river-station-shadow { opacity: 0.18; filter: blur(4px); }
 
-/* Click ripple from station into the river */
-@keyframes river-ripple {
-  0%   { r: 48;  opacity: 0.6; stroke-width: 2;   }
-  100% { r: 120; opacity: 0;   stroke-width: 0.5; }
+/* "Greeting" — fired imperatively from JS as the messenger arrives.
+   The station pulses, the halo blooms, and a ripple radiates outward. */
+@keyframes river-greet-circ {
+  0%   { transform: scale(1);    }
+  30%  { transform: scale(1.18); }
+  100% { transform: scale(1);    }
 }
-.river-ripple {
-  animation: river-ripple 1.4s ease-out forwards;
-  pointer-events: none;
-  fill: none;
+@keyframes river-greet-halo {
+  0%   { opacity: 0.3;  transform: scale(1);   }
+  40%  { opacity: 0.85; transform: scale(1.5); }
+  100% { opacity: 0.3;  transform: scale(1);   }
 }
+@keyframes river-greet-ripple {
+  0%   { r: 48;  opacity: 0.7; stroke-width: 2.5; }
+  100% { r: 140; opacity: 0;   stroke-width: 0.5; }
+}
+.river-station.is-greeting .river-station-circ { animation: river-greet-circ 2.2s ease-out; }
+.river-station.is-greeting .river-halo,
+.river-halo.river-halo.is-greeting             { animation: river-greet-halo 2.2s ease-out; }
+.river-greet-ripple                            { animation: river-greet-ripple 1.6s ease-out forwards; pointer-events: none; fill: none; }
 
 .river-station-name {
   font-family: var(--font-body);
@@ -262,6 +281,8 @@ body.dir-b .for-a { display: none !important; }
   text-anchor: middle;
   letter-spacing: 0.3px;
 }
+
+/* Mantra labels — fade up when their station is being greeted */
 .river-outer-q {
   font-family: var(--font-body);
   font-size: 13px;
@@ -271,8 +292,13 @@ body.dir-b .for-a { display: none !important; }
   font-weight: 400;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  transition: fill 0.4s ease, font-weight 0.4s ease;
 }
-.river-tick     { stroke: var(--ink-light, var(--grey)); stroke-width: 0.5; opacity: 0.5; }
+.river-outer-q.is-active {
+  fill: var(--ink, #1a1525);
+  font-weight: 500;
+}
+.river-tick      { stroke: var(--ink-light, var(--grey)); stroke-width: 0.5; opacity: 0.5; }
 .river-tick-ring { opacity: 0.35; }
 
 /* Centre disc — counter-rhythm breath */
@@ -301,19 +327,10 @@ body.dir-b .for-a { display: none !important; }
   dominant-baseline: central;
 }
 
-/* Flow direction arrows pulse softly */
-@keyframes river-arrow-pulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
-.river-flow-arrow      { animation: river-arrow-pulse 2.5s ease-in-out infinite; }
-.river-flow-arrow.a2   { animation-delay: 0.6s; }
-.river-flow-arrow.a3   { animation-delay: 1.2s; }
-.river-flow-arrow.a4   { animation-delay: 1.8s; }
-
 @media (prefers-reduced-motion: reduce) {
-  .river-current,
-  .river-current-soft,
-  .river-drop,
+  .river-messenger,
+  .river-trail-dot,
   .river-halo,
-  .river-center,
-  .river-flow-arrow { animation: none; }
-  .river-svg        { transform: none; }
+  .river-center { animation: none; }
+  .river-svg    { transform: none; }
 }
