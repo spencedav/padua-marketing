@@ -323,7 +323,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .river-center-how {
   font-family: var(--font-display);
   font-size: 18px;
-  font-style: italic;
   fill: var(--ink-mid, var(--grey));
   text-anchor: middle;
   dominant-baseline: central;

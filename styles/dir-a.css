@@ -849,7 +849,14 @@
 .dir-a .device-stat {
   background: var(--paper-warm);
   border-radius: 4px;
-  padding: 10px 12px;
+  padding: 12px 14px;
+  /* Stack label + figure as a flex column so the gap actually applies
+     (the spans are inline by default and the previous 2px margin-top
+     wasn't taking effect — label and figure were sitting on top of
+     each other with almost no breathing room). */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .dir-a .device-stat-label {
   font-family: var(--font-mono);
@@ -857,6 +864,7 @@
   letter-spacing: 0.1em;
   color: var(--ink-light);
   text-transform: uppercase;
+  display: block;
 }
 .dir-a .device-stat-val {
   font-family: var(--font-display);
@@ -864,7 +872,8 @@
   font-weight: 500;
   color: var(--ink);
   letter-spacing: -0.02em;
-  margin-top: 2px;
+  display: block;
+  line-height: 1.1;
 }
 .dir-a .device-stat-accent .device-stat-val { color: var(--teal); }
 
