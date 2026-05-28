@@ -388,3 +388,19 @@
   .about-values-grid { grid-template-columns: 1fr; }
   .about-offices-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — pre-launch responsiveness pass
+   Tighten gaps on the about-page big stacking grids, plus drop
+   the 4-up values grid one step earlier so it never sits at
+   two 334px columns on tablet portrait.
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .about-belief-grid { gap: 32px; }
+  .about-story-grid  { gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .about-values-grid { grid-template-columns: 1fr; gap: 18px; }
+}

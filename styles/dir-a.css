@@ -1708,3 +1708,41 @@
   .dir-a .quote-card { padding: 36px 28px; }
   .dir-a .eco-portal-body { padding: 32px 28px; }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — pre-launch responsiveness pass
+   Catches every grid + spacing issue surfaced by the 375px audit
+   on the homepage (dir-a). Existing breakpoints in this file go
+   from desktop down to 1100px and then 720px; this block adds
+   the missing rules for tablet-portrait (≤768px) and phone
+   (≤600px) widths.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* Hero: tighter padding + lower min-height so the section doesn't
+     own the entire iPhone SE viewport. */
+  .dir-a .hero { padding: 56px 16px 64px; min-height: auto; }
+  .dir-a .hero-inner { gap: 32px; }
+  .dir-a .hero h1 { font-size: clamp(28px, 6vw, 40px); max-width: none; }
+
+  /* Intro two-column → one column, less gap. */
+  .dir-a .intro-cols { gap: 24px; }
+
+  /* About grid already collapses at 1100px; just tighten the gap. */
+  .dir-a .about-grid { gap: 36px; }
+
+  /* Quote testimonial card — 56px padding swallowed the viewport. */
+  .dir-a .quote-card { padding: 28px 22px; }
+}
+
+@media (max-width: 600px) {
+  /* Streams cards (Who we work with): 3-col → 1-col so each card
+     gets the full width instead of three squashed 100px columns. */
+  .dir-a .streams-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  /* Eco-cards (What we offer): same treatment, 2-col → 1-col. */
+  .dir-a .eco-tier-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  /* Footer: 4-col → 1-col, blurb on top, link columns stacked. */
+  .dir-a .footer-top { grid-template-columns: 1fr; gap: 36px; }
+}

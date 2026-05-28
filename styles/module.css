@@ -1847,3 +1847,36 @@
   .module-art-wealthreview .wr-tile-4 { display: none; }
   .module-art-wealthreview .wr-tile { width: 70%; }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — pre-launch responsiveness pass
+   Module/product pages (SteveAI, WealthX, WealthReview, WealthAI,
+   WealthData, Paraplanning, Transition Management, Careers).
+   Existing breakpoints mostly target tablet; this block fills in
+   the phone (≤600px) gap that was leaving multi-column grids and
+   the giant clamp(56px,…) hero overflowing 375px viewports.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .dir-a .module-hero-inner { padding-bottom: 36px; }
+  .dir-a .module-everest-grid { gap: 32px; }
+}
+
+@media (max-width: 600px) {
+  /* Hero h1: drop the 56px clamp minimum (was set for desktop) so the
+     headline doesn't dominate a 375px viewport. */
+  .dir-a .module-h1 { font-size: clamp(32px, 7vw, 48px); }
+
+  /* Stat grid: 3 columns of stat cards → 1 column stacked. */
+  .dir-a .module-stat-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Flow grid: 4 numbered steps → 1 column (steps read better stacked
+     than as 4 narrow ~77px boxes). */
+  .dir-a .module-flow-grid { grid-template-columns: 1fr; gap: 14px; }
+
+  /* Feature grid: 3 columns → 1 column. */
+  .dir-a .module-features-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Everest support list: 2 columns → 1 column. */
+  .dir-a .module-everest-support { grid-template-columns: 1fr; gap: 10px 0; }
+}

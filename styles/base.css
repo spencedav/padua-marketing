@@ -335,3 +335,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .river-center { animation: none; }
   .river-svg    { transform: none; }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — pre-launch responsiveness pass
+   Tightens .container padding at very small widths so the
+   already-cramped 375px viewport gets back ~32px of usable
+   content area. The previous 900px media block kept 22px
+   padding all the way down to 320px which wasn't enough.
+   ============================================================ */
+@media (max-width: 600px) {
+  .container { padding: 0 16px; }
+}

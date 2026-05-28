@@ -974,3 +974,20 @@
   .portal-cta { padding: 64px 24px 72px; }
   .portal-faq-q { font-size: 18px; padding: 18px 0; }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — pre-launch responsiveness pass
+   Padua Portal page. Existing breakpoint at 1024px collapses
+   the big two-column hero, but the pillar + modules grids
+   stayed multi-column down to 320px. Fix below.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .dir-a .portal-what-grid { gap: 36px; }
+}
+
+@media (max-width: 600px) {
+  .dir-a .portal-h1 { font-size: clamp(30px, 7vw, 44px); }
+  .dir-a .portal-pillar-grid { grid-template-columns: 1fr; gap: 14px; }
+  .dir-a .portal-modules-grid { grid-template-columns: 1fr; gap: 14px; }
+}

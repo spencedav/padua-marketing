@@ -283,3 +283,14 @@
   .dir-a .article-related-grid { grid-template-columns: 1fr; }
   .dir-a .article-cta { padding: 56px 0 24px; }
 }
+
+/* ============================================================
+   MOBILE OVERRIDES — pre-launch responsiveness pass
+   The single article-page issue: 3-up "Keep reading" related
+   grid didn't collapse below 900px. Push to single column on
+   tablet portrait and below.
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .dir-a .article-related-grid { grid-template-columns: 1fr; gap: 14px; }
+}
