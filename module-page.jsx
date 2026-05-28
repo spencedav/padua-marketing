@@ -991,89 +991,17 @@ function ModuleWhat() {
 // at the centroid, each one-third of the area. Hovering any face dims the
 // others and swaps the caption.
 function PaduaTriangle() {
-  const [hovered, setHovered] = React.useState(null);
-  const regions = {
-    quality: { label: 'Quality', desc: 'Experienced advice guides and paraplanners applying Australian best practice on every file.' },
-    value: { label: 'Value', desc: 'Lower total cost per advice than in-house teams, traditional outsourcers or tech-only platforms.' },
-    turnaround: { label: 'Turnaround', desc: 'Average turnaround of 5 business days, with unparalleled visibility on every file in production.' },
-  };
-  const enter = (k) => () => setHovered(k);
-  const leave = () => setHovered(null);
+  // The interactive 3D pyramid (Three.js) mounts into #padua-tri3d.
+  // triangle-3d.js waits for this node to appear (React renders it late),
+  // then renders the spinning spectrum pyramid with Quality / Value /
+  // Turnaround faces.
   return (
-    <div className={`padua-triangle-wrap${hovered ? ' has-hover' : ''}`}>
-      <svg viewBox="0 0 520 460" className="padua-triangle" role="img" aria-label="The Padua advantage triangle">
-        <defs>
-          <linearGradient id="pt-quality" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#4a308c"/>
-            <stop offset="1" stopColor="#2a1a52"/>
-          </linearGradient>
-          <linearGradient id="pt-value" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#d97d20"/>
-            <stop offset="1" stopColor="#f59436"/>
-          </linearGradient>
-          <linearGradient id="pt-turnaround" x1="1" y1="1" x2="0" y2="0">
-            <stop offset="0" stopColor="#ab2178"/>
-            <stop offset="1" stopColor="#c1255b"/>
-          </linearGradient>
-        </defs>
-
-        {/* Three equal-area kites meeting at the centroid (260, 300).
-            Outer triangle: apex (260,20) · bottom-left (40,440) · bottom-right (480,440)
-            Midpoints: midL (150,230), midR (370,230), midB (260,440). */}
-        <polygon
-          className={`pt-region${hovered === 'quality' ? ' is-hovered' : ''}`}
-          points="260,20 150,230 260,300 370,230"
-          fill="url(#pt-quality)"
-          onMouseEnter={enter('quality')} onMouseLeave={leave}
-        />
-        <polygon
-          className={`pt-region${hovered === 'value' ? ' is-hovered' : ''}`}
-          points="150,230 40,440 260,440 260,300"
-          fill="url(#pt-value)"
-          onMouseEnter={enter('value')} onMouseLeave={leave}
-        />
-        <polygon
-          className={`pt-region${hovered === 'turnaround' ? ' is-hovered' : ''}`}
-          points="370,230 260,300 260,440 480,440"
-          fill="url(#pt-turnaround)"
-          onMouseEnter={enter('turnaround')} onMouseLeave={leave}
-        />
-
-        {/* Top kite, Better Quality (label centered around y=170) */}
-        <g className="pt-text pt-text-top" pointerEvents="none">
-          <g transform="translate(260, 95)">
-            <circle r="20" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
-            <path d="M -8 0 L -2 7 L 9 -7" fill="none" stroke="white" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
-          </g>
-          <text x="260" y="158" textAnchor="middle" className="pt-pre">Better</text>
-          <text x="260" y="195" textAnchor="middle" className="pt-name">Quality</text>
-        </g>
-
-        {/* Bottom-left kite, Better Value */}
-        <g className="pt-text pt-text-left" pointerEvents="none">
-          <g transform="translate(127, 310)">
-            <circle r="16" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
-            <text textAnchor="middle" y="6" fill="white" fontSize="17" fontFamily="var(--font-display)" fontWeight="700">$</text>
-          </g>
-          <text x="127" y="360" textAnchor="middle" className="pt-pre-sm">Better</text>
-          <text x="127" y="392" textAnchor="middle" className="pt-name-sm">Value</text>
-        </g>
-
-        {/* Bottom-right kite, Better Turnaround */}
-        <g className="pt-text pt-text-right" pointerEvents="none">
-          <g transform="translate(393, 310)">
-            <circle r="16" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.5)" strokeWidth="1"/>
-            <circle r="9" fill="none" stroke="white" strokeWidth="2"/>
-            <path d="M 0 -5 L 0 0 L 4 4" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-          </g>
-          <text x="393" y="360" textAnchor="middle" className="pt-pre-sm">Better</text>
-          <text x="393" y="392" textAnchor="middle" className="pt-name-sm">Turnaround</text>
-        </g>
-      </svg>
+    <div className="padua-triangle-wrap">
+      <div className="triangle-3d-stage">
+        <div id="padua-tri3d" aria-label="The Padua advantage — quality, value and turnaround, at once" />
+      </div>
       <p className="padua-triangle-caption">
-        {hovered
-          ? <><strong>Better {regions[hovered].label}.</strong> {regions[hovered].desc}</>
-          : <em>Hover any face. The unattainable triangle is attainable with Padua.</em>}
+        <em>The unattainable triangle is attainable with Padua — better quality, value and turnaround, at the same time.</em>
       </p>
     </div>
   );

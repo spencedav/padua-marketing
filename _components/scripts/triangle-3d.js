@@ -601,8 +601,24 @@ function safeInit() {
   }
 }
 
+// The #padua-tri3d mount may be rendered LATE — e.g. by a React app that
+// compiles JSX in the browser (Babel standalone) after DOMContentLoaded. So
+// instead of init-ing immediately, wait for the mount node to appear, then go.
+function waitForMountThenInit() {
+  if (document.getElementById('padua-tri3d')) { safeInit(); return; }
+  const obs = new MutationObserver(() => {
+    if (document.getElementById('padua-tri3d')) {
+      obs.disconnect();
+      safeInit();
+    }
+  });
+  obs.observe(document.documentElement, { childList: true, subtree: true });
+  // Stop watching after 20s so we don't observe forever on pages without it.
+  setTimeout(() => obs.disconnect(), 20000);
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', safeInit);
+  document.addEventListener('DOMContentLoaded', waitForMountThenInit);
 } else {
-  safeInit();
+  waitForMountThenInit();
 }
