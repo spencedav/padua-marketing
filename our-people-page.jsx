@@ -1,9 +1,10 @@
 // =======================================================
 // PADUA — Our people
-// Lightweight leadership page. PersonCard renders the "no photos"
-// variant — colored squares with initials. Photo paths kept on the
-// data so a future variant can swap to a photo layout without
-// re-keying everyone.
+// Board + Executive Leadership. PersonCard renders the real
+// headshot from assets/ if `p.photo` is set, falling back to a
+// coloured-initials tile if not. Keep the JSX faithful to the
+// design export — only paths differ where filenames don't match
+// exactly between the design folder and what shipped to assets/.
 // =======================================================
 
 const BOARD = [
@@ -27,9 +28,15 @@ const LEADERSHIP = [
 function PersonCard({ p }) {
   return (
     <div className="our-person">
-      <div className="our-person-photo" style={{ background: p.accent }}>
-        <span>{p.initials}</span>
-      </div>
+      {p.photo ? (
+        <div className="our-person-photo our-person-photo-img" style={{ background: '#e8e4dd' }}>
+          <img src={p.photo} alt={p.name} style={p.photoStyle ? p.photoStyle : (p.crop ? { objectPosition: `center ${p.crop}` } : undefined)} />
+        </div>
+      ) : (
+        <div className="our-person-photo" style={{ background: p.accent }}>
+          <span>{p.initials}</span>
+        </div>
+      )}
       <div className="our-person-name">{p.name}</div>
       <div className="our-person-role">{p.role}</div>
     </div>
