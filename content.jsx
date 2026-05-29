@@ -185,6 +185,27 @@ function PaduaNav({ variant = 'streams' }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Measure the actual rendered nav height and expose it as a CSS variable
+  // (--padua-nav-h) so the mobile drawer can sit exactly below the nav
+  // regardless of viewport, device, scrolled state or future style tweaks.
+  // ResizeObserver picks up scroll-shrink + breakpoint changes automatically.
+  React.useEffect(() => {
+    const nav = document.querySelector('.nav');
+    if (!nav) return undefined;
+    const apply = () => {
+      const h = Math.round(nav.getBoundingClientRect().height);
+      if (h) document.documentElement.style.setProperty('--padua-nav-h', `${h}px`);
+    };
+    apply();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', apply);
+      return () => window.removeEventListener('resize', apply);
+    }
+    const ro = new ResizeObserver(apply);
+    ro.observe(nav);
+    return () => ro.disconnect();
+  }, []);
+
   // Scroll-spy, only triggers active state for sections that have
   // a corresponding nav link (About, Insights). Audience links stay neutral
   // because this is a single-page site and they're not anchored to sections.

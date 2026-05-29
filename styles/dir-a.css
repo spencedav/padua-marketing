@@ -1787,14 +1787,14 @@
 
 /* Mobile drawer overlay — closed by default. Always rendered so the
    slide-in transition has something to animate from.
-   Positioned BELOW the nav (top: 60px = mobile .nav-inner height) so the
-   sticky nav bar with the hamburger-to-X button stays visible. Without
-   this, the drawer covered the nav and there was no visible close
-   affordance — content also visually clipped against the iOS status
-   bar area at the very top of the screen. */
+   Positioned BELOW the nav using --padua-nav-h, a CSS variable set in JS
+   from the actual rendered .nav height (see PaduaNav effect). That way
+   the drawer top stays exactly under the nav whatever its height ends up
+   being — mobile vs desktop vs scroll-shrunk vs notch-offset — instead
+   of relying on a hardcoded value that drifts off when the nav resizes. */
 .dir-a .nav-mobile-overlay {
   position: fixed;
-  top: 60px;
+  top: var(--padua-nav-h, 72px);
   right: 0;
   bottom: 0;
   left: 0;
