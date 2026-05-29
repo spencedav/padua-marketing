@@ -27,6 +27,11 @@
   color: var(--ink);
   border-bottom: 1px solid var(--line);
   transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  /* iOS notch / dynamic island: pad the nav top by the device's safe-area
+     inset so the logo + hamburger don't jam against the system UI. With
+     viewport-fit=cover in the meta tag, env(safe-area-inset-top) returns
+     real px on iPhone (otherwise it falls back to 0 for desktop / Android). */
+  padding-top: env(safe-area-inset-top, 0px);
 }
 .dir-a .nav.is-scrolled {
   --nav-h: 60px;
