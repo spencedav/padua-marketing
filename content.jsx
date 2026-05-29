@@ -158,22 +158,53 @@ function PaduaNav({ variant = 'streams' }) {
   const [activeSection, setActiveSection] = React.useState(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const closeTimer = React.useRef(0);
+  const hamburgerRef = React.useRef(null);
+  const drawerRef = React.useRef(null);
+  const closeBtnRef = React.useRef(null);
 
   // Mobile drawer lifecycle: lock body scroll, allow Esc-to-close, auto-close
   // any time the viewport widens back past the mobile breakpoint (e.g. device
-  // rotated to landscape on a tablet).
+  // rotated to landscape on a tablet). Plus focus management — move focus into
+  // the drawer on open, trap it inside, and return it to the hamburger on close.
   React.useEffect(() => {
     if (!mobileOpen) return undefined;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const onKey = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
+
+    // Move focus into the drawer once it's visible (small delay so the slide
+    // transition can start before focus shifts).
+    const focusTimer = window.setTimeout(() => {
+      if (closeBtnRef.current) closeBtnRef.current.focus();
+    }, 60);
+
+    const onKey = (e) => {
+      if (e.key === 'Escape') { setMobileOpen(false); return; }
+      // Simple focus trap — Tab cycles within the drawer's focusable elements.
+      if (e.key === 'Tab' && drawerRef.current) {
+        const nodes = drawerRef.current.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (!nodes.length) return;
+        const first = nodes[0];
+        const last = nodes[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
+    };
     const onResize = () => { if (window.innerWidth > 720) setMobileOpen(false); };
     window.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
+
     return () => {
+      window.clearTimeout(focusTimer);
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('keydown', onKey);
       window.removeEventListener('resize', onResize);
+      // Return focus to the trigger when the drawer closes.
+      if (hamburgerRef.current) hamburgerRef.current.focus();
     };
   }, [mobileOpen]);
 
@@ -432,6 +463,7 @@ function PaduaNav({ variant = 'streams' }) {
         {/* Mobile hamburger — only visible at ≤720px via CSS. Toggles the
             slide-in drawer below. Desktop behaviour is unchanged. */}
         <button
+          ref={hamburgerRef}
           type="button"
           className={`nav-hamburger${mobileOpen ? ' is-open' : ''}`}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -462,40 +494,70 @@ function PaduaNav({ variant = 'streams' }) {
           tabIndex={mobileOpen ? 0 : -1}
           onClick={() => setMobileOpen(false)}
         />
-        <aside className="nav-mobile-drawer" role="dialog" aria-label="Site navigation">
-          <div className="nav-mobile-section">
-            <div className="nav-mobile-h">Who we work with</div>
-            <a className="nav-mobile-link" href="advisers-licensees.html" onClick={() => setMobileOpen(false)}>Advisers &amp; Licensees</a>
-            <a className="nav-mobile-link" href="product-providers.html" onClick={() => setMobileOpen(false)}>Platforms &amp; Super Funds</a>
-            <a className="nav-mobile-link" href="product-providers.html" onClick={() => setMobileOpen(false)}>Investment Managers</a>
+        <aside
+          ref={drawerRef}
+          className="nav-mobile-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
+        >
+          {/* Header: close X aligned right, 44px tap target. */}
+          <div className="nav-mobile-header">
+            <button
+              ref={closeBtnRef}
+              type="button"
+              className="nav-mobile-close"
+              aria-label="Close menu"
+              onClick={() => setMobileOpen(false)}
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            </button>
           </div>
-          <div className="nav-mobile-section">
-            <div className="nav-mobile-h">Padua Portal</div>
-            <a className="nav-mobile-link" href="Padua Portal.html" onClick={() => setMobileOpen(false)}>Portal overview</a>
-            <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
-            <a className="nav-mobile-link" href="WealthX.html" onClick={() => setMobileOpen(false)}>WealthX</a>
-            <a className="nav-mobile-link" href="WealthAI.html" onClick={() => setMobileOpen(false)}>WealthAI</a>
-            <a className="nav-mobile-link" href="WealthData.html" onClick={() => setMobileOpen(false)}>WealthData</a>
+
+          {/* Body: scrollable group of nav links. */}
+          <div className="nav-mobile-body">
+            <div className="nav-mobile-section">
+              <div className="nav-mobile-h">Who we work with</div>
+              <a className="nav-mobile-link" href="advisers-licensees.html" onClick={() => setMobileOpen(false)}>Advisers &amp; Licensees</a>
+              <a className="nav-mobile-link" href="product-providers.html" onClick={() => setMobileOpen(false)}>Platforms &amp; Super Funds</a>
+              <a className="nav-mobile-link" href="product-providers.html" onClick={() => setMobileOpen(false)}>Investment Managers</a>
+            </div>
+            <div className="nav-mobile-section">
+              <div className="nav-mobile-h">Padua Portal</div>
+              <a className="nav-mobile-link" href="Padua Portal.html" onClick={() => setMobileOpen(false)}>Portal overview</a>
+              <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
+              <a className="nav-mobile-link" href="WealthX.html" onClick={() => setMobileOpen(false)}>WealthX</a>
+              <a className="nav-mobile-link" href="WealthAI.html" onClick={() => setMobileOpen(false)}>WealthAI</a>
+              <a className="nav-mobile-link" href="WealthData.html" onClick={() => setMobileOpen(false)}>WealthData</a>
+            </div>
+            <div className="nav-mobile-section">
+              <div className="nav-mobile-h">Advice services</div>
+              <a className="nav-mobile-link" href="Paraplanning.html" onClick={() => setMobileOpen(false)}>Paraplanning</a>
+              <a className="nav-mobile-link" href="Transition Management.html" onClick={() => setMobileOpen(false)}>Transition Management</a>
+            </div>
+            <div className="nav-mobile-section">
+              <div className="nav-mobile-h">About</div>
+              <a className="nav-mobile-link" href="Who we are.html" onClick={() => setMobileOpen(false)}>Who we are</a>
+              <a className="nav-mobile-link" href="about/our-people.html" onClick={() => setMobileOpen(false)}>Our people</a>
+              <a className="nav-mobile-link" href="Careers.html" onClick={() => setMobileOpen(false)}>Careers</a>
+            </div>
+            <div className="nav-mobile-section">
+              <div className="nav-mobile-h">Content</div>
+              <a className="nav-mobile-link" href="News & Insights.html" onClick={() => setMobileOpen(false)}>News &amp; Insights</a>
+              <a className="nav-mobile-link" href="Resources.html" onClick={() => setMobileOpen(false)}>Resources</a>
+            </div>
+            <div className="nav-mobile-section">
+              <div className="nav-mobile-h">Get in touch</div>
+              <a className="nav-mobile-link" href="Contact.html" onClick={() => setMobileOpen(false)}>Contact</a>
+              <a className="nav-mobile-link" href="Contact.html" onClick={() => setMobileOpen(false)}>Book a demo →</a>
+            </div>
           </div>
-          <div className="nav-mobile-section">
-            <div className="nav-mobile-h">Advice services</div>
-            <a className="nav-mobile-link" href="Paraplanning.html" onClick={() => setMobileOpen(false)}>Paraplanning</a>
-            <a className="nav-mobile-link" href="Transition Management.html" onClick={() => setMobileOpen(false)}>Transition Management</a>
-          </div>
-          <div className="nav-mobile-section">
-            <div className="nav-mobile-h">About</div>
-            <a className="nav-mobile-link" href="Who we are.html" onClick={() => setMobileOpen(false)}>Who we are</a>
-            <a className="nav-mobile-link" href="about/our-people.html" onClick={() => setMobileOpen(false)}>Our people</a>
-            <a className="nav-mobile-link" href="Careers.html" onClick={() => setMobileOpen(false)}>Careers</a>
-          </div>
-          <div className="nav-mobile-section">
-            <div className="nav-mobile-h">Content</div>
-            <a className="nav-mobile-link" href="News & Insights.html" onClick={() => setMobileOpen(false)}>News &amp; Insights</a>
-            <a className="nav-mobile-link" href="Resources.html" onClick={() => setMobileOpen(false)}>Resources</a>
-          </div>
-          <div className="nav-mobile-cta-row">
-            <a className="btn btn-ghost-dark" href="https://home.paduasolutions.com/">Sign in</a>
-            <a className="btn btn-spectrum" href="Contact.html" onClick={() => setMobileOpen(false)}>Book a demo →</a>
+
+          {/* Footer: pinned with divider above, primary "Adviser login" CTA. */}
+          <div className="nav-mobile-footer">
+            <a className="nav-mobile-login" href="https://home.paduasolutions.com/">Adviser login</a>
           </div>
         </aside>
       </div>
