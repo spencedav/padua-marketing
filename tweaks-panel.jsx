@@ -159,6 +159,20 @@ const __TWEAKS_STYLE = `
 // ── useTweaks ───────────────────────────────────────────────────────────────
 // Single source of truth for tweak values. setTweak persists via the host
 // (__edit_mode_set_keys → host rewrites the EDITMODE block on disk).
+// Production gate. The tweaks panel is a dev-only editor used inside the
+// design-host iframe and during local development. On production hostnames
+// we no-op everything: no postMessage handshake with a parent, no listener
+// registration, no panel UI. Toggle via:
+//   - hostname: localhost / 127.0.0.1 / *.workers.dev (auto-on)
+//   - query string: ?tweaks=1 (forces on, any host)
+const TWEAKS_ENABLED = (() => {
+  if (typeof location === 'undefined') return false;
+  const h = location.hostname || '';
+  const devHost = h === 'localhost' || h === '127.0.0.1' || h.endsWith('.workers.dev');
+  const optIn = /[?&]tweaks(=1)?(&|$)/.test(location.search || '');
+  return devHost || optIn;
+})();
+
 function useTweaks(defaults) {
   const [values, setValues] = React.useState(defaults);
   // Accepts either setTweak('key', value) or setTweak({ key: value, ... }) so a
@@ -168,6 +182,7 @@ function useTweaks(defaults) {
     const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
       ? keyOrEdits : { [keyOrEdits]: val };
     setValues((prev) => ({ ...prev, ...edits }));
+    if (!TWEAKS_ENABLED) return; // production: skip the design-host postMessage
     window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
     // Same-window signal so in-page listeners (deck-stage rail thumbnails)
     // can react, the parent message only reaches the host, not peers.
@@ -184,6 +199,10 @@ function useTweaks(defaults) {
 // flips off in lockstep; the host echoes __deactivate_edit_mode back which
 // is what actually hides the panel.
 function TweaksPanel({ title = 'Tweaks', children }) {
+  // Production gate (see TWEAKS_ENABLED at top of file). On production
+  // hostnames this short-circuits before any hook runs — no postMessage
+  // handshake, no listener registration, no panel.
+  if (!TWEAKS_ENABLED) return null;
   const [open, setOpen] = React.useState(false);
   const dragRef = React.useRef(null);
   const offsetRef = React.useRef({ x: 16, y: 16 });
