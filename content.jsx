@@ -480,8 +480,11 @@ function PaduaNav({ variant = 'streams' }) {
       {/* Soft backdrop tint while a dropdown is open, keeps focus on the panel */}
       <div className="nav-backdrop" aria-hidden="true" onMouseEnter={scheduleClose} />
 
-      {/* Mobile drawer — rendered always so CSS transitions work, gated by
-          aria-hidden + .is-open. Desktop never sees this (display:none ≥721px). */}
+      {/* Mobile drawer — portaled to document.body so it escapes the nav's
+          stacking context (the nav uses backdrop-filter, which creates a
+          containing block for position:fixed descendants — without the
+          portal the drawer was getting trapped behind page content). */}
+      {ReactDOM.createPortal(
       <div
         id="padua-mobile-drawer"
         className={`nav-mobile-overlay${mobileOpen ? ' is-open' : ''}`}
@@ -560,7 +563,9 @@ function PaduaNav({ variant = 'streams' }) {
             <a className="nav-mobile-login" href="https://home.paduasolutions.com/">Adviser login</a>
           </div>
         </aside>
-      </div>
+      </div>,
+      document.body
+      )}
     </nav>
   );
 }
