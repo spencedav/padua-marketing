@@ -24,9 +24,13 @@
 /advisers-licensees.html                     /padua-portal.html           301
 /product-providers                           /padua-portal-platforms      301
 /product-providers.html                      /padua-portal-platforms.html 301
-/about/our-people                            /who-we-are                  301
-/about/our-people.html                       /who-we-are.html             301
-/our-people                                  /who-we-are                  301
+# /about/our-people legacy path now points at the real Our people page
+# in the redesign (was a placeholder redirect to /who-we-are while no
+# Our people page existed). DO NOT add a /our-people redirect — there
+# IS a real /our-people.html in the bundle; redirecting would hijack
+# the nav link and send users to Who we are.
+/about/our-people                            /our-people                  301
+/about/our-people.html                       /our-people.html             301
 
 # --- 3. Folded-in old paths → their consolidated destination -------------
 # Booking + contact entrypoints all land on Contact (HubSpot embed lives there).
