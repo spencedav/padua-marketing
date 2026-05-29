@@ -127,8 +127,7 @@ const NAV_ABOUT_SECTIONS = [
     title: 'Company',
     items: [
       { h: 'Who we are', p: 'Our mission and values', href: 'who-we-are.html' },
-      // "Our people" removed — no redesign equivalent yet; the legacy
-      // about/our-people.html page was deleted in the launch cleanup.
+      { h: 'Our people', p: 'Meet the Board + leadership team', href: 'our-people.html' },
       { h: 'Careers', href: 'Careers.html' },
     ],
   },
@@ -543,6 +542,7 @@ function PaduaNav({ variant = 'streams' }) {
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">About</div>
               <a className="nav-mobile-link" href="who-we-are.html" onClick={() => setMobileOpen(false)}>Who we are</a>
+              <a className="nav-mobile-link" href="our-people.html" onClick={() => setMobileOpen(false)}>Our people</a>
               <a className="nav-mobile-link" href="Careers.html" onClick={() => setMobileOpen(false)}>Careers</a>
             </div>
             <div className="nav-mobile-section">

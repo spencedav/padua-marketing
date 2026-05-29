@@ -404,3 +404,115 @@
 @media (max-width: 768px) {
   .about-values-grid { grid-template-columns: 1fr; gap: 18px; }
 }
+
+
+/* ================================================================
+   OUR PEOPLE — board + leadership grid
+   Lives on /our-people. Uses --paper-soft / --ink / --compare /
+   --discover / --review tokens from base.css. Inline accent color on
+   each tile comes from the JSX (p.accent) so the page can be data-
+   driven; the gradient-text hero "Padua." reuses the spectrum.
+   ================================================================ */
+.about-page .our-people-hero {
+  background: var(--paper-soft);
+  padding: 96px 0 32px;
+  color: var(--ink);
+}
+.our-people-hero .about-eyebrow { color: var(--compare); }
+.our-people-hero .about-h1 { color: var(--ink); text-shadow: none; }
+.our-people-hero .about-h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--discover) 0%, var(--compare) 50%, var(--review) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.our-people-hero .about-hero-sub { color: var(--ink-mid); }
+
+.dir-a .our-people-grid-section {
+  background: var(--paper-soft);
+  padding: 32px 0 96px;
+}
+.our-people-grid-section + .our-people-grid-section { padding-top: 0; }
+.our-people-grid-section-alt { background: var(--paper-soft); }
+
+.our-people-h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 32px;
+}
+
+.our-people-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.our-person {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.our-person-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  overflow: hidden;
+  position: relative;
+}
+.our-person-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 30% 25%, rgba(255,255,255,0.18), transparent 60%);
+}
+.our-person-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 4px;
+}
+.our-person-role {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: var(--ink-mid);
+}
+
+/* Photo variant (kept so a future revision can render real photos
+   without changing the data shape — currently unused by PersonCard,
+   which renders the initials block only). */
+.our-person-photo-img { padding: 0; overflow: hidden; }
+.our-person-photo-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+.our-person-photo-img::after { display: none; }
+
+@media (max-width: 900px) {
+  .our-people-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .our-people-grid { grid-template-columns: 1fr; }
+}

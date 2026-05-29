@@ -41,6 +41,7 @@
 
   <!-- About -->
   <url><loc>https://www.paduasolutions.com/who-we-are</loc>                <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/our-people</loc>                <priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-05-29</lastmod></url>
   <url><loc>https://www.paduasolutions.com/Careers</loc>                   <priority>0.7</priority><changefreq>weekly</changefreq>  <lastmod>2026-05-29</lastmod></url>
 
   <!-- Content -->
