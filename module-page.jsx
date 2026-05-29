@@ -402,8 +402,8 @@ const MODULE_COPY_BY_KEY = {
     accentName: 'WealthData',
     productName: 'WealthData',
     productTagline: 'The source of truth on Australia\u2019s financial advice market.',
-    eyebrow: 'Software \u00b7 Standalone',
-    intro: 'Adviser movement data, licensee benchmarking and superannuation insights, drawn weekly from ASIC\u2019s Financial Adviser Register. Trusted by licensees, platforms, super funds and product providers across the country.',
+    eyebrow: 'Data-driven insights \u00b7 Standalone',
+    intro: 'Adviser movement data and superannuation insights, drawn weekly from ASIC\u2019s Financial Adviser Register.',
     cta_demo: 'Subscribe',
     cta_portal: '',
     person: {
@@ -416,36 +416,36 @@ const MODULE_COPY_BY_KEY = {
 
     what: {
       eyebrow: 'What it does',
-      lead: 'Professional research, data and consulting for businesses operating in wealth and financial advice. Three core offerings, all built on the most complete view of the Australian advice market.',
+      lead: 'Professional research and data for businesses operating in wealth and financial advice, built on the most complete view of the Australian advice market, drawn straight from ASIC.',
       cols: [
-        { stat: 'Movement', label: 'Adviser & skills benchmarking', p: 'Broad-based and tailored reports that licensees, platforms and product providers use for strategic planning, board updates and stakeholder reporting.' },
-        { stat: 'Listings', label: 'AFSL and licensee data', p: 'A comprehensive list of every Financial Advice Licensee in Australia, with core benchmarking data, key contacts, and filtering by licensee, state, postcode and our proprietary star-rating system.' },
-        { stat: 'Consulting', label: 'Professional consulting', p: 'Over 30 years of experience across every corner of wealth and financial advice, available for events, advice conferences, training days and strategic engagements.' },
+        { stat: 'Movement', label: 'Adviser movement & reporting', p: 'Broad-based and tailored reports that licensees, platforms and product providers use for strategic planning, board updates and stakeholder reporting.' },
+        { stat: 'Listings', label: 'AFSL and licensee data', p: 'A comprehensive list of every Financial Advice Licensee in Australia, with key contacts and filtering by licensee, state and postcode.' },
+        { stat: 'Weekly', label: 'Free weekly insight', p: 'Free public dashboards and a market insight published every Thursday, drawn straight from the week\u2019s ASIC data.' },
       ],
     },
 
     flow: {
       eyebrow: 'How it works',
       title: 'From ASIC register to strategic insight.',
-      sub: 'Weekly cadence, decision-ready.',
+      sub: 'New data every week, ready to act on.',
       steps: [
         { n: '01', h: 'ASIC Financial Adviser Register', p: 'Every week, WealthData pulls the latest data from ASIC\u2019s Financial Adviser Register, the single source of truth for who is licensed to provide personal advice in Australia.' },
-        { n: '02', h: 'Clean, enrich, benchmark', p: 'Raw register data is cleaned, deduplicated and enriched with licensee structure, peer-group classifications and skills benchmarks. Star ratings make advisers comparable like-for-like.' },
+        { n: '02', h: 'Clean, enrich, classify', p: 'Raw register data is cleaned, deduplicated and enriched with licensee structure and peer-group classifications.' },
         { n: '03', h: 'Weekly dashboards and reports', p: 'Subscribers access weekly dashboards through the Members Lounge, plus tailored reports built to brief. Free dashboards also publish openly for adviser movement, client segmentation, super and SMSF stats.' },
-        { n: '04', h: 'Strategic consulting on demand', p: 'When the data raises a question, Colin is available for 45-minute consultations, board briefings, conference speaking and bespoke project work.' },
+        { n: '04', h: 'Published every Thursday', p: 'A free weekly market insight is published to the WealthData blog every Thursday, with the headline dashboard anyone can view.' },
       ],
     },
 
     features: {
-      eyebrow: 'What\u2019s in the platform',
-      title: 'Three layers, one weekly cadence.',
+      eyebrow: 'What\u2019s included',
+      title: 'What you get, refreshed every week.',
       items: [
-        { h: 'Adviser movement data', p: 'Track every adviser movement across the Australian profession, refreshed weekly from ASIC.' },
-        { h: 'Licensee benchmarking', p: 'Compare your licensee against the full national network or selected peer groups across size, growth and skills mix.' },
-        { h: 'AFSL listings', p: 'Comprehensive Financial Advice Licensee directory with key contacts, filterable by state, postcode and star rating.' },
-        { h: 'Super & SMSF stats', p: 'Free public dashboards for super fund stats, SMSF stats and client segmentation insights.' },
-        { h: 'Members Lounge / Blue Book', p: 'Subscriber-only access to deeper data, historical movement trends and tailored reports on request.' },
-        { h: 'Professional consulting', p: 'Colin Williams works directly with clients on tailored research, board reports, strategic planning and conference speaking.' },
+        { h: 'Adviser movement data', p: '' },
+        { h: 'Licensee insights', p: '' },
+        { h: 'AFSL listings', p: '' },
+        { h: 'Super & SMSF stats', p: '' },
+        { h: 'Members Lounge / Blue Book', p: 'Subscriber-only access to deeper data.' },
+        { h: 'Weekly market insight', p: '' },
       ],
     },
 
@@ -453,12 +453,10 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'Frequently asked',
       title: 'Questions about WealthData.',
       items: [
-        { q: 'What data sits behind WealthData?', a: 'Every dataset starts with ASIC\u2019s Financial Adviser Register, refreshed weekly. We layer on licensee structure, peer-group classifications, skills benchmarks and our proprietary star ratings to make the data usable for strategic decisions, not just compliance.' },
-        { q: 'Who uses WealthData?', a: 'Licensees, dealer groups, platforms, super funds, investment managers, insurance companies and adviser service providers. Anyone whose business depends on understanding where advisers sit, how they move and what\u2019s changing across the profession.' },
-        { q: 'What\u2019s included with a subscription?', a: 'Full access to the Members Lounge and Blue Book: weekly dashboards, complete AFSL and adviser listings, benchmarking data, and historical movement trends. Plus the option to request tailored reports.' },
+        { q: 'What data sits behind WealthData?', a: 'Every dataset starts with ASIC\u2019s Financial Adviser Register, refreshed weekly. We layer on licensee structure and peer-group classifications to make the data usable for strategic decisions.' },
+        { q: 'Who uses WealthData?', a: 'Licensees, dealer groups, platforms, super funds and adviser service providers. Anyone whose business depends on understanding where advisers sit, how they move and what\u2019s changing across the profession.' },
+        { q: 'What\u2019s included with a subscription?', a: 'Full access to the Members Lounge and Blue Book: weekly dashboards, complete AFSL and adviser listings, and historical movement trends. Plus the option to request tailored reports.' },
         { q: 'Can I see WealthData before subscribing?', a: 'Yes. Several dashboards are free and publicly available, including the Adviser Weekly Dashboard, Client Segmentation Tool, Super Fund Stats and SMSF Statistics. The blog publishes a free weekly market insight every Thursday.' },
-        { q: 'Do you do custom reports and consulting?', a: 'Yes. Colin Williams works directly with clients on tailored research, board reports, strategic planning sessions and conference speaking. Book a 45-minute introductory call to scope what you need.' },
-        { q: 'Is WealthData part of Padua?', a: 'Yes. WealthData is a trading name of Padua Financial Group, and powers the data layer behind several Padua products including adviser targeting, market sizing and competitive benchmarking.' },
       ],
     },
   },
