@@ -30,7 +30,10 @@
   /* iOS notch / dynamic island: pad the nav top by the device's safe-area
      inset so the logo + hamburger don't jam against the system UI. With
      viewport-fit=cover in the meta tag, env(safe-area-inset-top) returns
-     real px on iPhone (otherwise it falls back to 0 for desktop / Android). */
+     real px on iPhone (otherwise it falls back to 0 for desktop / Android).
+     The mobile @media block below adds further explicit breathing room so
+     the nav still sits below the system area even on non-notched phones
+     where env() resolves to 0. */
   padding-top: env(safe-area-inset-top, 0px);
 }
 .dir-a .nav.is-scrolled {
@@ -1827,25 +1830,27 @@
 }
 .dir-a .nav-mobile-overlay.is-open .nav-mobile-scrim { opacity: 1; }
 
-/* The drawer itself — slides in from the right.
-   Now sits inside the overlay which starts below the nav, so we use a
-   modest top padding instead of 80px (no need to clear a covered nav). */
+/* The drawer itself — full-width sheet that slides DOWN from under the nav.
+   Was a narrow right-side drawer (360px); now fills the entire width and
+   the entire height below the nav so the mobile menu dominates the screen
+   instead of being a sliver. The overlay's scrim becomes purely a
+   transition aid because the drawer covers everything underneath. */
 .dir-a .nav-mobile-drawer {
   position: absolute;
-  top: 0; right: 0; bottom: 0;
-  width: min(360px, calc(100vw - 56px));
+  top: 0; right: 0; bottom: 0; left: 0;
+  width: 100%;
   background: var(--paper-soft);
-  box-shadow: -24px 0 60px -20px rgba(26, 21, 37, 0.3);
+  box-shadow: 0 24px 60px -20px rgba(26, 21, 37, 0.3);
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding: 32px 28px 32px;
+  gap: 26px;
+  padding: 32px 28px 40px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  transform: translateX(100%);
-  transition: transform .3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateY(-100%);
+  transition: transform .35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.dir-a .nav-mobile-overlay.is-open .nav-mobile-drawer { transform: translateX(0); }
+.dir-a .nav-mobile-overlay.is-open .nav-mobile-drawer { transform: translateY(0); }
 
 .dir-a .nav-mobile-section { display: flex; flex-direction: column; }
 .dir-a .nav-mobile-h {
