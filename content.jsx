@@ -1027,11 +1027,13 @@ const PADUA_CONTENT = {
         ],
       },
       {
+        // Was three links all pointing at the same /padua-portal-platforms page —
+        // bad for SEO (duplicate destinations) and confusing for users (three
+        // promises, one destination). Consolidated to one link whose label
+        // captures the audience scope.
         h: 'Other streams',
         links: [
-          { label: 'Platforms & Super Funds', href: 'padua-portal-platforms.html' },
-          { label: 'Investment Managers', href: 'padua-portal-platforms.html' },
-          { label: 'Media & Advertising', href: 'padua-portal-platforms.html' },
+          { label: 'Platforms, super funds & managers', href: 'padua-portal-platforms.html' },
         ],
       },
       {
