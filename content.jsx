@@ -523,9 +523,9 @@ function PaduaNav({ variant = 'streams' }) {
           <div className="nav-mobile-body">
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Who we work with</div>
-              <a className="nav-mobile-link" href="advisers-licensees.html" onClick={() => setMobileOpen(false)}>Advisers &amp; Licensees</a>
-              <a className="nav-mobile-link" href="product-providers.html" onClick={() => setMobileOpen(false)}>Platforms &amp; Super Funds</a>
-              <a className="nav-mobile-link" href="product-providers.html" onClick={() => setMobileOpen(false)}>Investment Managers</a>
+              <a className="nav-mobile-link" href="Padua Portal.html" onClick={() => setMobileOpen(false)}>Advisers &amp; Licensees</a>
+              <a className="nav-mobile-link" href="Padua Portal - Platforms.html" onClick={() => setMobileOpen(false)}>Platforms &amp; Super Funds</a>
+              <a className="nav-mobile-link" href="Padua Portal - Platforms.html" onClick={() => setMobileOpen(false)}>Investment Managers</a>
             </div>
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Padua Portal</div>
@@ -543,7 +543,6 @@ function PaduaNav({ variant = 'streams' }) {
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">About</div>
               <a className="nav-mobile-link" href="Who we are.html" onClick={() => setMobileOpen(false)}>Who we are</a>
-              <a className="nav-mobile-link" href="about/our-people.html" onClick={() => setMobileOpen(false)}>Our people</a>
               <a className="nav-mobile-link" href="Careers.html" onClick={() => setMobileOpen(false)}>Careers</a>
             </div>
             <div className="nav-mobile-section">
