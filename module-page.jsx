@@ -1411,7 +1411,7 @@ function ModuleCta() {
               <p className="module-cta-sub">A 30-minute demo, tailored to how your practice or platform runs.</p>
               <div className="module-cta-row">
                 <a className="btn btn-cta-dark" href="Contact.html">{c.cta_demo} →</a>
-                <a className="hero-link" href="Padua Portal.html">Back to the Portal overview</a>
+                <a className="hero-link" href="padua-portal.html">Back to the Portal overview</a>
               </div>
             </>
           )}

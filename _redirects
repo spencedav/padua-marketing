@@ -1,30 +1,53 @@
 # Cloudflare Workers Assets redirects
 # ---------------------------------------------------------------------------
-# Legacy pages were consolidated into their redesign equivalents pre-launch.
-# Every deleted URL has a 301 here (both the clean form and the .html form)
-# so external links + search-engine SEO stay intact.
+# Pre-launch URL consolidation. Three classes of redirect:
+#   1. Old "space-named" redesign URLs → new kebab-case URLs
+#   2. Deleted legacy static pages    → closest redesign equivalent
+#   3. Folded-in old paths            → their consolidated destination
+# Every URL gets both the clean form and the .html form for completeness.
 # ---------------------------------------------------------------------------
 
-# Booking + contact — both legacy entrypoints now land on the redesign
-# Contact page (which hosts the HubSpot meeting embed with Brett).
-/contact-us                                  /Contact            301
-/contact-us.html                             /Contact.html       301
-/book-a-demo                                 /Contact            301
-/book-a-demo.html                            /Contact.html       301
-/concierge                                   /Contact            301
-/ready-set-go                                /Contact            301
-/ready-set-go.html                           /Contact.html       301
+# --- 1. Old space-form URLs → new kebab URLs ------------------------------
+/Padua%20Portal                              /padua-portal                301
+/Padua%20Portal.html                         /padua-portal.html           301
+/Padua%20Portal%20-%20Platforms              /padua-portal-platforms      301
+/Padua%20Portal%20-%20Platforms.html         /padua-portal-platforms.html 301
+/Who%20we%20are                              /who-we-are                  301
+/Who%20we%20are.html                         /who-we-are.html             301
+/News%20%26%20Insights                       /news-insights               301
+/News%20%26%20Insights.html                  /news-insights.html          301
+/Transition%20Management                     /transition-management       301
+/Transition%20Management.html                /transition-management.html  301
 
-# Solution / product overview pages — fold into Padua Portal overview.
-/services                                    /Padua%20Portal     301
-/services.html                               /Padua%20Portal.html 301
-/mortgage-brokers                            /Padua%20Portal     301
-/mortgage-brokers.html                       /Padua%20Portal.html 301
-/what-constitutes-a-strategy-at-padua        /Padua%20Portal     301
-/what-constitutes-a-strategy-at-padua.html   /Padua%20Portal.html 301
+# --- 2. Deleted legacy static pages → redesign equivalents ---------------
+/advisers-licensees                          /padua-portal                301
+/advisers-licensees.html                     /padua-portal.html           301
+/product-providers                           /padua-portal-platforms      301
+/product-providers.html                      /padua-portal-platforms.html 301
+/about/our-people                            /who-we-are                  301
+/about/our-people.html                       /who-we-are.html             301
+/our-people                                  /who-we-are                  301
+
+# --- 3. Folded-in old paths → their consolidated destination -------------
+# Booking + contact entrypoints all land on Contact (HubSpot embed lives there).
+/contact-us                                  /Contact                     301
+/contact-us.html                             /Contact.html                301
+/book-a-demo                                 /Contact                     301
+/book-a-demo.html                            /Contact.html                301
+/concierge                                   /Contact                     301
+/ready-set-go                                /Contact                     301
+/ready-set-go.html                           /Contact.html                301
+
+# Solution / overview pages — Portal is now the canonical product surface.
+/services                                    /padua-portal                301
+/services.html                               /padua-portal.html           301
+/mortgage-brokers                            /padua-portal                301
+/mortgage-brokers.html                       /padua-portal.html           301
+/what-constitutes-a-strategy-at-padua        /padua-portal                301
+/what-constitutes-a-strategy-at-padua.html   /padua-portal.html           301
 
 # About subdirectory — fold legacy /about/* into the redesign equivalents.
-/about/who-we-are                            /Who%20we%20are     301
-/about/who-we-are.html                       /Who%20we%20are.html 301
-/about/careers                               /Careers            301
-/about/careers.html                          /Careers.html       301
+/about/who-we-are                            /who-we-are                  301
+/about/who-we-are.html                       /who-we-are.html             301
+/about/careers                               /Careers                     301
+/about/careers.html                          /Careers.html                301

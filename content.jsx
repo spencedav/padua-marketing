@@ -31,7 +31,7 @@ const NAV_AUDIENCES = [
     label: 'Advisers & Licensees',
     eyebrow: 'For advisers & licensees',
     blurb: 'Advice software, paraplanning and ongoing support for advice practices and licensees.',
-    href: 'advisers-licensees.html',
+    href: 'padua-portal.html',
     columns: [
       {
         kind: 'featured',
@@ -39,7 +39,7 @@ const NAV_AUDIENCES = [
         title: 'Padua Portal',
         blurb: 'The integrated workflow that pulls platform, CRM and Xplan data into one end-to-end advice system, with compliance built in.',
         cta: 'Portal overview',
-        href: 'Padua Portal.html',
+        href: 'padua-portal.html',
       },
       {
         title: 'Modular Components',
@@ -56,7 +56,7 @@ const NAV_AUDIENCES = [
         title: 'Advice Services',
         items: [
           { h: 'Paraplanning', p: 'Tech-enabled advice generation', href: 'Paraplanning.html' },
-          { h: 'Transition Management', p: 'End-to-end client transition support', href: 'Transition Management.html' },
+          { h: 'Transition Management', p: 'End-to-end client transition support', href: 'transition-management.html' },
         ],
       },
     ],
@@ -66,7 +66,7 @@ const NAV_AUDIENCES = [
     label: 'Platforms & Super Funds',
     eyebrow: 'For platforms & super funds',
     blurb: 'Member advice solutions and adviser tooling for platforms and super funds.',
-    href: 'product-providers.html',
+    href: 'padua-portal-platforms.html',
     columns: [
       {
         kind: 'featured',
@@ -74,7 +74,7 @@ const NAV_AUDIENCES = [
         title: 'Padua Portal',
         blurb: 'The integrated workflow embedded in your platform. End-to-end advice for both advised and non-advised members.',
         cta: 'Portal overview',
-        href: 'Padua Portal - Platforms.html',
+        href: 'padua-portal-platforms.html',
       },
       {
         title: 'Modular Components',
@@ -91,7 +91,7 @@ const NAV_AUDIENCES = [
         title: 'Advice Services',
         items: [
           { h: 'Paraplanning', p: 'Tech-enabled advice generation', href: 'Paraplanning.html' },
-          { h: 'Transition Management', p: 'End-to-end client transition support', href: 'Transition Management.html' },
+          { h: 'Transition Management', p: 'End-to-end client transition support', href: 'transition-management.html' },
         ],
       },
     ],
@@ -101,12 +101,12 @@ const NAV_AUDIENCES = [
     label: 'Investment Managers',
     eyebrow: 'For investment managers',
     blurb: 'Distribution, adviser engagement and research support for IMs and asset managers.',
-    href: 'product-providers.html',
+    href: 'padua-portal-platforms.html',
     columns: [
       {
         title: 'Advice Services',
         items: [
-          { h: 'Transition management', p: 'End-to-end implementation', href: 'Transition Management.html' },
+          { h: 'Transition management', p: 'End-to-end implementation', href: 'transition-management.html' },
         ],
       },
       {
@@ -126,16 +126,16 @@ const NAV_ABOUT_SECTIONS = [
   {
     title: 'Company',
     items: [
-      { h: 'Who we are', p: 'Our mission and values', href: 'Who we are.html' },
-      // No redesign "Our people" page yet → fall back to the existing page.
-      { h: 'Our people', href: 'about/our-people.html' },
+      { h: 'Who we are', p: 'Our mission and values', href: 'who-we-are.html' },
+      // "Our people" removed — no redesign equivalent yet; the legacy
+      // about/our-people.html page was deleted in the launch cleanup.
       { h: 'Careers', href: 'Careers.html' },
     ],
   },
   {
     title: 'Content',
     items: [
-      { h: 'News & insights', href: 'News & Insights.html' },
+      { h: 'News & insights', href: 'news-insights.html' },
       { h: 'Resources', p: 'Whitepapers & reports', href: 'Resources.html' },
     ],
   },
@@ -523,13 +523,13 @@ function PaduaNav({ variant = 'streams' }) {
           <div className="nav-mobile-body">
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Who we work with</div>
-              <a className="nav-mobile-link" href="Padua Portal.html" onClick={() => setMobileOpen(false)}>Advisers &amp; Licensees</a>
-              <a className="nav-mobile-link" href="Padua Portal - Platforms.html" onClick={() => setMobileOpen(false)}>Platforms &amp; Super Funds</a>
-              <a className="nav-mobile-link" href="Padua Portal - Platforms.html" onClick={() => setMobileOpen(false)}>Investment Managers</a>
+              <a className="nav-mobile-link" href="padua-portal.html" onClick={() => setMobileOpen(false)}>Advisers &amp; Licensees</a>
+              <a className="nav-mobile-link" href="padua-portal-platforms.html" onClick={() => setMobileOpen(false)}>Platforms &amp; Super Funds</a>
+              <a className="nav-mobile-link" href="padua-portal-platforms.html" onClick={() => setMobileOpen(false)}>Investment Managers</a>
             </div>
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Padua Portal</div>
-              <a className="nav-mobile-link" href="Padua Portal.html" onClick={() => setMobileOpen(false)}>Portal overview</a>
+              <a className="nav-mobile-link" href="padua-portal.html" onClick={() => setMobileOpen(false)}>Portal overview</a>
               <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
               <a className="nav-mobile-link" href="WealthX.html" onClick={() => setMobileOpen(false)}>WealthX</a>
               <a className="nav-mobile-link" href="WealthAI.html" onClick={() => setMobileOpen(false)}>WealthAI</a>
@@ -538,16 +538,16 @@ function PaduaNav({ variant = 'streams' }) {
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Advice services</div>
               <a className="nav-mobile-link" href="Paraplanning.html" onClick={() => setMobileOpen(false)}>Paraplanning</a>
-              <a className="nav-mobile-link" href="Transition Management.html" onClick={() => setMobileOpen(false)}>Transition Management</a>
+              <a className="nav-mobile-link" href="transition-management.html" onClick={() => setMobileOpen(false)}>Transition Management</a>
             </div>
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">About</div>
-              <a className="nav-mobile-link" href="Who we are.html" onClick={() => setMobileOpen(false)}>Who we are</a>
+              <a className="nav-mobile-link" href="who-we-are.html" onClick={() => setMobileOpen(false)}>Who we are</a>
               <a className="nav-mobile-link" href="Careers.html" onClick={() => setMobileOpen(false)}>Careers</a>
             </div>
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Content</div>
-              <a className="nav-mobile-link" href="News & Insights.html" onClick={() => setMobileOpen(false)}>News &amp; Insights</a>
+              <a className="nav-mobile-link" href="news-insights.html" onClick={() => setMobileOpen(false)}>News &amp; Insights</a>
               <a className="nav-mobile-link" href="Resources.html" onClick={() => setMobileOpen(false)}>Resources</a>
             </div>
             <div className="nav-mobile-section">
@@ -884,20 +884,20 @@ const PADUA_CONTENT = {
         tag: '',
         h: 'Advisers & Licensees',
         p: 'The Padua Advice Portal. A modular, AI-augmented advice platform with experienced Advice Guides supporting every step.',
-        href: 'Padua Portal.html',
+        href: 'padua-portal.html',
         featured: true,
       },
       {
         tag: '',
         h: 'Platforms & Super Funds',
         p: 'Data integration, modelling tools, member engagement video and open banking technology for platform operators and super funds.',
-        href: 'product-providers.html',
+        href: 'padua-portal-platforms.html',
       },
       {
         tag: '',
         h: 'Investment Managers',
         p: 'Fund administration tooling, investment analytics, market data and adviser advertising channels.',
-        href: 'product-providers.html',
+        href: 'padua-portal-platforms.html',
       },
     ],
   },
@@ -921,7 +921,7 @@ const PADUA_CONTENT = {
       {
         h: 'Transition Management',
         p: 'End-to-end support for moving clients between platforms and providers. Implementation handled, reporting clear, clients kept informed throughout.',
-        href: 'Transition Management.html',
+        href: 'transition-management.html',
       },
     ],
     standalone: [
@@ -933,7 +933,7 @@ const PADUA_CONTENT = {
       {
         h: 'Media & Advertising',
         p: "Reach Australia's advice market through Padua's owned channels and adviser networks.",
-        href: 'product-providers.html',
+        href: 'padua-portal-platforms.html',
       },
     ],
   },
@@ -1021,25 +1021,24 @@ const PADUA_CONTENT = {
       {
         h: 'Advisers & Licensees',
         links: [
-          { label: 'Padua Advice Portal', href: 'Padua Portal.html' },
+          { label: 'Padua Advice Portal', href: 'padua-portal.html' },
           { label: 'Paraplanning services', href: 'Paraplanning.html' },
-          { label: 'Transition management', href: 'Transition Management.html' },
+          { label: 'Transition management', href: 'transition-management.html' },
         ],
       },
       {
         h: 'Other streams',
         links: [
-          { label: 'Platforms & Super Funds', href: 'product-providers.html' },
-          { label: 'Investment Managers', href: 'product-providers.html' },
-          { label: 'Media & Advertising', href: 'product-providers.html' },
+          { label: 'Platforms & Super Funds', href: 'padua-portal-platforms.html' },
+          { label: 'Investment Managers', href: 'padua-portal-platforms.html' },
+          { label: 'Media & Advertising', href: 'padua-portal-platforms.html' },
         ],
       },
       {
         h: 'Company',
         links: [
-          { label: 'About Padua', href: 'Who we are.html' },
-          { label: 'Our people', href: 'about/our-people.html' },
-          { label: 'News & insights', href: 'News & Insights.html' },
+          { label: 'About Padua', href: 'who-we-are.html' },
+          { label: 'News & insights', href: 'news-insights.html' },
           { label: 'Careers', href: 'Careers.html' },
           { label: 'Contact', href: 'Contact.html' },
         ],
