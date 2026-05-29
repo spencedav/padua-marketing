@@ -1940,6 +1940,14 @@
   /* The desktop "Sign in" + "Book a demo" pills get hidden on mobile —
      they re-appear inside the drawer at the bottom for a clean phone bar. */
   .dir-a .nav-actions { display: none; }
-  /* Re-balance the inner grid: logo on the left, hamburger on the right. */
-  .dir-a .nav-inner { grid-template-columns: auto auto; }
+  /* Switch from grid to flex on mobile so justify-content: space-between
+     pushes the logo to the left edge and the hamburger to the right edge.
+     The old `grid-template-columns: auto auto` packed them both to the
+     left, leaving the hamburger stranded next to the logo. */
+  .dir-a .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
 }
