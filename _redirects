@@ -45,6 +45,11 @@
 /mortgage-brokers.html                       /padua-portal.html           301
 /what-constitutes-a-strategy-at-padua        /padua-portal                301
 /what-constitutes-a-strategy-at-padua.html   /padua-portal.html           301
+# /software was the four-stage overview + Three.js pyramid demo. Demo lives
+# off-site now (~/Documents/padua-pyramid-archive/). Public surface for
+# "what does Padua's software do?" is the Portal page.
+/software                                    /padua-portal                301
+/software.html                               /padua-portal.html           301
 
 # About subdirectory — fold legacy /about/* into the redesign equivalents.
 /about/who-we-are                            /who-we-are                  301
