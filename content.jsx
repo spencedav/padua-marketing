@@ -49,7 +49,7 @@ const NAV_AUDIENCES = [
           { h: 'WealthX', p: 'Open banking', href: 'WealthX.html' },
           { h: 'WealthAI', p: 'Video & statements', href: 'WealthAI.html' },
           { type: 'label', label: 'Standalone' },
-          { h: 'WealthData', p: 'Adviser insights', href: 'WealthData.html' },
+          { h: 'WealthData', p: 'Adviser movement data', href: 'WealthData.html' },
         ],
       },
       {
@@ -59,6 +59,10 @@ const NAV_AUDIENCES = [
           { h: 'Transition Management', p: 'End-to-end client transition support', href: 'transition-management.html' },
         ],
       },
+    ],
+    legend: [
+      { tag: 'both', label: 'Works standalone & in Padua Portal' },
+      { tag: 'standalone', label: 'Standalone only' },
     ],
   },
   {
@@ -84,7 +88,7 @@ const NAV_AUDIENCES = [
           { h: 'WealthX', p: 'Open banking', href: 'WealthX.html' },
           { h: 'WealthAI', p: 'Personalised member video', href: 'WealthAI.html' },
           { type: 'label', label: 'Standalone' },
-          { h: 'WealthData', p: 'Behavioural insights', href: 'WealthData.html' },
+          { h: 'WealthData', p: 'Adviser movement data', href: 'WealthData.html' },
         ],
       },
       {
@@ -94,6 +98,10 @@ const NAV_AUDIENCES = [
           { h: 'Transition Management', p: 'End-to-end client transition support', href: 'transition-management.html' },
         ],
       },
+    ],
+    legend: [
+      { tag: 'both', label: 'Works standalone & in Padua Portal' },
+      { tag: 'standalone', label: 'Standalone only' },
     ],
   },
   {
@@ -112,7 +120,7 @@ const NAV_AUDIENCES = [
       {
         title: 'Standalone Software',
         items: [
-          { h: 'WealthData', p: 'Adviser behaviour insights', href: 'WealthData.html' },
+          { h: 'WealthData', p: 'Adviser movement data', href: 'WealthData.html' },
           { h: 'WealthAI', p: 'Branded client video', href: 'WealthAI.html' },
         ],
       },
@@ -127,7 +135,7 @@ const NAV_ABOUT_SECTIONS = [
     title: 'Company',
     items: [
       { h: 'Who we are', p: 'Our mission and values', href: 'who-we-are.html' },
-      { h: 'Our people', p: 'Meet the Board + leadership team', href: 'our-people.html' },
+      { h: 'Our people', p: 'The team behind Padua', href: 'our-people.html' },
       { h: 'Careers', href: 'Careers.html' },
     ],
   },
