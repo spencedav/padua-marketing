@@ -7,14 +7,20 @@
 // Manually featured. Everything else is bridged automatically from the
 // Webflow-sourced articles list (see articles.jsx -> window.PADUA_ARTICLES).
 const CURATED_NEWS = [
-  { kind: 'article',  title: 'Division 296: A practical guide',                                              href: 'https://www.financialstandard.com.au/', date: '4 May 2026', image: 'assets/division-296.jpg', source: 'Financial Standard', authors: 'Anne-Marie Esler & Rudy Haddad' },
-  { kind: 'event',    title: 'Matt Esler speaks at SIAA 2026: the technology-enabled advice plenary',     href: 'https://www.linkedin.com/company/3641071/', date: '20 May 2026', image: 'assets/siaa2026-matt.jpg', source: 'SIAA Conference', authors: 'Park Hyatt Melbourne' },
-  { kind: 'event',    title: 'Anne-Marie Esler on AI, Tech and the Emerging Client Experience',            href: 'https://www.linkedin.com/company/3641071/', date: '29 Apr - 1 May 2026', image: 'assets/empowerher-noosa.png', source: 'CFS EmpowerHer Summit', authors: 'Noosa' },
+  // Each curated piece now links to its own local landing page (the
+  // 6 new content pages added in commit 4f12cb3) instead of bouncing
+  // out to Financial Standard / LinkedIn. Keeps users on-site, gives
+  // each piece an OG-image-sharable URL.
+  { kind: 'article',  title: 'Division 296: A practical guide',                                              href: 'division-296.html', date: '4 May 2026', image: 'assets/division-296.jpg', source: 'Financial Standard', authors: 'Anne-Marie Esler & Rudy Haddad' },
+  { kind: 'event',    title: 'Matt Esler speaks at SIAA 2026: the technology-enabled advice plenary',     href: 'siaa-2026.html', date: '20 May 2026', image: 'assets/siaa-matt-speaking.jpg', source: 'SIAA Conference', authors: 'Park Hyatt Melbourne' },
+  { kind: 'event',    title: 'Anne-Marie Esler on AI, Tech and the Emerging Client Experience',            href: 'cfs-empowerher.html', date: '29 Apr - 1 May 2026', image: 'assets/empowerher-noosa.png', source: 'CFS EmpowerHer Summit', authors: 'Noosa' },
 ];
 const CURATED_RESOURCES = [
-  { kind: 'report',     title: 'Federal Budget 2026-27: Padua branded analysis', href: 'assets/federal-budget-2026-27-branded.docx', date: '13 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-cover.png' },
-  { kind: 'whitepaper', title: 'Federal Budget 2026-27: adviser whitepaper',     href: 'assets/federal-budget-2026-27-whitepaper.docx', date: '12 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-whitepaper-cover.png' },
-  { kind: 'whitepaper', title: 'EOFY superannuation strategies 2025-26',         href: 'assets/eofy-super-strategies.pdf', date: '21 Apr 2026', authors: 'Rudy Haddad', image: 'assets/eofy-super-cover.png' },
+  // Same — link to the local resource landing pages, which carry the
+  // download button in-page, instead of straight to the .docx/.pdf.
+  { kind: 'report',     title: 'Federal Budget 2026-27: Padua branded analysis', href: 'federal-budget-report.html', date: '13 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-cover.png' },
+  { kind: 'whitepaper', title: 'Federal Budget 2026-27: adviser whitepaper',     href: 'federal-budget-whitepaper.html', date: '12 May 2026', authors: 'Rudy Haddad', image: 'assets/federal-budget-whitepaper-cover.png' },
+  { kind: 'whitepaper', title: 'EOFY superannuation strategies 2025-26',         href: 'eofy-super-strategies.html', date: '21 Apr 2026', authors: 'Rudy Haddad', image: 'assets/eofy-super-cover.png' },
 ];
 
 // Format an ISO date the same way curated entries are written ("4 May 2025").
