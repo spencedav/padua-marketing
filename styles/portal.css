@@ -128,12 +128,29 @@
 .portal-h1 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(38px, 4.6vw, 64px);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
+  font-size: clamp(42px, 5vw, 76px);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
   margin: 28px 0 24px;
   color: var(--ink);
   text-wrap: balance;
+  /* v3 hero title: productName stacks above tagline. */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* v3 hero tagline (the second line under productName), spectrum-gradient. */
+.portal-h1-tagline {
+  display: block;
+  font-size: clamp(24px, 2.6vw, 38px);
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  line-height: 1.1;
+  background: var(--spectrum);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: normal;
 }
 .portal-h1 em {
   font-style: italic;

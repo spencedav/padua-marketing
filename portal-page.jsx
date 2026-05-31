@@ -36,8 +36,9 @@ function useReveal(threshold = 0.2) {
 const PORTAL_COPY_BY_AUDIENCE = {
   advisers: {
     hero: {
-      eyebrow: 'Padua Portal · for advisers & licensees',
-      title: ['One platform for', <em key="em">end-to-end advice.</em>],
+      eyebrow: 'For advisers & licensees',
+      productName: 'Padua Portal',
+      tagline: 'One platform for end-to-end advice.',
       sub: 'A connected technology stack that brings discovery, advice generation, compliance and presentation into one compliance-gated workflow. Built on more than 13 years at the forefront of Australian financial advice.',
       videoLength: '2 min · Product tour',
       videoCaption: 'See the Portal in action, for advisers & licensees',
@@ -66,8 +67,8 @@ const PORTAL_COPY_BY_AUDIENCE = {
       lede: 'What sets Padua Portal apart for licensees and advice practices.',
       items: [
         { n: '01', key: 'integration', title: 'Integration', headline: 'Closed-loop integration', p: 'Secure data push and pull across your ecosystem. Platforms, IPSs, CRMs and Xplan connect to Padua through our secure API.' },
-        { n: '02', key: 'efficiency',  title: 'Efficiency',  headline: 'Adviser efficiency at scale', p: 'Padua takes advisers on the road to servicing 300+ clients. WealthX alone saves over 30 minutes per fact find through open banking.' },
-        { n: '03', key: 'engagement',  title: 'Engagement',  headline: 'Deeper client engagement',    p: 'Personalised video SOAs through WealthAI, plus a holistic, transparent wealth dashboard via WealthReview.' },
+        { n: '02', key: 'engagement',  title: 'Engagement',  headline: 'Deeper client engagement',    p: 'Personalised video SOAs through WealthAI, plus a holistic, transparent wealth dashboard via WealthReview.' },
+        { n: '03', key: 'efficiency',  title: 'Efficiency',  headline: 'Adviser efficiency at scale', p: 'Padua takes advisers on the road to servicing 300+ clients. WealthX alone saves over 30 minutes per fact find through open banking.' },
         { n: '04', key: 'compliance',  title: 'Compliance',  headline: 'Audit-ready by default',      p: 'Padua AQA stage gates run inside every file. Padua RAFA delivers an ASIC and AFCA-aligned audit before and after implementation, with secure cold storage on completion.' },
       ],
     },
@@ -76,9 +77,9 @@ const PORTAL_COPY_BY_AUDIENCE = {
       title: 'Three modules. One connected workflow.',
       sub: 'Use the Portal end-to-end, or bring in the modules that solve your sharpest problem first.',
       items: [
-        { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Pulls together fact-find data, modelling and strategy notes into a first-draft ROA in minutes, then learns your tone of voice as your team uses it.', cta: 'Explore SteveAI', href: 'SteveAI.html', accent: 'discover' },
+        { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Records and transcribes your meetings and turns them into structured, compliant file notes, so your team spends less time on admin and more time with clients.', cta: 'Explore SteveAI', href: 'SteveAI.html', accent: 'discover' },
         { key: 'wealthx', name: 'WealthX', tagline: 'Open banking, built in.', p: 'Pulls live cashflow, super and investment data from 100+ Australian institutions, so the fact-find writes itself and the modelling stays current.', cta: 'Explore WealthX', href: 'WealthX.html', accent: 'teal' },
-        { key: 'wealthreview', name: 'WealthReview', tagline: 'The client dashboard.', p: 'A live, white-labelled view of every client\u2019s strategy, holdings and progress against goals, designed to make ongoing review effortless.', cta: 'Explore WealthReview', href: 'WealthReview.html', accent: 'review' },
+        { key: 'wealthreview', name: 'WealthReview', tagline: 'The client dashboard.', p: 'Brings every dimension of a client\u2019s wealth into one structured, engaging view, so reviews are more productive and clients stay connected to their plan between meetings.', cta: 'Explore WealthReview', href: 'WealthReview.html', accent: 'review' },
       ],
     },
     faq: {
@@ -102,8 +103,9 @@ const PORTAL_COPY_BY_AUDIENCE = {
 
   platforms: {
     hero: {
-      eyebrow: 'Padua Portal · for platforms & super funds',
-      title: ['One platform for', <em key="em">end-to-end advice.</em>],
+      eyebrow: 'For platforms & super funds',
+      productName: 'Padua Portal',
+      tagline: 'One platform for end-to-end advice.',
       sub: 'One connected advice workflow for platforms and super funds. Bring discovery, advice generation, compliance and presentation into a single compliance-gated journey, embedded in your ecosystem.',
       videoLength: '2 min · Product tour',
       videoCaption: 'See the Portal in action, for platforms & super funds',
@@ -132,8 +134,8 @@ const PORTAL_COPY_BY_AUDIENCE = {
       lede: 'What sets Padua Portal apart for platforms and super funds.',
       items: [
         { n: '01', key: 'integration', title: 'Integration', headline: 'Closed-loop with your platform', p: 'Secure data push and pull between Padua and your platform, IPSs, CRMs and Xplan through our secure API. Available for both advised and non-advised members.' },
-        { n: '02', key: 'efficiency',  title: 'Efficiency',  headline: 'Adviser efficiency at scale',    p: 'Padua takes advisers on the road to servicing 300+ clients, and reduces reliance on expensive, disparate software subscriptions across your network.' },
-        { n: '03', key: 'engagement',  title: 'Engagement',  headline: 'Holistic member experience',    p: 'Personalised video SOAs through WealthAI and a transparent wealth dashboard via WealthReview, white-labelled to your platform brand.' },
+        { n: '02', key: 'engagement',  title: 'Engagement',  headline: 'Holistic member experience',    p: 'Personalised video SOAs through WealthAI and a transparent wealth dashboard via WealthReview, white-labelled to your platform brand.' },
+        { n: '03', key: 'efficiency',  title: 'Efficiency',  headline: 'Adviser efficiency at scale',    p: 'Padua takes advisers on the road to servicing 300+ clients, and reduces reliance on expensive, disparate software subscriptions across your network.' },
         { n: '04', key: 'compliance',  title: 'Compliance',  headline: 'Audit-ready by default',    p: 'Padua AQA stage gates inside the workflow plus Padua RAFA, an ASIC and AFCA-aligned audit before and after implementation, with secure cold storage and full record completeness on file closure.' },
       ],
     },
@@ -144,7 +146,7 @@ const PORTAL_COPY_BY_AUDIENCE = {
       items: [
         { key: 'steveai', name: 'SteveAI', tagline: 'The AI advice assistant.', p: 'Agentive AI that runs the fact find and concierge meeting, records transcripts and stays with the member throughout the entire advice journey.', cta: 'Explore SteveAI', href: 'SteveAI.html', accent: 'discover' },
         { key: 'wealthx', name: 'WealthX', tagline: 'Open banking, built in.', p: 'Securely integrates with the member\u2019s banks for direct bank feeds and transparent insights, saving over 30 minutes per fact find.', cta: 'Explore WealthX', href: 'WealthX.html', accent: 'teal' },
-        { key: 'wealthreview', name: 'WealthReview', tagline: 'The member dashboard.', p: 'A live, white-labelled view of every member\u2019s strategy, holdings and progress against goals, populated with post-advice data.', cta: 'Explore WealthReview', href: 'WealthReview.html', accent: 'review' },
+        { key: 'wealthreview', name: 'WealthReview', tagline: 'The member dashboard.', p: 'Brings every dimension of a member\u2019s wealth into one structured, engaging view, populated with post-advice data, so members stay connected to their plan.', cta: 'Explore WealthReview', href: 'WealthReview.html', accent: 'review' },
       ],
     },
     faq: {
@@ -216,7 +218,8 @@ function PortalHero({ layout = 'video-below' }) {
         <div className="portal-hero-text">
           <div className="portal-eyebrow">{c.eyebrow}</div>
           <h1 className="portal-h1">
-            {c.title[0]} {c.title[1]}
+            {c.productName}
+            <span className="portal-h1-tagline">{c.tagline}</span>
           </h1>
           <p className="portal-hero-sub">{c.sub}</p>
         </div>
