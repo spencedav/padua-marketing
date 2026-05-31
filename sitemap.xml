@@ -45,8 +45,18 @@
   <url><loc>https://www.paduasolutions.com/Careers</loc>                   <priority>0.7</priority><changefreq>weekly</changefreq>  <lastmod>2026-05-29</lastmod></url>
 
   <!-- Content -->
-  <url><loc>https://www.paduasolutions.com/news-insights</loc>             <priority>0.7</priority><changefreq>weekly</changefreq>  <lastmod>2026-05-29</lastmod></url>
-  <url><loc>https://www.paduasolutions.com/Resources</loc>                 <priority>0.6</priority><changefreq>weekly</changefreq>  <lastmod>2026-05-29</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/news-insights</loc>             <priority>0.7</priority><changefreq>weekly</changefreq>  <lastmod>2026-06-01</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/Resources</loc>                 <priority>0.6</priority><changefreq>weekly</changefreq>  <lastmod>2026-06-01</lastmod></url>
+
+  <!-- Feature articles (hand-curated, top-level URLs) -->
+  <url><loc>https://www.paduasolutions.com/cfs-empowerher</loc>            <priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-06-01</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/division-296</loc>              <priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-06-01</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/siaa-2026</loc>                 <priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-06-01</lastmod></url>
+
+  <!-- Whitepapers & reports -->
+  <url><loc>https://www.paduasolutions.com/eofy-super-strategies</loc>     <priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-06-01</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/federal-budget-report</loc>     <priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-06-01</lastmod></url>
+  <url><loc>https://www.paduasolutions.com/federal-budget-whitepaper</loc> <priority>0.5</priority><changefreq>monthly</changefreq><lastmod>2026-06-01</lastmod></url>
 
   <!-- Contact -->
   <url><loc>https://www.paduasolutions.com/Contact</loc>                   <priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-05-29</lastmod></url>
