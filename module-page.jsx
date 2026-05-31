@@ -38,32 +38,36 @@ const MODULE_COPY_BY_KEY = {
     key: 'steveai',
     accent: 'discover',           // purple
     accentName: 'SteveAI',
-    productName: 'SteveAI',
+    productName: 'Padua SteveAI',
+    badge: 'Coming soon',
+    badgeNote: 'currently being tested internally',
     productTagline: 'The AI assistant for advice.',
-    eyebrow: 'Modular component · Inside Padua Portal',
-    intro: 'An AI assistant that runs the advice journey alongside your team. SteveAI records meetings, builds the fact find, hosts the advice guidance and presents the advice. Always there, always learning.',
+    eyebrow: '',
+    intro: 'An AI assistant that works alongside your team across the advice journey. SteveAI records and transcribes your meetings and turns them into structured, compliant file notes, so advisers, paraplanners and support staff spend less time on admin and more time with clients.',
     cta_demo: 'Book a SteveAI demo',
-    cta_portal: 'See SteveAI inside the Portal',
+    cta_portal: 'See SteveAI inside the Padua Portal',
 
     what: {
       eyebrow: 'What it does',
-      lead: 'SteveAI is the advice assistant that never misses a meeting. It listens, captures, prompts and presents, freeing your advisers to focus on the conversation, not the keyboard.',
+      lead: 'SteveAI is the advice assistant that never misses a meeting. It listens, captures and summarises, freeing advisers to focus on the conversation, not the keyboard.',
       cols: [
-        { stat: '24/7', label: 'Always-on advice assistant', p: 'Available at every client interaction across the Portal workflow.' },
+        { stat: '24/7', label: 'Always-on advice assistant', p: 'Available at every client interaction across the Padua Portal workflow.' },
         { stat: '100%', label: 'Captured & transcribed', p: 'Every meeting recorded, transcribed and turned into a structured file note.' },
-        { stat: 'AI', label: 'Proactive, not passive', p: 'SteveAI prompts clients for missing information instead of waiting to be asked.' },
+        { stat: 'Compliant', label: 'Compliant file notes', p: 'Structured file notes built to support your ASIC compliance obligations.' },
       ],
     },
 
     flow: {
       eyebrow: 'How it works',
       title: 'A continuous presence across the advice journey.',
-      sub: 'SteveAI stays with the client at every stage of the Portal workflow.',
+      sub: 'SteveAI joins every client meeting, capturing the conversation at each stage of the advice journey.',
       steps: [
-        { n: '01', h: 'Discovery', p: 'Records the initial client conversation, transcribes it and structures the data into your fact-find templates.' },
-        { n: '02', h: 'Advice guidance', p: 'Hosts the advice guidance session, captures clarifications and prompts for any information that\u2019s still missing.' },
-        { n: '03', h: 'Advice generation', p: 'Feeds clean structured data into the Advice Optimiser and SOA generation, accelerating drafting without skipping detail.' },
-        { n: '04', h: 'Advice presentation', p: 'Presents the advice with the client at the final meeting, then carries forward into review.' },
+        { n: '01', h: 'Pre-discovery', p: 'Captures the first conversation with a prospective client, the why behind their advice, so nothing from that initial chat is lost.' },
+        { n: '02', h: 'Discovery', p: 'Records and transcribes the discovery meeting, capturing the detail of the client\u2019s situation and goals.' },
+        { n: '03', h: 'Advice preparation', p: 'Sits in on advice guidance meetings, capturing clarifications and the key recommendations and strategies discussed.' },
+        { n: '04', h: 'Advice generation', p: 'Summarises the meeting into a structured, compliant file note that supports advice generation.' },
+        { n: '05', h: 'Advice presentation', p: 'Produces a client-ready summary that supports the adviser presenting the advice.' },
+        { n: '06', h: 'Advice review', p: 'At review time, records and summarises the meeting so changes since the last advice are captured.' },
       ],
     },
 
@@ -71,12 +75,10 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'What SteveAI does for you',
       title: 'Built for the way advice actually gets made.',
       items: [
-        { h: 'Meeting recording & transcription', p: 'Captures every meeting verbatim, time-coded and searchable.' },
-        { h: 'Auto-generated file notes', p: 'Turns the transcript into a structured file note aligned to your firm\u2019s template.' },
-        { h: 'Proactive client prompts', p: 'Notices gaps in the fact find and asks the client, directly, on their terms.' },
-        { h: 'Lives inside the Portal', p: 'A persistent assistant across discovery, advice guidance, advice generation and presentation.' },
-        { h: 'Tone-of-voice aware', p: 'Learns your firm\u2019s language so file notes and advice text sound like you wrote them.' },
-        { h: 'Audit-friendly', p: 'Full conversation transcripts and structured notes make every advice file audit-ready.' },
+        { h: 'Meeting recording & transcription', p: 'Captures every meeting in full, time-coded and searchable.' },
+        { h: 'Auto-generated file notes', p: 'Turns the transcript into a structured, compliant file note aligned to your firm\u2019s template.' },
+        { h: 'Action items & owners', p: 'Identifies the key actions from each meeting and who\u2019s responsible.' },
+        { h: 'Lives inside the Padua Portal', p: 'A persistent assistant across the Padua Portal, from discovery through to advice review.' },
       ],
     },
 
@@ -84,10 +86,10 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'Frequently asked',
       title: 'Questions advisers ask about SteveAI.',
       items: [
-        { q: 'Is SteveAI replacing my paraplanner?', a: 'No. SteveAI accelerates the work that sits around the meeting, recording, transcription, file notes, structured data capture. Your paraplanners and advisers stay in the loop on every advice decision.' },
-        { q: 'Where does the audio go?', a: 'All recordings, transcripts and file notes are stored onshore in Australia, inside an ISO 27001 certified environment, governed by the Portal\u2019s standard compliance controls.' },
-        { q: 'Can clients opt out of recording?', a: 'Yes. Consent is captured at the start of every session and the meeting can run with transcription disabled if the client prefers.' },
-        { q: 'Can I use SteveAI without the rest of the Portal?', a: 'Yes. SteveAI is available as a standalone module for non-Padua advisers who want to extend their existing workflow.' },
+        { q: 'Does SteveAI help keep our advice compliant?', a: 'Yes. SteveAI turns every meeting into a structured, compliant file note that supports your ASIC obligations, backed by a complete, time-stamped transcript. Recordings, transcripts and notes are stored onshore in Australia inside an ISO 27001 certified environment.' },
+        { q: 'Will SteveAI replace my role?', a: 'No. SteveAI is a tool to save your team time and boost productivity, not to replace anyone. It records and transcribes meetings and turns them into structured, compliant file notes that support your ASIC obligations, freeing advisers, paraplanners and support staff to focus on clients.' },
+        { q: 'Where does the audio go?', a: 'All recordings, transcripts and file notes are stored onshore in Australia, inside an ISO 27001 certified environment, governed by the Portal\u2019s standard compliance controls. For more on how your data is handled, see our <a href=\"https://www.paduasolutions.com/privacy-policy\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>.' },
+        { q: 'Can clients opt out of recording?', a: 'Clients are always informed that SteveAI is part of the meeting and that the session is being recorded. If a client would prefer not to be recorded, the adviser can simply choose not to include SteveAI in that meeting.' },
       ],
     },
   },
@@ -96,7 +98,7 @@ const MODULE_COPY_BY_KEY = {
     key: 'wealthx',
     accent: 'teal',
     accentName: 'WealthX',
-    productName: 'WealthX',
+    productName: 'Padua WealthX',
     productTagline: 'Open banking, built for advice.',
     eyebrow: 'Modular component · Inside Padua Portal',
     intro: 'Verified client income, expenses, balances and mortgage data, pulled straight from the bank. Your fact find starts with the truth, not a guess.',
@@ -107,7 +109,7 @@ const MODULE_COPY_BY_KEY = {
       length: 'Launch video',
     },
     cta_demo: 'Book a WealthX demo',
-    cta_portal: 'See WealthX inside the Portal',
+    cta_portal: 'See WealthX inside the Padua Portal',
 
     what: {
       eyebrow: 'What it does',
@@ -139,8 +141,8 @@ const MODULE_COPY_BY_KEY = {
         { h: 'Categorised income & expenses', p: 'Every transaction automatically and perfectly categorised, ready for modelling.' },
         { h: 'Property & mortgage data', p: 'Real-time property valuations and mortgage information for stronger advice inputs.' },
         { h: 'Free client cashflow app', p: 'Clients get a free mobile cashflow app, deepening engagement between reviews.' },
-        { h: 'Embedded in the Portal', p: 'Data flows straight into Padua\u2019s fact find, modelling and WealthReview modules.' },
-        { h: 'Consent transparency', p: 'Clients can see, manage and revoke access at any time, from inside the Portal.' },
+        { h: 'Embedded in the Padua Portal', p: 'Data flows straight into Padua\u2019s fact find, modelling and WealthReview modules.' },
+        { h: 'Consent transparency', p: 'Clients can see, manage and revoke access at any time, from inside the Padua Portal.' },
       ],
     },
 
@@ -184,12 +186,12 @@ const MODULE_COPY_BY_KEY = {
     key: 'wealthreview',
     accent: 'review',
     accentName: 'WealthReview',
-    productName: 'WealthReview',
+    productName: 'Padua WealthReview',
     productTagline: 'Make client reviews count.',
-    eyebrow: 'Modular component · Inside Padua Portal',
-    intro: 'A smarter way to review and manage your clients\u2019 financial position. WealthReview brings every dimension of a client\u2019s wealth into one engaging, structured view, so reviews are more productive for both you and your clients.',
+    eyebrow: 'Inside Padua Portal & Paraplanning customers',
+    intro: 'A smarter way to review and manage your clients\u2019 financial position. WealthReview brings every dimension of a client\u2019s wealth into one engaging, structured view, so reviews are more productive for both you and your clients. Clients get their own direct access too, so the value of the conversation continues at home. Available inside the Padua Portal, and to firms using our paraplanning service.',
     cta_demo: 'Explore WealthReview',
-    cta_portal: 'See WealthReview inside the Portal',
+    cta_portal: 'See WealthReview inside the Padua Portal',
 
     what: {
       eyebrow: 'What it does',
@@ -217,12 +219,12 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'Inside the dashboard',
       title: 'Every dimension of wealth, in one structured view.',
       items: [
-        { h: 'Family & entities', p: 'Clients, dependants and entities organised into one clear dashboard view.' },
-        { h: 'Goals & objectives', p: 'Visualise progress against each client goal, retirement, lifestyle, property and beyond.' },
-        { h: 'Cashflow & capital', p: 'Income, expenses, net cashflow, assets and liabilities surfaced at a glance.' },
-        { h: 'Retirement & protection', p: 'Super, income, asset and protection coverage all in one snapshot.' },
-        { h: 'Portfolio & allocation', p: 'Portfolio value, net flows, returns, growth, income and asset allocation, cleanly summarised.' },
-        { h: 'Personalised branding', p: 'White-labelled to reflect your firm or platform across every touchpoint.' },
+        { h: 'Your family at a glance', p: 'Who matters in this picture, partners, dependants and the family structure, brought together in one clear view.' },
+        { h: 'How you\u2019re tracking towards your goals', p: 'Retirement, lifestyle, property and the milestones in between, with progress shown visually so you can see where you stand.' },
+        { h: 'How your money moves day to day', p: 'Income, expenses, what comes in and what goes out, plus the bigger picture of savings and what you owe, all in one place.' },
+        { h: 'How well protected you are', p: 'Super, income protection, life and other cover, brought into one snapshot so the gaps are easy to spot.' },
+        { h: 'How your portfolio is performing', p: 'What the portfolio is worth today, how it\u2019s grown, what it earns and where it\u2019s invested, summarised so you don\u2019t need a glossary.' },
+        { h: 'Take-home for clients', p: 'Your clients get their own direct access to WealthReview, so they can revisit their wealth picture, track progress against goals and stay engaged with their advice between reviews.' },
       ],
     },
 
@@ -232,8 +234,7 @@ const MODULE_COPY_BY_KEY = {
       items: [
         { q: 'What data does WealthReview use?', a: 'WealthReview is built on your existing Padua Discover fact-find data, so client information flows in automatically. With WealthX layered on top, bank feeds and platform data keep balances live between reviews.' },
         { q: 'Can we brand it for our firm or platform?', a: 'Yes. WealthReview is personalised by default, reflecting your business across colours, typography and copy. For platforms and super funds, we white-label across both adviser and member experiences.' },
-        { q: 'What does the dashboard actually show?', a: 'Family, entities, goals, cashflow, capital, retirement, protection, portfolio snapshot and asset allocation, every dimension of a client\u2019s wealth in one structured view.' },
-        { q: 'Can we use it without the rest of the Portal?', a: 'Yes. WealthReview can run standalone for non-Padua advisers, fed by Discover fact-find data or by an external data feed of your choosing.' },
+        { q: 'What does the dashboard actually show?', a: 'A clear, outcome-led view of how healthy your wealth position is today and how it\u2019s tracking against your goals. The dashboard brings together your family picture, the goals you\u2019re working towards, your day-to-day cashflow, your bigger savings and assets, your retirement and protection cover, and how your portfolio is performing. All in one place, so reviews become a conversation, not a paperwork exercise.' },
       ],
     },
   },
@@ -245,18 +246,18 @@ const MODULE_COPY_BY_KEY = {
     productName: 'Paraplanning',
     productTagline: 'Australian-based advice experts.',
     eyebrow: 'Advice services · Paraplanning',
-    intro: 'Paraplanning and advice generation by an onshore Australian team. Experienced advice guides, paraplanners and quality assurance specialists, supported by Padua technology on every file.',
+    intro: 'Paraplanning and advice generation, supported by an onshore Australian team. Experienced advice guides, paraplanners and quality assurance specialists, backed by Padua\u2019s own technology on every request.',
     panelImage: 'assets/paraplanner-2.jpg',
     triangle: true,
-    cta_demo: 'Find out more',
-    cta_portal: 'See paraplanning inside the Portal',
+    cta_demo: 'Book a 30-minute demo',
+    cta_portal: 'See paraplanning inside the Padua Portal',
 
     what: {
       eyebrow: 'The Padua advantage',
-      lead: 'The triangle most paraplanners say is unattainable. Better quality, better turnaround and better value, at the same time. Not just one or two.',
+      lead: 'The triangle most advisers say is unattainable. Better quality, better turnaround and better value, at the same time. Not just one or two.',
       cols: [
         { stat: 'Better', label: 'Quality', p: 'Experienced advice guides and paraplanners applying Australian best practice on every file.' },
-        { stat: 'Better', label: 'Turnaround', p: 'Average turnaround of 5 business days, with unparalleled visibility on where every file is in production.' },
+        { stat: 'Better', label: 'Turnaround', p: 'Fast turnaround with unparalleled visibility on where every file is in production.' },
         { stat: 'Better', label: 'Value', p: 'Lower total cost per advice than in-house teams, traditional outsourcers or tech-only platforms.' },
       ],
     },
@@ -264,7 +265,7 @@ const MODULE_COPY_BY_KEY = {
     flow: {
       eyebrow: 'Our four value drivers',
       title: 'Time, cost, quality and engagement.',
-      sub: 'The four levers Padua pulls to make advice better. The language is lifted directly from the proposal so the conversation stays consistent.',
+      sub: 'The outcomes that matter most to your firm and your clients.',
       steps: [
         { n: '01', h: 'Time', p: 'Reducing the time to generate advice. Both our turnaround and the time advisers save on their side via advice guides, integrations and digital fact-finds.' },
         { n: '02', h: 'Cost', p: 'Lowering the cost of advice production through technology leverage and operational scale.' },
@@ -277,12 +278,12 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'The team behind every file',
       title: 'A dedicated team of Australian advice experts.',
       items: [
+        { h: 'HyperCare', p: 'Our onboarding team. From setup and training through to holding your hand through your first few submissions, until you\u2019re comfortable and never doing it alone.' },
         { h: 'Advice Guides', p: 'Your dedicated specialist who navigates the journey alongside you, from initial strategy conversation through to final sign-off.' },
         { h: 'Quality Assurance team', p: 'Quality assurance specialists who pre-vet every file at three stage gates before it reaches your adviser.' },
-        { h: 'Paraplanners', p: 'A bench of intermediate and senior paraplanners drafting advice against your firm\u2019s templates and tone of voice.' },
+        { h: 'Paraplanners', p: 'A bench of intermediate and senior paraplanners drafting your advice, configured to your branding and compliance requirements.' },
         { h: 'Relationship Management', p: 'A dedicated relationship manager owning the commercial side, with regular reporting and continuous improvement.' },
-        { h: 'Data, Research & Technical Advice', p: 'Specialists keeping you abreast of the latest regulatory, tax and technical developments.' },
-        { h: 'Technology & Cyber Security', p: 'An Australian engineering team protecting your client data with ISO 27001-certified infrastructure.' },
+        { h: 'Research & Technology', p: 'Specialists keeping you abreast of regulatory, tax and technical developments, supported by an Australian engineering team and ISO 27001-certified infrastructure.' },
       ],
     },
 
@@ -308,15 +309,16 @@ const MODULE_COPY_BY_KEY = {
     everest: {
       eyebrow: 'An entire support system',
       title: 'Behind every Advice Guide, an entire team.',
-      lead: 'Behind every successful Everest ascent sits an enormous support infrastructure. Support climbers fixing ropes and ladders, logistics teams moving equipment, route planners studying conditions, camps prepared in advance and operational teams coordinating every stage. The climber interacts most directly with their guide, but the success of the journey depends on a much broader ecosystem working behind the scenes.',
-      outro: 'Padua operates the same way. While the Advice Guide forms the primary relationship with you, they are supported by extensive operational and technology infrastructure across our firm.',
+      lead: 'Behind every successful Everest ascent sits an enormous support system. Climbers fixing ropes and ladders, logistics teams moving equipment, route planners studying conditions, camps prepared in advance and operational teams coordinating every stage. The climber interacts most directly with their guide, but the journey depends on a much broader ecosystem working behind the\u00a0scenes.',
+      listIntro: 'Padua works the same way. Behind your Advice Guide sits an entire Padua support system, working quietly behind the scenes on every file:',
+      outro: 'The Advice Guide is your primary relationship and single point of accountability. But behind them, this wider team and our operational and technology infrastructure carry the load, so quality, turnaround and compliance never rest on any one person.',
       support: [
         'Advice Generation teams',
         'Research capability',
         'Advice Enablement specialists',
         'Workflow & operational support',
         'Advanced technology platforms',
-        'AI initiatives (SteveAI and beyond)',
+        'AI initiatives (SteveAI and AQA)',
         'Continuous efficiency programmes',
       ],
     },
@@ -326,11 +328,12 @@ const MODULE_COPY_BY_KEY = {
       title: 'Questions advisers ask about Padua paraplanning.',
       items: [
         { q: 'How does the Advice Guide work?', a: 'Your Advice Guide is your single point of accountability across the whole journey. They take the initial 5\u201310 minute strategy conversation, coordinate the file through Padua\u2019s operational infrastructure and advice generation teams, and personally perform the final quality assurance review on the SOA. Same person, start to finish.' },
-        { q: 'What\u2019s the typical turnaround?', a: 'Average turnaround across the year is approximately 5 business days. You get unparalleled visibility on where your file is in production, so you can confidently schedule follow-up meetings and maintain momentum with clients.' },
-        { q: 'How does compliance work?', a: 'Two named stage gates sit inside every file. Padua AQA (Advice Quality Assurance) runs three times during file prep, identifying gaps and inconsistencies in advice documents, reducing admin rework, improving advice construction standards and supporting consistent quality. Padua RAFA (Regulatory Advice File Audit) then runs a full ASIC and AFCA-aligned audit before the advice reaches the client, and again after implementation, giving licensees and compliance teams confidence. Every file is audit-ready by default.' },
-        { q: 'Will the SOAs match our firm\u2019s style?', a: 'Yes. We configure the team to your templates, tone of voice and quality standards before any file goes live. Most firms can\u2019t tell internal from Padua-drafted advice once we\u2019re settled in.' },
-        { q: 'What is the impact on adviser capacity?', a: 'Firms using Padua paraplanning are already seeing meaningful uplifts in advice throughput and revenue, often materially improving adviser productivity. The aim is not just cheaper documents, it\u2019s unlocking adviser capacity to see more clients and operate at their highest value.' },
-        { q: 'How is Padua different from traditional paraplanning outsourcers?', a: 'Traditional outsourcers typically mean longer turnaround, inconsistent compliance and one-size-fits-all templates. Padua is 100% onshore, Australian-based, configured to your templates and tone of voice, with quality assurance built into every advice file.' },
+        { q: 'What\u2019s the typical turnaround?', a: 'Days, not weeks. You get unparalleled visibility on where your file is in production, so you can confidently schedule follow-up meetings and maintain momentum with clients.' },
+        { q: 'How does compliance work?', a: 'Padua AQA (Advice Quality Assurance) runs three times during file preparation, identifying gaps and inconsistencies, reducing rework and supporting consistent advice quality. Every file is checked before it reaches the client, so it\u2019s audit-ready by default.' },
+        { q: 'Will the advice match our firm\u2019s style?', a: 'Yes. We configure your advice documents to align with your branding and compliance requirements, so everything that reaches your client looks and reads like your firm.' },
+        { q: 'What is the impact on adviser capacity?', a: 'Firms using Padua\u2019s advice guidance and paraplanning services are already seeing meaningful uplifts in advice throughput and revenue. The aim isn\u2019t to provide a cheaper document, it\u2019s to unlock advisers\u2019 capacity to see more clients and deliver valuable advice.' },
+        { q: 'How is Padua different from traditional paraplanning outsourcers?', a: 'Traditional outsourcers typically mean longer turnaround, inconsistent compliance and one-size-fits-all templates. Padua is 100% onshore, Australian-based, configured to your branding and compliance requirements, with quality assurance built into every advice file.' },
+        { q: 'How long does onboarding take?', a: 'Our HyperCare team works alongside you every step of the way, from setup and training through to your first few submissions, to get you up and running as quickly as you need. You\u2019re never doing it alone.' },
       ],
     },
   },
@@ -400,10 +403,10 @@ const MODULE_COPY_BY_KEY = {
     key: 'wealthdata',
     accent: 'navy',
     accentName: 'WealthData',
-    productName: 'WealthData',
+    productName: 'Padua WealthData',
     productTagline: 'The source of truth on Australia\u2019s financial advice market.',
     eyebrow: 'Data-driven insights \u00b7 Standalone',
-    intro: 'Adviser movement data and superannuation insights, drawn weekly from ASIC\u2019s Financial Adviser Register.',
+    intro: 'Adviser movement data, drawn weekly from ASIC\u2019s Financial Adviser Register, plus superannuation insights driven by APRA and ATO data.',
     cta_demo: 'Subscribe',
     cta_portal: '',
     person: {
@@ -431,7 +434,7 @@ const MODULE_COPY_BY_KEY = {
       steps: [
         { n: '01', h: 'ASIC Financial Adviser Register', p: 'Every week, WealthData pulls the latest data from ASIC\u2019s Financial Adviser Register, the single source of truth for who is licensed to provide personal advice in Australia.' },
         { n: '02', h: 'Clean, enrich, classify', p: 'Raw register data is cleaned, deduplicated and enriched with licensee structure and peer-group classifications.' },
-        { n: '03', h: 'Weekly dashboards and reports', p: 'Subscribers access weekly dashboards through the Members Lounge, plus tailored reports built to brief. Free dashboards also publish openly for adviser movement, client segmentation, super and SMSF stats.' },
+        { n: '03', h: 'Weekly dashboards and reports', p: 'Subscribers access weekly dashboards through the Members Lounge, plus tailored reports built to brief. All searchable adviser and licensee databases are updated each week, and sit separately from the dashboards.' },
         { n: '04', h: 'Published every Thursday', p: 'A free weekly market insight is published to the WealthData blog every Thursday, with the headline dashboard anyone can view.' },
       ],
     },
@@ -440,12 +443,12 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'What\u2019s included',
       title: 'What you get, refreshed every week.',
       items: [
-        { h: 'Adviser movement data', p: '' },
-        { h: 'Licensee insights', p: '' },
-        { h: 'AFSL listings', p: '' },
-        { h: 'Super & SMSF stats', p: '' },
-        { h: 'Members Lounge / Blue Book', p: 'Subscriber-only access to deeper data.' },
-        { h: 'Weekly market insight', p: '' },
+        { h: 'Adviser movement data', p: 'Track adviser movement across the financial adviser industry, updated weekly from the ASIC Financial Adviser Register.' },
+        { h: 'Licensee insights', p: 'Track key movements of licensees and licensee owners, updated weekly from the ASIC Australian Financial Services Licensees dataset.' },
+        { h: 'AFSL & adviser listings', p: 'Comprehensive AFSL listings, filterable by new licensees, business model, state and postcode, plus direct adviser search by postcode. Key contacts are available in the Blue Book.' },
+        { h: 'Super & SMSF stats', p: 'A range of deep-dive dashboards plus limited free versions. Updated quarterly as APRA and ATO data is released, rather than weekly.' },
+        { h: 'Members Lounge / Blue Book', p: 'Optional paid tier with deeper licensee detail, including key contacts and business model.' },
+        { h: 'Weekly market insight blog', p: 'Insights every week into key adviser movements and the growth and losses of licensee owners.' },
       ],
     },
 
@@ -453,10 +456,10 @@ const MODULE_COPY_BY_KEY = {
       eyebrow: 'Frequently asked',
       title: 'Questions about WealthData.',
       items: [
-        { q: 'What data sits behind WealthData?', a: 'Every dataset starts with ASIC\u2019s Financial Adviser Register, refreshed weekly. We layer on licensee structure and peer-group classifications to make the data usable for strategic decisions.' },
-        { q: 'Who uses WealthData?', a: 'Licensees, dealer groups, platforms, super funds and adviser service providers. Anyone whose business depends on understanding where advisers sit, how they move and what\u2019s changing across the profession.' },
-        { q: 'What\u2019s included with a subscription?', a: 'Full access to the Members Lounge and Blue Book: weekly dashboards, complete AFSL and adviser listings, and historical movement trends. Plus the option to request tailored reports.' },
-        { q: 'Can I see WealthData before subscribing?', a: 'Yes. Several dashboards are free and publicly available, including the Adviser Weekly Dashboard, Client Segmentation Tool, Super Fund Stats and SMSF Statistics. The blog publishes a free weekly market insight every Thursday.' },
+        { q: 'What data sits behind WealthData?', a: 'Each week we combine the ASIC Financial Adviser Register with ASIC\u2019s AFSL and Representative datasets, and layer on licensee structure and peer-group classifications to make the data usable for strategic decisions.' },
+        { q: 'Who uses WealthData?', a: 'Licensees, platforms, super funds and adviser service providers. Anyone whose business depends on understanding where advisers sit, how they move and what\u2019s changing across the profession.' },
+        { q: 'What\u2019s included with a subscription?', a: 'Full access to the Members Lounge and Blue Book: weekly dashboards, complete AFSL and adviser listings with key person contact details in the Blue Book, and historical movement trends. Plus the option to request tailored reports.' },
+        { q: 'Can I see WealthData before subscribing?', a: 'Yes. Several dashboards are free and publicly available, including the Adviser Weekly Dashboard, Client Segmentation Tool, Super Fund Stats and SMSF Statistics, and the blog publishes a free weekly market insight every Thursday. We can also arrange a full demo to show how membership can benefit your business, and you can trial the full subscription for just $39 for your first month.' },
       ],
     },
   },
@@ -465,12 +468,29 @@ const MODULE_COPY_BY_KEY = {
     key: 'wealthai',
     accent: 'gold',
     accentName: 'WealthAI',
-    productName: 'WealthAI',
+    productName: 'Padua WealthAI',
     productTagline: 'Personalised video for every client.',
-    eyebrow: 'Software · Inside the Padua Portal & standalone',
-    intro: 'Autonomous AI video and voice-over for advice documents, member statements and investment fund information. A market-first in client engagement that turns every SOA into something clients actually watch.',
+    eyebrow: 'Software · Portal & standalone',
+    intro: 'Autonomous, hyper-personalised AI video and voice-over for advice documents, member statements and fund reports. WealthAI greets each client by name and walks them through their own numbers, generated automatically at scale, so even a three-million-member fund can reach every one personally.',
     cta_demo: 'Book a WealthAI demo',
-    cta_portal: 'See WealthAI inside the Portal',
+    cta_portal: 'See WealthAI inside the Padua Portal',
+
+    statband: {
+      problem: {
+        eyebrow: 'The problem',
+        stat: '1 in 3',
+        label: 'don\u2019t read their Statement of Advice thoroughly',
+        p: 'Many clients skim it, sign without reading, or don\u2019t recall receiving it, undermining both understanding and compliance.',
+        cite: 'Australian Government Treasury, Quality of Advice Review, 2022',
+      },
+      solution: {
+        eyebrow: 'The solution',
+        stat: '15.8\u00d7',
+        label: 'more likely to prefer a short video over a manual-style document',
+        p: 'When the information is complex, people reach for video. WealthAI turns a ~40-page PDF into a ~3-minute personalised video clients actually watch.',
+        cite: 'Wyzowl Marketing Report, 2025',
+      },
+    },
 
     what: {
       eyebrow: 'What it does',
@@ -502,6 +522,8 @@ const MODULE_COPY_BY_KEY = {
         { h: 'Personalised member statements', p: 'For super funds and platforms: annual or quarterly statements as a personalised video, not a PDF nobody opens.' },
         { h: 'Personalised PowerPoint packs', p: 'Branded slide decks that mirror the video, ready for in-person presentations.' },
         { h: 'Market-first engagement', p: 'No other Australian advice platform delivers personalised video at this scale. A differentiator for licensees, platforms and super funds.' },
+        { h: 'Multilingual, 25+ languages', p: 'Output the video, presentation and voice-over in over 25 languages, so every client hears their advice in the language they understand best.' },
+        { h: 'Your trusted voice, cloned', p: 'Industry-leading Australian AI voices, or clone your advisers\u2019 own voices to keep your firm\u2019s recognisable, trusted tone, securely and with full AI disclosure.' },
         { h: 'Client accessibility', p: 'Clients can replay, share and revisit the advice at their own pace. Especially valuable for elderly clients and EAL audiences.' },
         { h: 'White-label brand', p: 'Configured to your firm or platform brand across voice, visuals, intro and outro.' },
       ],
@@ -513,10 +535,10 @@ const MODULE_COPY_BY_KEY = {
       items: [
         { q: 'What kind of documents does WealthAI work with?', a: 'Statements of Advice, member statements (for super funds and platforms), investment fund reports and any other client-facing advice or product document. We read the source, personalise per client, and output a video plus matching PowerPoint pack.' },
         { q: 'How is the video personalised?', a: 'Client names, goals, balances, recommendations and projected outcomes are dynamically inserted into the script, the visuals and the on-screen text. Every client sees a version made for them.' },
-        { q: 'Whose voice is in the video?', a: 'A consistent on-brand AI voice configured to your firm or platform. We can also support specific voice profiles for licensees who want a recognisable narrator.' },
-        { q: 'Can we white-label it?', a: 'Yes. Branding, colours, intro/outro, music and voice are all configurable to your firm or platform. WealthAI sits inside your client experience, not Padua\u2019s.' },
+        { q: 'Whose voice is in the video?', a: 'A consistent on-brand AI voice configured to your firm or platform, using industry-leading Australian AI voices. If you prefer, we can clone your advisers\u2019 own voices to keep your recognisable, trusted tone. We value transparency and always disclose that the voice-over is generated with AI.' },
+        { q: 'How long does a video take to produce?', a: 'Videos are produced on the fly, with turnaround scaled to your package. Inside the Padua Portal, production can trigger automatically as soon as an SOA is approved. The average video takes around 5\u201310 minutes, and you\u2019re notified in the portal when it\u2019s ready, or it can be emailed straight to your client.' },
         { q: 'Can it run without the rest of the Padua Portal?', a: 'Yes. WealthAI runs standalone alongside your existing advice workflow, or as a fully integrated component of the Padua Portal.' },
-        { q: 'Is it secure?', a: 'Yes. Onshore Australian infrastructure, ISO 27001 certified, with the same compliance posture as the rest of the Padua platform.' },
+        { q: 'Is it secure?', a: 'Yes. Onshore Australian infrastructure, ISO 27001 certified, with zero data retention during the production process, the same compliance posture as the rest of the Padua platform.' },
       ],
     },
   },
@@ -542,11 +564,11 @@ const MODULE_COPY_BY_KEY = {
 
     what: {
       eyebrow: 'Why Padua',
-      lead: 'A team that takes its work seriously. Onshore, deliberate about advice quality, with more than 13 years shipping real product into a regulated profession.',
+      lead: 'A team that takes its work seriously. We’re onshore, deliberate about advice quality, and 13 years into delivering real product for a regulated profession.',
       cols: [
         { stat: 'On a mission', label: 'Better advice for more Australians', p: 'Every product we build, every Advice Guide we hire, every line of code we ship is in service of advisers helping more clients well.' },
-        { stat: '13 years', label: 'Shipping real product', p: 'More than 13 years building and refining the technology that sits behind better advice for Australians.' },
         { stat: 'EARS', label: 'Values that anchor the work', p: 'Empathy, Agility, Reliability and Simplicity. Our values shape who we hire, how we work and the standard we hold ourselves to.' },
+        { stat: '13 years', label: 'Delivering real product', p: 'More than 13 years building and refining the technology that sits behind better advice for Australians.' },
       ],
     },
 
@@ -625,14 +647,29 @@ function ModuleHero({ tweaks }) {
       data-screen-label="module-hero"
     >
       <div className="container module-hero-inner">
-        <div className="module-eyebrow">{c.eyebrow}</div>
+        {c.eyebrow && <div className="module-eyebrow">{c.eyebrow}</div>}
+        {c.badge && (
+          <span className="module-hero-badge">
+            <span className="module-hero-badge-dot" aria-hidden="true"></span>
+            <span className="module-hero-badge-main">{c.badge}</span>
+            {c.badgeNote && <span className="module-hero-badge-note">{c.badgeNote}</span>}
+          </span>
+        )}
         <h1 className="module-h1">
           {c.productName}
           <em>{c.productTagline}</em>
         </h1>
         <p className="module-hero-intro">{c.intro}</p>
         <div className="module-hero-cta-row">
-          {c.cta_demo && <a className="btn btn-spectrum" href="#book">{c.cta_demo}</a>}
+          {(c.heroCta || c.cta_demo) && (
+            <a
+              className="btn btn-spectrum"
+              href={c.heroCtaHref || 'Contact.html'}
+              {...(c.heroCtaHref ? { target: '_blank', rel: 'noopener' } : {})}
+            >
+              {c.heroCta || c.cta_demo}
+            </a>
+          )}
           {!c.press && c.cta_portal && (
             <a className="hero-link" href="#in-context">{c.cta_portal}</a>
           )}
@@ -673,6 +710,36 @@ function ModuleArtwork({ accent, offset, tweaks }) {
     );
   }
   if (accent === 'discover') {
+    if (tweaks && tweaks.steveaiArt === 'thoughts') {
+      const thoughts = [
+        { text: 'Client retiring at 61', cls: 't-1' },
+        { text: 'Pay off mortgage', cls: 't-2' },
+        { text: 'Goal: $80k/yr in retirement', cls: 't-3' },
+        { text: 'Family · 2 dependants', cls: 't-4' },
+        { text: 'Fact find completed', cls: 't-5' },
+        { text: 'Follow-up meeting booked', cls: 't-6' },
+      ];
+      return (
+        <div className="module-art module-art-steveai-thoughts" aria-hidden="true" style={{ transform: `translate3d(0, ${offset}px, 0)` }}>
+          <span className="orb orb-a" />
+          <span className="orb orb-b" />
+          <span className="orb orb-c" />
+          <span className="orb orb-d" />
+          <span className="orb orb-e" />
+          <span className="orb orb-f" />
+          <svg className="orb-lines" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path d="M 100 250 Q 300 100 500 250 T 900 250" />
+            <path d="M 100 320 Q 300 200 500 320 T 900 320" />
+            <path d="M 100 180 Q 300 40 500 180 T 900 180" />
+          </svg>
+          {thoughts.map((t) => (
+            <span key={t.cls} className={`thought-bubble thought-${t.cls}`}>
+              <span className="thought-bubble-text">{t.text}</span>
+            </span>
+          ))}
+        </div>
+      );
+    }
     return (
       <div className="module-art module-art-steveai" aria-hidden="true" style={{ transform: `translate3d(0, ${offset}px, 0)` }}>
         <span className="orb orb-a" />
@@ -757,56 +824,34 @@ function ModuleArtwork({ accent, offset, tweaks }) {
       </div>
     );
   }
+  // Transition (amber), Padua bubble filling up: small dots drift in from
+  // off-screen and accumulate inside a central outlined circle. Reads as
+  // "fragmented books consolidating into one place under Padua."
   if (accent === 'amber') {
     return (
-      <div className="module-art module-art-bulb" aria-hidden="true" style={{ transform: `translate3d(0, ${offset}px, 0)` }}>
+      <div className="module-art module-art-fill" aria-hidden="true" style={{ transform: `translate3d(0, ${offset}px, 0)` }}>
         <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
           <defs>
-            <radialGradient id="bulb-glow" cx="0.5" cy="0.45" r="0.55">
-              <stop offset="0" stopColor="rgba(245,213,52,0.55)"/>
-              <stop offset="0.5" stopColor="rgba(245,148,54,0.18)"/>
-              <stop offset="1" stopColor="rgba(245,148,54,0)"/>
-            </radialGradient>
-            <linearGradient id="bulb-glass" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="rgba(255,255,255,0.85)"/>
-              <stop offset="1" stopColor="rgba(255,255,255,0.25)"/>
-            </linearGradient>
+            <clipPath id="fill-clip">
+              <circle cx="400" cy="250" r="120" />
+            </clipPath>
           </defs>
-          <circle cx="400" cy="230" r="220" fill="url(#bulb-glow)" className="bulb-halo"/>
-          <g className="bulb-rays" stroke="rgba(255,228,140,0.55)" strokeWidth="2.4" strokeLinecap="round">
-            <line x1="400" y1="35" x2="400" y2="70"/>
-            <line x1="555" y1="80" x2="535" y2="105"/>
-            <line x1="620" y1="220" x2="585" y2="220"/>
-            <line x1="555" y1="360" x2="535" y2="340"/>
-            <line x1="245" y1="80" x2="265" y2="105"/>
-            <line x1="180" y1="220" x2="215" y2="220"/>
-            <line x1="245" y1="360" x2="265" y2="340"/>
+          {/* Faint outer halo for the destination bubble */}
+          <circle cx="400" cy="250" r="138" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1.4" strokeDasharray="2 6"/>
+          {/* The destination bubble outline */}
+          <circle cx="400" cy="250" r="120" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.8"/>
+          {/* Padua label at centre */}
+          <text x="400" y="256" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontFamily="var(--font-mono)" fontSize="12" letterSpacing="2">PADUA</text>
+          {/* Dots inside the bubble — settled */}
+          <g clipPath="url(#fill-clip)">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <circle key={i} className={`fill-dot fill-dot-${i}`} r="3"/>
+            ))}
           </g>
-          <path
-            d="M 400 105 C 462 105 510 152 510 215 C 510 258 488 295 462 322 L 462 360 L 338 360 L 338 322 C 312 295 290 258 290 215 C 290 152 338 105 400 105 Z"
-            fill="url(#bulb-glass)"
-            stroke="rgba(255,255,255,0.75)"
-            strokeWidth="2.2"
-          />
-          <path
-            d="M 360 250 Q 380 215 400 250 Q 420 285 440 250"
-            fill="none"
-            stroke="rgba(255,221,90,0.95)"
-            strokeWidth="3"
-            strokeLinecap="round"
-            className="bulb-filament"
-          />
-          <path
-            d="M 360 250 L 350 280 M 440 250 L 450 280"
-            stroke="rgba(255,255,255,0.5)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            fill="none"
-          />
-          <rect x="346" y="360" width="108" height="12" fill="rgba(255,255,255,0.55)" rx="2"/>
-          <rect x="352" y="376" width="96" height="9" fill="rgba(255,255,255,0.42)" rx="2"/>
-          <rect x="358" y="389" width="84" height="9" fill="rgba(255,255,255,0.32)" rx="2"/>
-          <path d="M 372 405 Q 400 420 428 405" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeLinecap="round"/>
+          {/* Dots streaming in from off-screen */}
+          {Array.from({ length: 12 }).map((_, i) => (
+            <circle key={`s-${i}`} className={`fill-stream fill-stream-${i}`} r="3" fill="rgba(245,213,52,0.9)"/>
+          ))}
         </svg>
       </div>
     );
@@ -815,41 +860,21 @@ function ModuleArtwork({ accent, offset, tweaks }) {
   // refreshed insight. Calm and confident, not the busy dashboard screenshot.
   if (accent === 'navy') {
     return (
-      <div className="module-art module-art-chart" aria-hidden="true" style={{ transform: `translate3d(0, ${offset}px, 0)` }}>
-        <svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
-          {/* Grid */}
-          <g stroke="rgba(255,255,255,0.06)" strokeWidth="1">
-            <line x1="0" y1="120" x2="800" y2="120"/>
-            <line x1="0" y1="220" x2="800" y2="220"/>
-            <line x1="0" y1="320" x2="800" y2="320"/>
-            <line x1="0" y1="420" x2="800" y2="420"/>
-          </g>
-          {/* Soft area fill */}
-          <path
-            d="M 50 400 L 150 360 L 250 340 L 350 280 L 450 230 L 550 200 L 650 140 L 750 90 L 750 500 L 50 500 Z"
-            fill="rgba(0,138,147,0.14)"
-            className="nv-area"
-          />
-          {/* Main growing line */}
-          <path
-            d="M 50 400 L 150 360 L 250 340 L 350 280 L 450 230 L 550 200 L 650 140 L 750 90"
-            fill="none"
-            stroke="rgba(150,220,225,0.95)"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-            className="nv-line"
-          />
-          {/* Data points */}
-          <g className="nv-points">
-            <circle cx="150" cy="360" r="4"/>
-            <circle cx="250" cy="340" r="4"/>
-            <circle cx="350" cy="280" r="4"/>
-            <circle cx="450" cy="230" r="4"/>
-            <circle cx="550" cy="200" r="4"/>
-            <circle cx="650" cy="140" r="4"/>
-            <circle cx="750" cy="90" r="6" className="nv-current"/>
-          </g>
-        </svg>
+      <div className="module-art module-art-dashboard">
+        <a
+          className="wd-dash-card"
+          href="https://wealthdata.com.au/blog-1/financial-adviser-market-insights-may-28-2026-gnbgl-j9nt9-tp9yy"
+          target="_blank"
+          rel="noopener"
+        >
+          <span className="wd-dash-frame">
+            <img src="assets/wealthdata-dashboard.png" alt="WealthData weekly key data summary, drawn from ASIC" />
+          </span>
+          <span className="wd-dash-caption">
+            <span className="wd-dash-caption-label">Updated weekly from ASIC</span>
+            <span className="wd-dash-caption-link">View this week&rsquo;s blog post &rarr;</span>
+          </span>
+        </a>
       </div>
     );
   }
@@ -949,6 +974,42 @@ function ModuleVideo() {
 }
 
 // =====================================================
+// PROBLEM / SOLUTION stat band (data-driven, WealthAI only)
+// =====================================================
+function ModuleStatband() {
+  const c = MODULE.statband;
+  const [ref, seen] = useModuleReveal(0.2);
+  const Card = ({ d, variant }) => (
+    <div className={`module-statband-card module-statband-${variant}`}>
+      <div className="module-statband-eyebrow">{d.eyebrow}</div>
+      <div className="module-statband-figure">{d.stat}</div>
+      <div className="module-statband-label">{d.label}</div>
+      <p className="module-statband-p">{d.p}</p>
+      <div className="module-statband-cite">{d.cite}</div>
+    </div>
+  );
+  return (
+    <section
+      ref={ref}
+      className={`module-section module-statband${seen ? ' is-in-view' : ''}`}
+      data-screen-label="problem-solution"
+    >
+      <div className="container">
+        <div className="module-statband-grid">
+          <Card d={c.problem} variant="problem" />
+          <div className="module-statband-arrow" aria-hidden="true">
+            <svg viewBox="0 0 48 24" width="48" height="24" fill="none">
+              <path d="M2 12 H42 M34 5 L43 12 L34 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <Card d={c.solution} variant="solution" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// =====================================================
 // WHAT IT DOES
 // =====================================================
 function ModuleWhat() {
@@ -966,9 +1027,6 @@ function ModuleWhat() {
           <p className="module-lead-copy">{c.lead}</p>
         </div>
         {MODULE.triangle && <PaduaTriangle />}
-        {/* Chart options: Flourish embed (preferred — interactive) takes
-            precedence; falls back to a static PNG for modules that don't
-            yet have a Flourish viz set up. */}
         {MODULE.chartFlourishId && (
           <div className="module-what-chart module-what-chart-flourish">
             <FlourishEmbed id={MODULE.chartFlourishId} />
@@ -978,14 +1036,22 @@ function ModuleWhat() {
         {MODULE.chartImage && !MODULE.chartFlourishId && (
           <div className="module-what-chart">
             <img src={MODULE.chartImage} alt="Sample platform fee comparison across nine platforms" />
-            <div className="module-what-chart-caption">{MODULE.chartCaption || 'Sample · Fee comparison across in-scope platforms'}</div>
+            <div className="module-what-chart-caption">Sample, Fee comparison across in-scope platforms</div>
           </div>
         )}
         <div className="module-stat-grid">
           {c.cols.map((col, i) => (
             <div className="module-stat" key={col.label} style={{ transitionDelay: `${i * 70}ms` }}>
-              <div className="module-stat-figure">{col.stat}</div>
-              <div className="module-stat-label">{col.label}</div>
+              {MODULE.key === 'paraplanning' ? (
+                <div className="module-stat-combined">
+                  <span className="module-stat-better">{col.stat}</span> {col.label}
+                </div>
+              ) : (
+                <>
+                  <div className="module-stat-figure">{col.stat}</div>
+                  <div className="module-stat-label">{col.label}</div>
+                </>
+              )}
               <p className="module-stat-p">{col.p}</p>
             </div>
           ))}
@@ -995,11 +1061,8 @@ function ModuleWhat() {
   );
 }
 
-// Flourish embed loader. Injects the official Flourish embed script once
-// on first mount, then lets the library wire up the iframe inside the
-// data-src container. Subsequent <FlourishEmbed/> instances re-trigger
-// loadEmbed() so dashes added later still hydrate. Used today for the
-// Transition Management book-analysis chart.
+// Flourish embed loader. Injects the official Flourish script once and lets
+// the embed.js library wire up the iframe inside the data-src container.
 function FlourishEmbed({ id }) {
   React.useEffect(() => {
     const src = 'https://public.flourish.studio/resources/embed.js';
@@ -1028,7 +1091,7 @@ function PaduaTriangle() {
   const regions = {
     quality: { label: 'Quality', desc: 'Experienced advice guides and paraplanners applying Australian best practice on every file.' },
     value: { label: 'Value', desc: 'Lower total cost per advice than in-house teams, traditional outsourcers or tech-only platforms.' },
-    turnaround: { label: 'Turnaround', desc: 'Average turnaround of 5 business days, with unparalleled visibility on every file in production.' },
+    turnaround: { label: 'Turnaround', desc: 'Fast turnaround with unparalleled visibility on every file in production.' },
   };
   const enter = (k) => () => setHovered(k);
   const leave = () => setHovered(null);
@@ -1166,7 +1229,7 @@ function ModuleFeatures() {
           {c.items.map((it, i) => (
             <div className="module-feature" key={it.h} style={{ transitionDelay: `${i * 60}ms` }}>
               <h3 className="module-feature-h">{it.h}</h3>
-              <p className="module-feature-p">{it.p}</p>
+              {it.p && <p className="module-feature-p">{it.p}</p>}
             </div>
           ))}
         </div>
@@ -1194,6 +1257,7 @@ function ModuleEverest() {
           <div className="eyebrow">{c.eyebrow}</div>
           <h2 className="section-title">{c.title}</h2>
           <p className="module-everest-lead">{c.lead}</p>
+          {c.listIntro && <p className="module-everest-listintro">{c.listIntro}</p>}
           {c.support && (
             <ul className="module-everest-support">
               {c.support.map((item) => (
@@ -1369,7 +1433,7 @@ function ModuleFaqRow({ item, isOpen, onToggle }) {
       </button>
       <div className="module-faq-a-wrap" style={{ maxHeight }}>
         <div className="module-faq-a" ref={bodyRef}>
-          <p>{item.a}</p>
+          <p dangerouslySetInnerHTML={{ __html: item.a }} />
         </div>
       </div>
     </li>
@@ -1383,6 +1447,8 @@ function ModuleCta() {
   const c = MODULE;
   const [ref, seen] = useModuleReveal(0.3);
   const isCareers = c.key === 'careers';
+  const isWealthData = c.key === 'wealthdata';
+  const isParaplanning = c.key === 'paraplanning';
   return (
     <section
       ref={ref}
@@ -1400,16 +1466,28 @@ function ModuleCta() {
               </h2>
               <p className="module-cta-sub">We&rsquo;re always open to a conversation with extraordinary people.</p>
             </>
-          ) : (
+          ) : isWealthData ? null : (
             <>
-              <h2 className="module-cta-title">
-                See {c.productName} in
-                <em> your own workflow.</em>
-              </h2>
-              <p className="module-cta-sub">A 30-minute demo, tailored to how your practice or platform runs.</p>
+              {isParaplanning ? (
+                <>
+                  <h2 className="module-cta-title">
+                    See how Padua can add value to
+                    <em> your advice firm.</em>
+                  </h2>
+                  <p className="module-cta-sub">A 30-minute demo, tailored to how your firm runs.</p>
+                </>
+              ) : (
+                <>
+                  <h2 className="module-cta-title">
+                    See {c.productName} in
+                    <em> your own workflow.</em>
+                  </h2>
+                  <p className="module-cta-sub">A 30-minute demo, tailored to how your practice or platform runs.</p>
+                </>
+              )}
               <div className="module-cta-row">
                 <a className="btn btn-cta-dark" href="Contact.html">{c.cta_demo} →</a>
-                <a className="hero-link" href="padua-portal.html">Back to the Portal overview</a>
+                <a className="hero-link" href="padua-portal.html">Back to the Padua Portal overview</a>
               </div>
             </>
           )}
@@ -1446,6 +1524,7 @@ function ModulePage({ values }) {
     <main className={`module-page module-${MODULE.accent}`}>
       {values.showHero && <ModuleHero tweaks={values} />}
       {values.showVideo && MODULE.video && <ModuleVideo />}
+      {MODULE.statband && <ModuleStatband />}
       {values.showWhat && <ModuleWhat />}
       {values.showFlow && <ModuleFlow />}
       {values.showFeatures && <ModuleFeatures />}
@@ -1483,7 +1562,7 @@ function ModuleRoles() {
           <ul className="module-roles-list">
             {c.items.map((r, i) => (
               <li className="module-role" key={r.title} style={{ transitionDelay: `${i * 80}ms` }}>
-                <a className="module-role-link" href={email ? `mailto:${email}?subject=${encodeURIComponent('Application: ' + r.title)}` : 'mailto:peopleandculture@paduasolutions.com'}>
+                <a className="module-role-link" href={email ? `mailto:${email}?subject=${encodeURIComponent('Application: ' + r.title)}` : '#contact'}>
                   <div className="module-role-main">
                     <div className="module-role-meta">
                       <span className="module-role-team">{r.team}</span>
