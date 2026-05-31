@@ -1066,6 +1066,23 @@
   font-weight: 600;
   color: var(--ink);
 }
+/* Paraplanning "what" cards: combined "Better Quality" heading so the noun
+   reads as the subject and "Better" is an accent, not a giant repeat. */
+.module-stat-combined {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.module-stat-better {
+  background: linear-gradient(135deg, var(--m-accent) 0%, var(--m-accent-2) 60%, var(--m-accent-3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .module-stat-p {
   font-size: 14.5px;
   line-height: 1.55;
