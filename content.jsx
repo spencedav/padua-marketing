@@ -1154,7 +1154,9 @@ function PaduaFooter() {
         <div className="footer-bot">
           <p>{f.legal}</p>
           <div className="footer-bot-right">
-            <div className="footer-cert">ISO 27001 Certified</div>
+            <div className="footer-cert footer-cert-badge" aria-label="ISO 27001 Certified">
+              <img src="assets/iso-27001-certified.jpg" alt="ISO 27001 Certified — de.iterate" />
+            </div>
             <div className="footer-cert">100% Onshore</div>
             <a href="privacy-policy.html">Privacy</a>
             <a href="terms.html">Terms</a>
