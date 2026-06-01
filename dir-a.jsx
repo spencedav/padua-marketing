@@ -183,7 +183,7 @@ function DirectionA({ show, navVariant }) {
                 Through the <strong>Padua Advice Platform</strong>. A connected suite of software and services purpose-built for the Australian advice industry.
               </p>
               <div className="hero-cta-row">
-                <a className="hero-link" href="#watch">Watch the 2-minute video</a>
+                <a className="hero-link" href="#watch">Watch the 6-minute video</a>
               </div>
             </div>
 

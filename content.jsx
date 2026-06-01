@@ -918,7 +918,7 @@ const PADUA_CONTENT = {
       h: 'The software platform we use, available to you too.',
       p: 'A connected suite of tools that maps the entire advice journey. Use the full Portal end-to-end, or pick the modules that fit alongside your existing systems.',
       flow: ['WealthX', 'SteveAI', 'WealthReview', 'WealthAI'],
-      cta: 'Watch the 2-minute tour',
+      cta: 'Watch the 6-minute tour',
     },
     services: [
       {
@@ -1284,7 +1284,7 @@ function PillarAudit() {
 }
 
 // =====================================================
-// SHARED, Portal video card (placeholder for 2-minute video)
+// SHARED, Portal video card (plays the 6-minute platform tour)
 // =====================================================
 // Homepage "Padua Portal" eco section video card. Was a static placeholder
 // thumb (simulated UI screenshot + fake bars). Now plays the real Padua
