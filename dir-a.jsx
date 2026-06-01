@@ -276,6 +276,7 @@ function DirectionA({ show, navVariant }) {
               <PortalVideoCard />
               <div className="eco-portal-body">
                 <div className="eyebrow">{c.ecosystem.portal.eyebrow}</div>
+                {c.ecosystem.portal.title && <h2 className="eco-portal-title">{c.ecosystem.portal.title}</h2>}
                 <h3>{c.ecosystem.portal.h}</h3>
                 <p>{c.ecosystem.portal.p}</p>
                 <div className="eco-flow">

@@ -83,36 +83,6 @@ function AboutBelief() {
   );
 }
 
-function AboutStory() {
-  const [activePhoto, setActivePhoto] = React.useState(0);
-  React.useEffect(() => {
-    const id = setInterval(() => {
-      setActivePhoto((p) => (p === 0 ? 1 : 0));
-    }, 6000);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <section className="about-story" data-screen-label="story">
-      <div className="container about-story-grid">
-        <div className="about-story-image" aria-hidden="true">
-          <div className={`about-story-photo about-story-photo-1${activePhoto === 0 ? ' is-active' : ''}`} />
-          <div className={`about-story-photo about-story-photo-2${activePhoto === 1 ? ' is-active' : ''}`} />
-        </div>
-        <div className="about-story-text">
-          <div className="eyebrow">Our story</div>
-          <h2 className="section-title">Founded by family.</h2>
-          <p>
-            Padua was founded by Anne-Marie and Matthew Esler, brother and sister. Despite the name, Padua is 100% Australian-owned and operated. The company is named in tribute to their brother Anthony and the city of Padua in Italy, deeply rooted in family values.
-          </p>
-          <p>
-            Matt leads as Managing Director and CEO. Anne-Marie is now our Non-Executive Director, helping shape long-term direction. Our head office sits in Sydney, with a second team in Kiama. Onshore, employee-owned, deliberate about advice quality.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function AboutOffices() {
   return (
     <section className="about-offices" data-screen-label="offices">
@@ -164,7 +134,6 @@ function AboutPage() {
         <AboutHero />
         <AboutValues />
         <AboutBelief />
-        <AboutStory />
         <AboutOffices />
         <AboutCta />
       </main>

@@ -37,7 +37,7 @@ const PORTAL_COPY_BY_AUDIENCE = {
   advisers: {
     hero: {
       eyebrow: 'For advisers & licensees',
-      productName: 'Padua Portal',
+      productName: 'Padua Portal for licensees',
       tagline: 'One platform for end-to-end advice.',
       sub: 'A connected technology stack that brings discovery, advice generation, compliance and presentation into one compliance-gated workflow. Built on more than 13 years at the forefront of Australian financial advice.',
       videoLength: '6 min · Product tour',
@@ -106,8 +106,8 @@ const PORTAL_COPY_BY_AUDIENCE = {
   platforms: {
     hero: {
       eyebrow: 'For platforms & super funds',
-      productName: 'Padua Portal',
-      tagline: 'One platform for end-to-end advice.',
+      productName: 'Padua Portal for platforms',
+      tagline: 'Embedded end-to-end advice.',
       sub: 'One connected advice workflow for platforms and super funds. Bring discovery, advice generation, compliance and presentation into a single compliance-gated journey, embedded in your ecosystem.',
       videoLength: '6 min · Product tour',
       videoCaption: 'See the Portal in action, for platforms & super funds',

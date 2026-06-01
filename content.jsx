@@ -36,7 +36,7 @@ const NAV_AUDIENCES = [
       {
         kind: 'featured',
         badge: 'The Platform',
-        title: 'Padua Portal',
+        title: 'Padua Portal for licensees',
         blurb: 'The integrated workflow that pulls platform, CRM and Xplan data into one end-to-end advice system, with compliance built in.',
         cta: 'Portal overview',
         href: 'padua-portal.html',
@@ -77,7 +77,7 @@ const NAV_AUDIENCES = [
       {
         kind: 'featured',
         badge: 'The Platform',
-        title: 'Padua Portal',
+        title: 'Padua Portal for platforms',
         blurb: 'The integrated workflow embedded in your platform. End-to-end advice for both advised and non-advised members.',
         cta: 'Portal overview',
         href: 'padua-portal-platforms.html',
@@ -919,10 +919,11 @@ const PADUA_CONTENT = {
     title: 'Built for every part of the advice journey.',
     framing: 'A connected ecosystem of software and services. The Padua Portal sits at the centre, with Advice Services and Standalone Products around it.',
     portal: {
-      eyebrow: 'The Padua Portal · The rise of the advice platform',
+      eyebrow: 'The rise of the advice platform',
+      title: 'Padua Portal',
       h: 'The software platform we use, available to you too.',
       p: 'A connected suite of tools that maps the entire advice journey. Use the full Portal end-to-end, or pick the modules that fit alongside your existing systems.',
-      flow: ['WealthX', 'SteveAI', 'WealthReview', 'WealthAI'],
+      flow: ['Pre-Discovery', 'Discovery', 'Advice Guidance', 'Advice Generation', 'Engagement', 'Compliance'],
       cta: 'Watch the 6-minute tour',
     },
     services: [
