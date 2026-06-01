@@ -268,7 +268,7 @@ function DirectionA({ show, navVariant }) {
                 </h2>
               </div>
               <p className="eco-framing">
-                A connected ecosystem of software and services. The Padua Portal sits at the centre, with <em>Advice Services</em> and Standalone Products around it.
+                A connected ecosystem of software and services. The Padua Portal sits at the centre, with <em>Advice Generation Services</em> and Standalone Products around it.
               </p>
             </div>
 
@@ -292,7 +292,7 @@ function DirectionA({ show, navVariant }) {
             </div>
 
             <div className="eco-tier-label" data-reveal>
-              <div className="eyebrow">Advice Services</div>
+              <div className="eyebrow">Advice Generation Services</div>
             </div>
             <div className="eco-tier-grid" data-reveal>
               {c.ecosystem.services.map((s) => (

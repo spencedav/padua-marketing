@@ -55,7 +55,7 @@ const NAV_AUDIENCES = [
         ],
       },
       {
-        title: 'Advice Services',
+        title: 'Advice Generation Services',
         items: [
           { h: 'Paraplanning', p: 'Tech-enabled advice generation', href: 'Paraplanning.html' },
           { h: 'Transition Management', p: 'End-to-end client transition support', href: 'transition-management.html' },
@@ -96,7 +96,7 @@ const NAV_AUDIENCES = [
         ],
       },
       {
-        title: 'Advice Services',
+        title: 'Advice Generation Services',
         items: [
           { h: 'Paraplanning', p: 'Tech-enabled advice generation', href: 'Paraplanning.html' },
           { h: 'Transition Management', p: 'End-to-end client transition support', href: 'transition-management.html' },
@@ -116,7 +116,7 @@ const NAV_AUDIENCES = [
     href: 'padua-portal-platforms.html',
     columns: [
       {
-        title: 'Advice Services',
+        title: 'Advice Generation Services',
         items: [
           { h: 'Transition management', p: 'End-to-end implementation', href: 'transition-management.html' },
         ],
@@ -917,7 +917,7 @@ const PADUA_CONTENT = {
   ecosystem: {
     eyebrow: 'The Padua ecosystem',
     title: 'Built for every part of the advice journey.',
-    framing: 'A connected ecosystem of software and services. The Padua Portal sits at the centre, with Advice Services and Standalone Products around it.',
+    framing: 'A connected ecosystem of software and services. The Padua Portal sits at the centre, with Advice Generation Services and Standalone Products around it.',
     portal: {
       eyebrow: 'The rise of the advice platform',
       title: 'Padua Portal',
