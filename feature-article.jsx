@@ -57,9 +57,9 @@ const ARTICLE_COPY = {
 const ARTICLE = ARTICLE_COPY[window.__PADUA_ARTICLE] || ARTICLE_COPY.div296;
 
 const ARTICLE_HREF = {
-  div296: 'Division 296.html',
-  siaa: 'SIAA 2026.html',
-  empowerher: 'CFS EmpowerHer.html',
+  div296: 'division-296.html',
+  siaa: 'siaa-2026.html',
+  empowerher: 'cfs-empowerher.html',
 };
 
 function ArticlePage() {
@@ -75,7 +75,7 @@ function ArticlePage() {
     <main className="article-page">
       <article className="article">
         <div className="container article-inner">
-          <a className="article-back" href="News & Insights.html">← All news &amp; insights</a>
+          <a className="article-back" href="news-insights.html">← All news &amp; insights</a>
 
           <div className="article-eyebrow">{a.kind}</div>
           <h1 className="article-h1">{a.title}</h1>

@@ -84,9 +84,9 @@ const RESOURCE_COPY = {
 const RESOURCE = RESOURCE_COPY[window.__PADUA_RESOURCE] || RESOURCE_COPY.budgetReport;
 
 const RESOURCE_HREF = {
-  budgetReport: 'Federal Budget Report.html',
-  budgetWhitepaper: 'Federal Budget Whitepaper.html',
-  eofySuper: 'EOFY Super Strategies.html',
+  budgetReport: 'federal-budget-report.html',
+  budgetWhitepaper: 'federal-budget-whitepaper.html',
+  eofySuper: 'eofy-super-strategies.html',
 };
 
 function ResourcePage() {
