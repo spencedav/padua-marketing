@@ -1732,6 +1732,22 @@
   width: auto;
   border-radius: 4px;
 }
+/* LinkedIn (social) link in the footer-bot row. Sits between the cert
+   pills and the Privacy/Terms text links. Icon-only — colour matches
+   the legal text links so it reads as part of the same row. */
+.dir-a .footer-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-mid);
+  transition: color .2s ease, transform .2s ease;
+  padding: 2px;
+  border-bottom: none;
+}
+.dir-a .footer-social:hover {
+  color: var(--ink);
+  transform: translateY(-1px);
+}
 .dir-a .footer-bot a {
   font-size: 12px;
   color: var(--ink-mid);
