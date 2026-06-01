@@ -924,7 +924,7 @@ const PADUA_CONTENT = {
       h: 'The software platform we use, available to you too.',
       p: 'A connected suite of tools that maps the entire advice journey. Use the full Portal end-to-end, or pick the modules that fit alongside your existing systems.',
       flow: ['Pre-Discovery', 'Discovery', 'Advice Guidance', 'Advice Generation', 'Engagement', 'Compliance'],
-      cta: 'Watch the 6-minute tour',
+      cta: 'Watch the tour',
     },
     services: [
       {
@@ -1370,7 +1370,7 @@ function PortalVideoCard() {
             </svg>
           )}
         </button>
-        <div className="portal-video-cap">6 min · See the platform in action</div>
+        <div className="portal-video-cap">See the platform in action</div>
       </div>
     </div>
   );
@@ -1388,8 +1388,8 @@ function PortalVideoCard() {
 function HeroVideoCard({
   src = 'assets/padua-portal-tour-licensee.mp4',
   poster = 'assets/padua-portal-tour-licensee-poster.jpg',
-  caption = 'THE PADUA PORTAL · 6-MIN TOUR',
-  length = '6 min',
+  caption = 'THE PADUA PORTAL · TOUR',
+  length = '',
 }) {
   const [hovered, setHovered] = React.useState(false);
   const [playing, setPlaying] = React.useState(false);
