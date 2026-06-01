@@ -1286,12 +1286,42 @@ function PillarAudit() {
 // =====================================================
 // SHARED, Portal video card (placeholder for 2-minute video)
 // =====================================================
+// Homepage "Padua Portal" eco section video card. Was a static placeholder
+// thumb (simulated UI screenshot + fake bars). Now plays the real Padua
+// Portal tour video on click. The simulated thumb stays as the paused
+// poster underneath the <video> element so the card still has visual
+// weight before the user clicks.
 function PortalVideoCard() {
+  const [playing, setPlaying] = React.useState(false);
+  const [ready, setReady] = React.useState(false);
+  const ref = React.useRef(null);
+  const togglePlay = React.useCallback(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (v.paused) v.play(); else v.pause();
+  }, []);
   return (
     <div className="portal-video">
-      <div className="portal-video-frame">
+      <div
+        className={`portal-video-frame${playing ? ' is-playing' : ''}${ready ? ' is-ready' : ''}`}
+        onClick={togglePlay}
+        role="button"
+        tabIndex={0}
+        aria-label={playing ? 'Pause Padua Portal tour' : 'Play Padua Portal tour'}
+      >
+        <video
+          ref={ref}
+          src="assets/padua-portal-tour-platform.mp4"
+          playsInline
+          preload="metadata"
+          onLoadedMetadata={() => setReady(true)}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onEnded={() => setPlaying(false)}
+        />
         <div className="portal-video-thumb" aria-hidden="true">
-          {/* Placeholder: simulated UI screenshot of Padua Portal */}
+          {/* Placeholder thumb sits over the video as the paused poster.
+              Fades out when .is-playing per portal-video CSS. */}
           <div className="portal-video-thumb-inner">
             <div className="portal-video-thumb-bar">
               <span></span><span></span><span></span>
@@ -1304,12 +1334,23 @@ function PortalVideoCard() {
             </div>
           </div>
         </div>
-        <button className="portal-video-play" aria-label="Play 2-minute tour">
-          <svg width="22" height="26" viewBox="0 0 22 26" fill="currentColor" aria-hidden="true">
-            <path d="M1 1 L21 13 L1 25 Z" />
-          </svg>
+        <button
+          className="portal-video-play"
+          aria-label={playing ? 'Pause tour' : 'Play tour'}
+          onClick={(e) => { e.stopPropagation(); togglePlay(); }}
+        >
+          {playing ? (
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="currentColor" aria-hidden="true">
+              <rect x="2" y="1" width="6" height="24" rx="1"/>
+              <rect x="14" y="1" width="6" height="24" rx="1"/>
+            </svg>
+          ) : (
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="currentColor" aria-hidden="true">
+              <path d="M1 1 L21 13 L1 25 Z" />
+            </svg>
+          )}
         </button>
-        <div className="portal-video-cap">2 min · See the platform in action</div>
+        <div className="portal-video-cap">6 min · See the platform in action</div>
       </div>
     </div>
   );

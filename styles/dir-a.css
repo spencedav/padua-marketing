@@ -1285,6 +1285,40 @@
   backdrop-filter: blur(6px);
 }
 
+/* Homepage Portal video — playback rules.
+   The <video> sits behind the simulated UI thumb (inset 32px). On click,
+   .is-playing fades the thumb / play button / caption so the video has
+   the whole frame. The frame itself becomes clickable to toggle play. */
+.dir-a .portal-video-frame {
+  cursor: pointer;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.dir-a .portal-video-frame:hover { transform: translateY(-2px); }
+.dir-a .portal-video-frame video {
+  position: absolute;
+  inset: 32px;
+  width: calc(100% - 64px);
+  height: calc(100% - 64px);
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+  z-index: 1;
+  background: #000;
+}
+.dir-a .portal-video-frame.is-playing .portal-video-thumb,
+.dir-a .portal-video-frame.is-playing .portal-video-cap {
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+.dir-a .portal-video-frame.is-playing .portal-video-play {
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.dir-a .portal-video-frame.is-playing:hover .portal-video-play {
+  opacity: 1;
+}
+
 .dir-a .eco-portal-body {
   padding: 40px 44px;
   display: flex; flex-direction: column; justify-content: center;
