@@ -279,9 +279,6 @@ function PortalVideoFrame({ src, poster, caption, length }) {
       )}
       <div className="portal-video-poster" aria-hidden="true" />
       <div className="portal-video-tint" aria-hidden="true" />
-      <div className="portal-video-meta">
-        <span className="portal-video-length">{length}</span>
-      </div>
       <button
         type="button"
         className="portal-video-play"

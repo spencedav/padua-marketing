@@ -1422,9 +1422,6 @@ function HeroVideoCard({
         onEnded={() => setPlaying(false)}
       />
       <div className="hero-video-tint" aria-hidden="true" />
-      <div className="hero-video-meta">
-        <span className="hero-video-length">{length}</span>
-      </div>
       <button
         type="button"
         className="hero-video-play"
