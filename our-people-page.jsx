@@ -7,22 +7,26 @@
 // exactly between the design folder and what shipped to assets/.
 // =======================================================
 
+// Photos are the official Webflow CMS headshots, downloaded via the
+// Webflow Data API on 2026-06-01 and recompressed where needed. They
+// share a consistent framing, so we no longer need per-person crop
+// overrides — keep `photoStyle` only if a specific photo needs it.
 const BOARD = [
-  { name: "Peter O'Connell",  role: 'Chairman & Non-Executive Director',                                  initials: 'PO', accent: '#1e3a5f', photo: 'assets/peter-oconnell-web.png', photoStyle: { objectPosition: 'center 25%' } },
-  { name: 'Matthew Esler',    role: 'Managing Director & CEO, Co-Founder',                                 initials: 'ME', accent: '#4a308c', photo: 'assets/matt-esler.png' },
-  { name: 'Anne-Marie Esler', role: 'Non-Executive Director & Industry Engagement Lead, Co-Founder',       initials: 'AE', accent: '#ab2178', photo: 'assets/anne-marie-esler.png' },
-  { name: 'Gareth Turner',    role: 'Executive Director - Finance',                                        initials: 'GT', accent: '#007282', photo: 'assets/gareth-turner.png' },
-  { name: 'Matthew Sheehan',  role: 'Non-Executive Director',                                              initials: 'MS', accent: '#2d6e6e', photo: 'assets/matt-sheehan-web.png', photoStyle: { objectPosition: 'center 20%' } },
+  { name: "Peter O'Connell",  role: 'Chairman & Non-Executive Director',                                  initials: 'PO', accent: '#1e3a5f', photo: 'assets/peter-oconnell.jpg' },
+  { name: 'Matthew Esler',    role: 'Managing Director & CEO, Co-Founder',                                 initials: 'ME', accent: '#4a308c', photo: 'assets/matt-esler.jpg' },
+  { name: 'Anne-Marie Esler', role: 'Non-Executive Director & Industry Engagement Lead, Co-Founder',       initials: 'AE', accent: '#ab2178', photo: 'assets/anne-marie-esler.jpg' },
+  { name: 'Gareth Turner',    role: 'Executive Director - Finance',                                        initials: 'GT', accent: '#007282', photo: 'assets/gareth-turner.jpg' },
+  { name: 'Matthew Sheehan',  role: 'Non-Executive Director',                                              initials: 'MS', accent: '#2d6e6e', photo: 'assets/matt-sheehan.jpg' },
 ];
 
 const LEADERSHIP = [
-  { name: 'Rudy Haddad',      role: 'Head of Research, Data & Technical Advice', initials: 'RH', accent: '#eb2e4d', photo: 'assets/rudy-haddad-web.jpg', photoStyle: { objectPosition: 'center 20%' } },
-  { name: 'Erin Egan',        role: 'Head of HyperCare',                         initials: 'EE', accent: '#c1255b', photo: 'assets/erin-egan-web.jpg' },
-  { name: 'Helen Roelofsen',  role: 'Head of Advice Guidance',                   initials: 'HR', accent: '#d97d20', photo: 'assets/helen-roelofsen-web.png' },
-  { name: 'Joshua Marley',    role: 'Head of Advice Generation',                 initials: 'JM', accent: '#6e2a8a', photo: 'assets/josh-marley-web.png' },
-  { name: 'Brett Canning',    role: 'Head of Sales & Relationship Management',   initials: 'BC', accent: '#f59436', photo: 'assets/brett-canning.png', photoStyle: { objectFit: 'contain', objectPosition: 'center bottom', transform: 'scale(0.96) translateY(8%)', transformOrigin: 'center bottom' } },
-  { name: 'Simon Dawe',       role: 'Delivery Executive',                        initials: 'SD', accent: '#008a93', photo: 'assets/simon-dawe.png', photoStyle: { objectFit: 'contain' } },
-  { name: 'Amir Moghimi',     role: 'Virtual Chief Technology Officer',          initials: 'AM', accent: '#b88a1f', photo: 'assets/amir-moghimi.png', photoStyle: { objectFit: 'contain' } },
+  { name: 'Rudy Haddad',      role: 'Head of Research, Data & Technical Advice', initials: 'RH', accent: '#eb2e4d', photo: 'assets/rudy-haddad.jpg' },
+  { name: 'Erin Egan',        role: 'Head of HyperCare',                         initials: 'EE', accent: '#c1255b', photo: 'assets/erin-egan.jpg' },
+  { name: 'Helen Roelofsen',  role: 'Head of Advice Guidance',                   initials: 'HR', accent: '#d97d20', photo: 'assets/helen-roelofsen.jpg' },
+  { name: 'Joshua Marley',    role: 'Head of Advice Generation',                 initials: 'JM', accent: '#6e2a8a', photo: 'assets/josh-marley.jpg' },
+  { name: 'Brett Canning',    role: 'Head of Sales & Relationship Management',   initials: 'BC', accent: '#f59436', photo: 'assets/brett-canning.jpg' },
+  { name: 'Simon Dawe',       role: 'Delivery Executive',                        initials: 'SD', accent: '#008a93', photo: 'assets/simon-dawe.jpg' },
+  { name: 'Amir Moghimi',     role: 'Virtual Chief Technology Officer',          initials: 'AM', accent: '#b88a1f', photo: 'assets/amir-moghimi.jpg' },
 ];
 
 function PersonCard({ p }) {
