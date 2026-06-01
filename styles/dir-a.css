@@ -1732,32 +1732,31 @@
   width: auto;
   border-radius: 4px;
 }
-/* LinkedIn (social) link in the footer-bot row. Pill-styled CTA so it
-   stands out from the Privacy/Terms text links. Sits between the cert
-   badges and the legal links. LinkedIn blue on hover for affordance. */
+/* LinkedIn (social) link in the footer-bot row. Pill-styled CTA, always
+   in LinkedIn brand blue so it reads as a recognisable social link at a
+   glance, not just on hover. */
 .dir-a .footer-social {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 6px 14px 6px 10px;
   border-radius: 999px;
-  background: white;
-  border: 1px solid var(--line);
-  color: var(--ink);
+  background: #f5faff;
+  border: 1px solid #0A66C2;
+  color: #0A66C2;          /* LinkedIn brand blue, always */
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-weight: 500;
-  transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 .dir-a .footer-social svg { display: block; }
 .dir-a .footer-social-label { line-height: 1; }
 .dir-a .footer-social:hover {
-  color: #0A66C2;          /* LinkedIn brand blue */
-  border-color: #0A66C2;
-  background: #f5faff;
+  background: #e8f3ff;     /* slightly darker blue tint on hover */
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px -6px rgba(10, 102, 194, 0.4);
 }
 .dir-a .footer-bot a {
   font-size: 12px;
