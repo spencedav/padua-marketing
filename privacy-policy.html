@@ -449,95 +449,16 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5af514fb1be24d3a90fcbadc2117217d"}'></script>
 <!-- End Cloudflare Web Analytics -->
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/dir-a.css">
 </head>
-<body>
+<body class="dir-a">
 
 <!-- =====================================================================
      NAVIGATION (canonical v3 — no active state; Privacy is a footer link)
      ===================================================================== -->
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="padua-logo">
-      <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
-      <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
-    </a>
-
-    <div class="nav-links">
-
-      <!-- ADVISERS & LICENSEES (mega) -->
-      <div class="nav-item has-mega">
-        <a class="nav-link" href="/padua-portal">Advisers &amp; Licensees
-          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
-        </a>
-        <div class="dropdown dropdown-mega">
-          <div class="mega-eyebrow">Our Solutions  ·  for advisers &amp; licensees</div>
-          <div class="mega-cols">
-            <div class="mega-col">
-              <h5>The Padua Portal</h5>
-              <a href="/padua-portal">Portal overview</a>
-              <a href="/#watch">See the workflow in action</a>
-            </div>
-            <div class="mega-col">
-              <h5>Services</h5>
-              <a href="/services">Tech-enabled paraplanning<small>The fastest path to scale</small></a>
-              <a href="/services#transition">Transition management<small>End-to-end implementation</small></a>
-            </div>
-            <div class="mega-col">
-              <h5>Software</h5>
-              <a href="/software#padua-home">Padua Home<small>Product hub</small></a>
-              <a href="/software#discover">Discover<small>Digital fact-finding</small></a>
-              <a href="/software#compare">Compare<small>Side-by-side analysis</small></a>
-              <a href="/software#recommend">Recommend<small>Strategy at scale</small></a>
-            </div>
-          </div>
-          <a class="mega-featured" href="/#watch">
-            <div class="mega-featured-play"></div>
-            <div class="mega-featured-text">
-              <div class="eb">2 min video</div>
-              <h6>See the Padua Portal in action</h6>
-            </div>
-            <div class="mega-featured-arrow">→</div>
-          </a>
-        </div>
-      </div>
-
-      <!-- PLATFORMS & PROVIDERS (merged: platforms/super funds + investment managers) -->
-      <div class="nav-item">
-        <a class="nav-link" href="/padua-portal-platforms">Platforms &amp; Providers
-          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
-        </a>
-        <div class="dropdown">
-          <div class="mega-eyebrow">Our Solutions  ·  for product providers</div>
-          <div class="dropdown-section">Who we work with</div>
-          <a href="/padua-portal-platforms#platforms">Platforms, super funds &amp; investment managers</a>
-          <a href="/padua-portal-platforms#consultants">Business &amp; compliance consultants</a>
-          <div class="dropdown-section">Distribution</div>
-          <a href="/padua-portal-platforms">Media &amp; Advertising<small>Reach Australian advisers</small></a>
-        </div>
-      </div>
-
-      <!-- ABOUT -->
-      <div class="nav-item">
-        <a class="nav-link" href="/about/who-we-are">About
-          <svg class="nav-caret" viewBox="0 0 10 10" fill="currentColor"><path d="M1 3.5L5 7.5L9 3.5"/></svg>
-        </a>
-        <div class="dropdown">
-          <div class="dropdown-section">Company</div>
-          <a href="/about/who-we-are">Who we are<small>Our mission, values, Advice Guides</small></a>
-          <a href="/who-we-are">Our people</a>
-          <a href="/about/careers">Careers</a>
-        </div>
-      </div>
-
-      <a class="nav-link" href="/Contact">Contact</a>
-    </div>
-
-    <div class="nav-actions">
-      <a class="btn btn-ghost-dark" href="https://home.paduasolutions.com/">Log in</a>
-      <a class="btn btn-spectrum" href="/Contact">Book a demo</a>
-    </div>
-  </div>
-</nav>
+<!-- Padua nav (rendered by static-shell.jsx via content.jsx) -->
+<div id="padua-nav-root"></div>
 
 <!-- =====================================================================
      HERO — Legal page, simple H2 centered (no spectrum gradient)
@@ -685,52 +606,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- =====================================================================
      FOOTER (canonical v3 — verbatim)
      ===================================================================== -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="/" class="padua-logo">
-          <img class="padua-logo-mark" src="https://cdn.prod.website-files.com/64dc507cffef202bc73d11dc/6576818ef2c374d506d75b90_padua-logo-horizontal.svg" alt="">
-          <span class="padua-logo-text">Padua<sup class="padua-logo-tm">™</sup></span>
-        </a>
-        <p>Padua Solutions is Australia's tech-enabled financial advice infrastructure. Combining experienced onshore advice professionals, intelligent workflow and AI to help advisers help more Australians.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Advisers &amp; Licensees</h4>
-        <a href="/padua-portal">Padua Advice Portal</a>
-        <a href="/services">Paraplanning services</a>
-        <a href="/services#transition">Transition management</a>
-      </div>
-      <div class="footer-col">
-        <h4>Other streams</h4>
-        <a href="/padua-portal-platforms">Platforms &amp; Super Funds</a>
-        <a href="/padua-portal-platforms">Investment Managers</a>
-        <a href="/padua-portal-platforms">Media &amp; Advertising</a>
-      </div>
-      <div class="footer-col">
-        <h4>Company</h4>
-        <a href="/about/who-we-are">About Padua</a>
-        <a href="/who-we-are">Our people</a>
-        <a href="/about/careers">Careers</a>
-        <a href="/Contact">Contact</a>
-      </div>
-    </div>
+<!-- Padua footer (rendered by static-shell.jsx via content.jsx) -->
+<div id="padua-footer-root"></div>
 
-    <div class="footer-bottom">
-      <p>© 2026 Padua Solutions Pty Ltd. ABN 93 167 243 745. All rights reserved.</p>
-      <div class="footer-bottom-right">
-        <div class="footer-cert-pill">ISO 27001 Certified</div>
-        <div class="footer-cert-pill">100% Onshore</div>
-        <a href="/privacy-policy">Privacy</a>
-        <a href="/terms">Terms</a>
-      </div>
-    </div>
 
-    <p class="acknowledgement">
-      Padua acknowledges the Traditional Owners of the lands on which we work, the Wodi Wodi people on Dharawal country and the Gadigal people of the Eora Nation. We acknowledge their continuing connection to land, waters, and community. We pay our respects to the people, the cultures, and the Elders past and present.
-    </p>
-  </div>
-</footer>
+<!-- React + Babel + content.jsx + inline mount script. Brings the
+     shared PaduaNav + PaduaFooter onto these legal pages without
+     JSX-porting the legal text body. Babel processes type=text/babel
+     scripts in declaration order, so the mount script below runs
+     after content.jsx has defined PaduaNav + PaduaFooter on window. -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="content.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+  ReactDOM.createRoot(document.getElementById('padua-nav-root')).render(<PaduaNav />);
+  ReactDOM.createRoot(document.getElementById('padua-footer-root')).render(<PaduaFooter />);
+</script>
 
 </body>
 </html>
