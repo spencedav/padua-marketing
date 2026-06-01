@@ -1325,6 +1325,7 @@ function PortalVideoCard() {
         <video
           ref={ref}
           src="assets/padua-portal-tour-platform.mp4"
+          poster="assets/padua-portal-tour-platform-poster.jpg"
           playsInline
           preload="metadata"
           onLoadedMetadata={() => setReady(true)}

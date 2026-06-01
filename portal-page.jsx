@@ -43,6 +43,7 @@ const PORTAL_COPY_BY_AUDIENCE = {
       videoLength: '6 min · Product tour',
       videoCaption: 'See the Portal in action, for advisers & licensees',
       videoSrc: 'assets/padua-portal-tour-licensee.mp4',
+      videoPoster: 'assets/padua-portal-tour-licensee-poster.jpg',
     },
     what: {
       eyebrow: 'What it is',
@@ -111,6 +112,7 @@ const PORTAL_COPY_BY_AUDIENCE = {
       videoLength: '6 min · Product tour',
       videoCaption: 'See the Portal in action, for platforms & super funds',
       videoSrc: 'assets/padua-portal-tour-platform.mp4',
+      videoPoster: 'assets/padua-portal-tour-platform-poster.jpg',
     },
     what: {
       eyebrow: 'What it is',
@@ -227,7 +229,7 @@ function PortalHero({ layout = 'video-below' }) {
         </div>
 
         <div className="portal-hero-video" id="video" style={{ transform: videoTransform }}>
-          <PortalVideoFrame src={c.videoSrc} caption={c.videoCaption} length={c.videoLength} />
+          <PortalVideoFrame src={c.videoSrc} poster={c.videoPoster} caption={c.videoCaption} length={c.videoLength} />
         </div>
       </div>
     </section>
@@ -238,7 +240,7 @@ function PortalHero({ layout = 'video-below' }) {
 // module-page.jsx: shows the styled poster + big play button when paused,
 // swaps to play/pause as the user interacts. The <video> element is the
 // background layer; the tint/meta/play-button sit above it via z-index.
-function PortalVideoFrame({ src, caption, length }) {
+function PortalVideoFrame({ src, poster, caption, length }) {
   const [hovered, setHovered] = React.useState(false);
   const [playing, setPlaying] = React.useState(false);
   const [ready, setReady] = React.useState(false);
@@ -266,6 +268,7 @@ function PortalVideoFrame({ src, caption, length }) {
         <video
           ref={ref}
           src={src}
+          poster={poster}
           playsInline
           preload="metadata"
           onLoadedMetadata={() => setReady(true)}
