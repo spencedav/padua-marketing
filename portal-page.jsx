@@ -40,8 +40,9 @@ const PORTAL_COPY_BY_AUDIENCE = {
       productName: 'Padua Portal',
       tagline: 'One platform for end-to-end advice.',
       sub: 'A connected technology stack that brings discovery, advice generation, compliance and presentation into one compliance-gated workflow. Built on more than 13 years at the forefront of Australian financial advice.',
-      videoLength: '2 min · Product tour',
+      videoLength: '6 min · Product tour',
       videoCaption: 'See the Portal in action, for advisers & licensees',
+      videoSrc: 'assets/padua-portal-tour-licensee.mp4',
     },
     what: {
       eyebrow: 'What it is',
@@ -107,8 +108,9 @@ const PORTAL_COPY_BY_AUDIENCE = {
       productName: 'Padua Portal',
       tagline: 'One platform for end-to-end advice.',
       sub: 'One connected advice workflow for platforms and super funds. Bring discovery, advice generation, compliance and presentation into a single compliance-gated journey, embedded in your ecosystem.',
-      videoLength: '2 min · Product tour',
+      videoLength: '6 min · Product tour',
       videoCaption: 'See the Portal in action, for platforms & super funds',
+      videoSrc: 'assets/padua-portal-tour-platform.mp4',
     },
     what: {
       eyebrow: 'What it is',
@@ -225,36 +227,76 @@ function PortalHero({ layout = 'video-below' }) {
         </div>
 
         <div className="portal-hero-video" id="video" style={{ transform: videoTransform }}>
-          <PortalVideoFrame caption={c.videoCaption} length={c.videoLength} />
+          <PortalVideoFrame src={c.videoSrc} caption={c.videoCaption} length={c.videoLength} />
         </div>
       </div>
     </section>
   );
 }
 
-// Big play-button video card. Uses the surfer image as a stand-in poster
-// frame until a real video upload is available.
-function PortalVideoFrame({ caption, length }) {
+// Portal hero video card. Mirrors the WealthX click-to-play pattern in
+// module-page.jsx: shows the styled poster + big play button when paused,
+// swaps to play/pause as the user interacts. The <video> element is the
+// background layer; the tint/meta/play-button sit above it via z-index.
+function PortalVideoFrame({ src, caption, length }) {
   const [hovered, setHovered] = React.useState(false);
+  const [playing, setPlaying] = React.useState(false);
+  const [ready, setReady] = React.useState(false);
+  const ref = React.useRef(null);
+  const togglePlay = React.useCallback(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play();
+    } else {
+      v.pause();
+    }
+  }, []);
   return (
     <div
-      className={`portal-video-frame${hovered ? ' is-hovered' : ''}`}
+      className={`portal-video-frame${hovered ? ' is-hovered' : ''}${playing ? ' is-playing' : ''}${ready ? ' is-ready' : ''}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={togglePlay}
       role="button"
       tabIndex={0}
-      aria-label={`Play video: ${caption}`}
+      aria-label={playing ? 'Pause video' : `Play video: ${caption}`}
     >
+      {src && (
+        <video
+          ref={ref}
+          src={src}
+          playsInline
+          preload="metadata"
+          onLoadedMetadata={() => setReady(true)}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onEnded={() => setPlaying(false)}
+        />
+      )}
       <div className="portal-video-poster" aria-hidden="true" />
       <div className="portal-video-tint" aria-hidden="true" />
       <div className="portal-video-meta">
         <span className="portal-video-length">{length}</span>
       </div>
-      <button type="button" className="portal-video-play" aria-label="Play video">
-        <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
-          <circle cx="32" cy="32" r="31" fill="rgba(255,255,255,0.96)" />
-          <path d="M26 20 L46 32 L26 44 Z" fill="#1a1525" />
-        </svg>
+      <button
+        type="button"
+        className="portal-video-play"
+        aria-label={playing ? 'Pause video' : 'Play video'}
+        onClick={(e) => { e.stopPropagation(); togglePlay(); }}
+      >
+        {playing ? (
+          <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="rgba(255,255,255,0.96)" />
+            <rect x="22" y="20" width="6" height="24" fill="#1a1525" rx="1.2" />
+            <rect x="36" y="20" width="6" height="24" fill="#1a1525" rx="1.2" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="rgba(255,255,255,0.96)" />
+            <path d="M26 20 L46 32 L26 44 Z" fill="#1a1525" />
+          </svg>
+        )}
       </button>
       <div className="portal-video-caption">{caption}</div>
     </div>

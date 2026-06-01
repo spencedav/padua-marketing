@@ -1008,3 +1008,38 @@
   .dir-a .portal-pillar-grid { grid-template-columns: 1fr; gap: 14px; }
   .dir-a .portal-modules-grid { grid-template-columns: 1fr; gap: 14px; }
 }
+
+
+/* ================================================================
+   PORTAL HERO VIDEO — playback rules
+   When PortalVideoFrame goes into .is-playing state, fade out the
+   poster + tint + meta + caption + (eventually) play button so the
+   <video> element underneath is the only thing visible.
+   Mirrors the module-video pattern in module.css.
+   ================================================================ */
+.portal-video-frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 0;
+}
+.portal-video-frame.is-playing .portal-video-poster,
+.portal-video-frame.is-playing .portal-video-tint,
+.portal-video-frame.is-playing .portal-video-meta,
+.portal-video-frame.is-playing .portal-video-caption {
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+/* Play/pause button stays visible briefly on hover while playing so the
+   user can pause — otherwise it fades with the rest of the chrome. */
+.portal-video-frame.is-playing .portal-video-play {
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.portal-video-frame.is-playing:hover .portal-video-play {
+  opacity: 1;
+}
