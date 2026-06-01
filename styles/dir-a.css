@@ -746,6 +746,103 @@
 }
 .dir-a .pillar-tab.active { background: rgba(255,255,255,0.92); }
 
+/* ===== HERO VIDEO CARD (replaces HeroCarousel on the homepage hero)
+   16:9 click-to-play tile, sized to fit the right column of .hero-inner.
+   Same overlay vocabulary as portal-page's PortalVideoFrame but in its
+   own namespace because portal.css isn't loaded on the homepage. ===== */
+.dir-a .hero-video-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0d0817;
+  border: 1px solid rgba(255,255,255,0.10);
+  box-shadow: 0 30px 60px -25px rgba(0,0,0,0.55);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.dir-a .hero-video-card.is-hovered {
+  transform: translateY(-2px);
+  box-shadow: 0 40px 70px -25px rgba(0,0,0,0.6);
+}
+.dir-a .hero-video-card video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.dir-a .hero-video-tint {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.dir-a .hero-video-card.is-playing .hero-video-tint,
+.dir-a .hero-video-card.is-playing .hero-video-meta,
+.dir-a .hero-video-card.is-playing .hero-video-caption {
+  opacity: 0;
+  pointer-events: none;
+}
+.dir-a .hero-video-meta {
+  position: absolute; top: 16px; right: 16px;
+  z-index: 2;
+  transition: opacity 0.3s ease;
+}
+.dir-a .hero-video-length {
+  display: inline-block;
+  padding: 5px 10px;
+  background: rgba(26, 21, 37, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+}
+.dir-a .hero-video-play {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px; height: 64px;
+  background: transparent; border: 0; padding: 0;
+  cursor: pointer;
+  color: inherit;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));
+}
+.dir-a .hero-video-card.is-hovered .hero-video-play {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+.dir-a .hero-video-card.is-playing .hero-video-play {
+  opacity: 0;
+  pointer-events: none;
+}
+.dir-a .hero-video-card.is-playing:hover .hero-video-play {
+  opacity: 0.85;
+  pointer-events: auto;
+}
+.dir-a .hero-video-caption {
+  position: absolute; bottom: 16px; left: 16px;
+  z-index: 2;
+  display: inline-block;
+  max-width: calc(100% - 32px);
+  padding: 7px 12px;
+  background: rgba(26, 21, 37, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+  transition: opacity 0.3s ease;
+}
+
 /* Pillar visuals, identical to B but slightly recoloured for the warm photo bg */
 .dir-a .hub {
   position: relative;

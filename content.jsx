@@ -1375,6 +1375,79 @@ function PortalVideoCard() {
   );
 }
 
+// =====================================================
+// HOMEPAGE HERO VIDEO — click-to-play tile that lives in
+// the right column of the hero grid (formerly HeroCarousel).
+// Same playback pattern as the Portal page's PortalVideoFrame
+// so behaviour is consistent across the site, but the markup
+// is scoped to `.hero-video-card` so it inherits hero styling
+// from dir-a.css rather than portal.css (which isn't loaded
+// on the homepage).
+// =====================================================
+function HeroVideoCard({
+  src = 'assets/padua-portal-tour-licensee.mp4',
+  poster = 'assets/padua-portal-tour-licensee-poster.jpg',
+  caption = 'THE PADUA PORTAL · 6-MIN TOUR',
+  length = '6 min',
+}) {
+  const [hovered, setHovered] = React.useState(false);
+  const [playing, setPlaying] = React.useState(false);
+  const [ready, setReady] = React.useState(false);
+  const ref = React.useRef(null);
+  const togglePlay = React.useCallback(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (v.paused) v.play(); else v.pause();
+  }, []);
+  return (
+    <div
+      className={`hero-video-card${hovered ? ' is-hovered' : ''}${playing ? ' is-playing' : ''}${ready ? ' is-ready' : ''}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={togglePlay}
+      role="button"
+      tabIndex={0}
+      aria-label={playing ? 'Pause Padua Portal tour' : 'Play Padua Portal tour'}
+    >
+      <video
+        ref={ref}
+        src={src}
+        poster={poster}
+        playsInline
+        preload="metadata"
+        onLoadedMetadata={() => setReady(true)}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+      />
+      <div className="hero-video-tint" aria-hidden="true" />
+      <div className="hero-video-meta">
+        <span className="hero-video-length">{length}</span>
+      </div>
+      <button
+        type="button"
+        className="hero-video-play"
+        aria-label={playing ? 'Pause tour' : 'Play tour'}
+        onClick={(e) => { e.stopPropagation(); togglePlay(); }}
+      >
+        {playing ? (
+          <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="rgba(255,255,255,0.96)" />
+            <rect x="22" y="20" width="6" height="24" fill="#1a1525" rx="1.2" />
+            <rect x="36" y="20" width="6" height="24" fill="#1a1525" rx="1.2" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="31" fill="rgba(255,255,255,0.96)" />
+            <path d="M26 20 L46 32 L26 44 Z" fill="#1a1525" />
+          </svg>
+        )}
+      </button>
+      <div className="hero-video-caption">{caption}</div>
+    </div>
+  );
+}
+
 // Share to window scope so other Babel scripts can read them
 Object.assign(window, {
   PaduaLogo,
@@ -1384,6 +1457,7 @@ Object.assign(window, {
   DiffTriangle,
   DiffIcon,
   HeroCarousel,
+  HeroVideoCard,
   PillarHub,
   PillarBars,
   PillarDevice,

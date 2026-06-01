@@ -182,16 +182,13 @@ function DirectionA({ show, navVariant }) {
               <p className="hero-sub">
                 Through the <strong>Padua Advice Platform</strong>. A connected suite of software and services purpose-built for the Australian advice industry.
               </p>
-              <div className="hero-cta-row">
-                <a className="hero-link" href="#watch">Watch the 6-minute video</a>
-              </div>
             </div>
 
             <div
               className="hero-carousel-wrap"
               style={{ transform: carouselTransform, opacity: carouselOpacity }}
             >
-              <HeroCarousel pillars={c.pillars} />
+              <HeroVideoCard />
             </div>
           </div>
           <div className="hero-loc">SUNRISE · KIAMA</div>
