@@ -2020,3 +2020,338 @@
 @media (max-width: 640px) {
   .wd-dash-caption { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
+
+
+/* ================================================================
+   STEVEAI "How it works" — 3x2 grid with filled gradient markers
+   v3 design changed this from a 4-col single row (which overflowed
+   to a 2nd row of 2 stragglers) to a clean 3-col × 2-row layout
+   with per-row connectors instead of a single full-width line.
+   Source: Website redesign (3) export, 1 Jun 2026
+   ================================================================ */
+.dir-a .module-discover .module-flow-grid {
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 56px;
+}
+.dir-a .module-discover .module-flow-grid::before { display: none; }
+
+/* Filled gradient markers replace the hollow purple-outline circles. */
+.dir-a .module-discover .module-flow-n {
+  background: linear-gradient(135deg, var(--m-accent), var(--m-accent-2));
+  border-color: transparent;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+
+/* Per-row connector line linking each step. Last item in each row
+   (every 3rd) doesn't get a trailing connector. */
+.dir-a .module-discover .module-flow-step::after {
+  content: "";
+  position: absolute;
+  top: 23px;
+  left: 26px;
+  right: -24px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--m-accent), var(--m-accent-2));
+  opacity: .28;
+  border-radius: 1px;
+  z-index: 0;
+}
+.dir-a .module-discover .module-flow-step:nth-child(3n)::after { display: none; }
+
+
+/* ================================================================
+   PROBLEM / SOLUTION stat band (WealthAI)
+   Two side-by-side cards with an arrow between them. Solution card
+   picks up the module's brand accent on figure + border tint.
+   Source: Website redesign (3) export, 1 Jun 2026
+   ================================================================ */
+.dir-a .module-statband {
+  background: var(--paper-soft);
+  position: relative;
+}
+.module-statband-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 28px;
+}
+.module-statband-card {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 40px 34px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.module-statband.is-in-view .module-statband-card { opacity: 1; transform: none; }
+.module-statband.is-in-view .module-statband-solution { transition-delay: .12s; }
+.module-statband-solution {
+  border-color: color-mix(in srgb, var(--m-accent) 35%, var(--line));
+  background:
+    radial-gradient(ellipse 120% 90% at 100% 0%, color-mix(in srgb, var(--m-accent-3) 22%, transparent), transparent 60%),
+    var(--paper);
+}
+.module-statband-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  color: var(--grey);
+}
+.module-statband-solution .module-statband-eyebrow { color: var(--m-accent); }
+.module-statband-figure {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 7vw, 92px);
+  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.module-statband-solution .module-statband-figure { color: var(--m-accent); }
+.module-statband-label {
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 14px;
+  text-wrap: balance;
+}
+.module-statband-p {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--ink-soft, #4a4654);
+  margin: 0 0 22px;
+}
+.module-statband-cite {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: var(--grey);
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.module-statband-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--m-accent);
+}
+@media (max-width: 860px) {
+  .module-statband-grid { grid-template-columns: 1fr; gap: 18px; }
+  .module-statband-arrow { transform: rotate(90deg); padding: 4px 0; }
+}
+
+
+/* ================================================================
+   V3 PORT — class rules referenced in module-page.jsx that were
+   missing from our module.css. Pulled verbatim from (3).
+   ================================================================ */
+
+/* NOT FOUND in (3): .flourish-chart */
+
+/* --- .module-art-fill (1 rule(s)) --- */
+.module-art-fill .fill-stream { animation: none; }
+
+/* NOT FOUND in (3): .module-art-steveai-thoughts */
+
+/* NOT FOUND in (3): .module-everest-listintro */
+
+/* NOT FOUND in (3): .module-hero-badge-main */
+
+/* NOT FOUND in (3): .module-role-main */
+
+/* NOT FOUND in (3): .module-role-team */
+
+/* NOT FOUND in (3): .module-role-type */
+
+/* NOT FOUND in (3): .wd-dash-caption-label */
+
+/* .module-everest-listintro */
+.module-everest-listintro {
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--ink);
+  font-weight: 500;
+  margin: 0 0 18px;
+  text-wrap: pretty;
+}
+
+/* SteveAI, "Thought bubbles" variant: orbs + speech-bubble notes drifting in.
+   Reuses .module-art-steveai-thoughts as the alias for .module-art-steveai
+   styling so orbs and connector lines inherit, with five small chat bubbles
+   carrying captured-note text floating across the panel. */
+.module-art-steveai-thoughts {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.module-art-steveai-thoughts .orb,
+.module-art-steveai-thoughts .orb-lines { will-change: transform, opacity; }
+/* Inherit orb sizing/positions from the base orb variant by reusing classes */
+.module-art-steveai-thoughts .orb { position: absolute; }
+.module-art-steveai-thoughts .orb-a,
+.module-art-steveai-thoughts .orb-b,
+.module-art-steveai-thoughts .orb-c,
+.module-art-steveai-thoughts .orb-d,
+.module-art-steveai-thoughts .orb-e,
+.module-art-steveai-thoughts .orb-f {
+  /* Trim the orb count down so the bubbles have room to breathe */
+  opacity: 0.55;
+}
+
+.thought-bubble {
+  position: absolute;
+  display: inline-flex;
+  padding: 12px 18px 14px;
+  border-radius: 3px;
+  background: #fff5d6;
+  color: #1a1525;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+  opacity: 0;
+  box-shadow:
+    0 10px 18px -10px rgba(26, 21, 37, 0.55),
+    0 2px 3px rgba(26, 21, 37, 0.18);
+  animation: thought-rise 18s ease-in-out infinite;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+.thought-bubble::before {
+  /* tiny tape strip across the top — instant "sticky note" cue */
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 28px;
+  height: 8px;
+  background: rgba(180, 160, 100, 0.35);
+  border-radius: 1px;
+}
+.thought-bubble-text { display: inline-block; }
+
+.thought-t-1 { left: 8%;  top: 74%; animation-delay: -1s;  --rot: -3deg; }
+.thought-t-2 { left: 32%; top: 70%; animation-delay: -5s;  --rot:  2deg; }
+.thought-t-3 { left: 58%; top: 76%; animation-delay: -9s;  --rot: -1deg; }
+.thought-t-4 { left: 18%; top: 66%; animation-delay: -13s; --rot:  4deg; }
+.thought-t-5 { left: 70%; top: 72%; animation-delay: -16s; --rot: -2deg; }
+.thought-t-6 { left: 48%; top: 64%; animation-delay: -20s; --rot:  3deg; }
+
+@keyframes thought-rise {
+  0%   { transform: translate3d(0, 40px, 0) rotate(var(--rot, 0deg)); opacity: 0; }
+  12%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translate3d(32px, -300px, 0) rotate(calc(var(--rot, 0deg) + 4deg)); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thought-bubble { animation: none; opacity: 1; transform: translate3d(0, -80px, 0); }
+}
+
+/* Apply same orb + orb-lines styling to the thoughts variant */
+.module-art-steveai-thoughts .orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0.04) 70%);
+  filter: blur(0.5px);
+  animation: orb-drift 14s ease-in-out infinite alternate;
+}
+.module-art-steveai-thoughts .orb-a { width: 220px; height: 220px; top: 15%;  left: 8%;  animation-delay:  -1s; opacity: .7; }
+.module-art-steveai-thoughts .orb-b { width: 140px; height: 140px; top: 45%;  left: 22%; animation-delay:  -4s; opacity: .85;}
+.module-art-steveai-thoughts .orb-c { width: 280px; height: 280px; top: 25%;  right: 8%; animation-delay:  -7s; opacity: .6; }
+.module-art-steveai-thoughts .orb-d { width: 90px;  height: 90px;  top: 65%;  right: 28%; animation-delay: -2s; opacity: .9; }
+.module-art-steveai-thoughts .orb-e { width: 60px;  height: 60px;  top: 75%;  left: 48%; animation-delay: -10s; opacity: .8; }
+.module-art-steveai-thoughts .orb-f { width: 180px; height: 180px; bottom:-12%; left: 55%; animation-delay: -6s; opacity: .55;}
+.module-art-steveai-thoughts .orb-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.module-art-steveai-thoughts .orb-lines path {
+  fill: none;
+  stroke: rgba(255,255,255,0.18);
+  stroke-width: 1.4;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  animation: orb-line-draw 4s ease-out forwards, orb-line-flow 18s linear 4s infinite;
+}
+.module-art-steveai-thoughts .orb-lines path:nth-child(2) { animation-delay: .3s, 4.3s; stroke: rgba(245,213,52,0.32); }
+.module-art-steveai-thoughts .orb-lines path:nth-child(3) { animation-delay: .6s, 4.6s; stroke: rgba(255,255,255,0.1); }
+
+
+/* Transition (amber): bubble-filling artwork. Settled dots inside the bubble
+   gently breathe; streaming dots animate in from off-screen along curved
+   paths and fade out at the centre. */
+.module-art-fill svg { width: 100%; height: 100%; display: block; }
+.module-art-fill .fill-dot { fill: rgba(255, 245, 220, 0.85); animation: fill-dot-breathe 4s ease-in-out infinite; }
+.module-art-fill .fill-dot-0 { cx: 430.0; cy: 250.0; animation-delay: 0.00s; }
+.module-art-fill .fill-dot-1 { cx: 422.9; cy: 289.9; animation-delay: -0.23s; }
+.module-art-fill .fill-dot-2 { cx: 368.8; cy: 303.6; animation-delay: -0.46s; }
+.module-art-fill .fill-dot-3 { cx: 322.0; cy: 249.6; animation-delay: -0.69s; }
+.module-art-fill .fill-dot-4 { cx: 353.6; cy: 168.2; animation-delay: -0.92s; }
+.module-art-fill .fill-dot-5 { cx: 415.2; cy: 224.2; animation-delay: -1.15s; }
+.module-art-fill .fill-dot-6 { cx: 446.0; cy: 250.5; animation-delay: -1.38s; }
+.module-art-fill .fill-dot-7 { cx: 430.3; cy: 304.1; animation-delay: -1.61s; }
+.module-art-fill .fill-dot-8 { cx: 360.0; cy: 317.0; animation-delay: -1.84s; }
+.module-art-fill .fill-dot-9 { cx: 306.0; cy: 248.4; animation-delay: -2.07s; }
+.module-art-fill .fill-dot-10 { cx: 385.5; cy: 223.7; animation-delay: -2.30s; }
+.module-art-fill .fill-dot-11 { cx: 423.8; cy: 210.6; animation-delay: -2.53s; }
+.module-art-fill .fill-dot-12 { cx: 462.0; cy: 251.4; animation-delay: -2.76s; }
+.module-art-fill .fill-dot-13 { cx: 437.3; cy: 318.5; animation-delay: -2.99s; }
+.module-art-fill .fill-dot-14 { cx: 350.9; cy: 330.1; animation-delay: -3.22s; }
+.module-art-fill .fill-dot-15 { cx: 370.0; cy: 249.2; animation-delay: -3.45s; }
+.module-art-fill .fill-dot-16 { cx: 378.2; cy: 209.5; animation-delay: -3.68s; }
+.module-art-fill .fill-dot-17 { cx: 432.7; cy: 197.3; animation-delay: -3.91s; }
+
+@keyframes fill-dot-breathe {
+  0%, 100% { opacity: 0.55; r: 2.6; }
+  50%      { opacity: 1;    r: 3.4; }
+}
+
+/* Streaming dots: each takes ~9s to travel from off-screen to the bubble centre,
+   then fades. Staggered so the flow is constant. */
+.module-art-fill .fill-stream { opacity: 0; animation: fill-stream-arrive 9s linear infinite; }
+.module-art-fill .fill-stream-0 { --sx: -40; --sy: 80; cx: -40; cy: 80; animation-delay: 0.00s; }
+.module-art-fill .fill-stream-1 { --sx: 840; --sy: 133; cx: 840; cy: 133; animation-delay: -0.75s; }
+.module-art-fill .fill-stream-2 { --sx: -40; --sy: 186; cx: -40; cy: 186; animation-delay: -1.50s; }
+.module-art-fill .fill-stream-3 { --sx: 840; --sy: 239; cx: 840; cy: 239; animation-delay: -2.25s; }
+.module-art-fill .fill-stream-4 { --sx: -40; --sy: 292; cx: -40; cy: 292; animation-delay: -3.00s; }
+.module-art-fill .fill-stream-5 { --sx: 840; --sy: 345; cx: 840; cy: 345; animation-delay: -3.75s; }
+.module-art-fill .fill-stream-6 { --sx: -40; --sy: 398; cx: -40; cy: 398; animation-delay: -4.50s; }
+.module-art-fill .fill-stream-7 { --sx: 840; --sy: 111; cx: 840; cy: 111; animation-delay: -5.25s; }
+.module-art-fill .fill-stream-8 { --sx: -40; --sy: 164; cx: -40; cy: 164; animation-delay: -6.00s; }
+.module-art-fill .fill-stream-9 { --sx: 840; --sy: 217; cx: 840; cy: 217; animation-delay: -6.75s; }
+.module-art-fill .fill-stream-10 { --sx: -40; --sy: 270; cx: -40; cy: 270; animation-delay: -7.50s; }
+.module-art-fill .fill-stream-11 { --sx: 840; --sy: 323; cx: 840; cy: 323; animation-delay: -8.25s; }
+
+@keyframes fill-stream-arrive {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  5%   { opacity: 1; }
+  85%  { transform: translate(calc((400 - var(--sx)) * 1px), calc((250 - var(--sy)) * 1px)); opacity: 1; }
+  100% { transform: translate(calc((400 - var(--sx)) * 1px), calc((250 - var(--sy)) * 1px)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .module-art-fill .fill-dot,
+  .module-art-fill .fill-stream { animation: none; }
+}
+
+
+@keyframes orb-drift {
+  0%   { translate: 0 0; }
+
+@keyframes orb-line-draw { to { stroke-dashoffset: 0; }
+
+@keyframes orb-line-flow {
+  0%   { stroke-dashoffset: 0; }
