@@ -548,7 +548,7 @@ function PaduaNav({ variant = 'streams' }) {
               <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
             </div>
             <div className="nav-mobile-section">
-              <div className="nav-mobile-h">Advice services</div>
+              <div className="nav-mobile-h">Advice Generation Services</div>
               <a className="nav-mobile-link" href="Paraplanning.html" onClick={() => setMobileOpen(false)}>Paraplanning</a>
               <a className="nav-mobile-link" href="transition-management.html" onClick={() => setMobileOpen(false)}>Transition Management</a>
             </div>
