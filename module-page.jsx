@@ -40,7 +40,6 @@ const MODULE_COPY_BY_KEY = {
     accentName: 'SteveAI',
     productName: 'Padua SteveAI',
     badge: 'Coming soon',
-    badgeNote: 'currently being tested internally',
     productTagline: 'The AI assistant for advice.',
     eyebrow: '',
     intro: 'An AI assistant that works alongside your team across the advice journey. SteveAI records and transcribes your meetings and turns them into structured, compliant file notes, so advisers, paraplanners and support staff spend less time on admin and more time with clients.',
