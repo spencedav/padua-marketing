@@ -12,8 +12,8 @@ const CURATED_NEWS = [
   // out to Financial Standard / LinkedIn. Keeps users on-site, gives
   // each piece an OG-image-sharable URL.
   { kind: 'article',  title: 'Division 296: A practical guide',                                              href: 'division-296.html', date: '4 May 2026', image: 'assets/division-296.jpg', source: 'Financial Standard', authors: 'Anne-Marie Esler & Rudy Haddad' },
-  { kind: 'event',    title: 'Matt Esler speaks at SIAA 2026: the technology-enabled advice plenary',     href: 'siaa-2026.html', date: '20 May 2026', image: 'assets/siaa-matt-speaking.jpg', source: 'SIAA Conference', authors: 'Park Hyatt Melbourne' },
-  { kind: 'event',    title: 'Anne-Marie Esler on AI, Tech and the Emerging Client Experience',            href: 'cfs-empowerher.html', date: '29 Apr - 1 May 2026', image: 'assets/empowerher-noosa.png', source: 'CFS EmpowerHer Summit', authors: 'Noosa' },
+  { kind: 'event',    title: 'Matt Esler speaks at SIAA 2026: the technology-enabled advice plenary',     href: 'siaa-2026.html', date: '20 May 2026', image: 'assets/siaa-matt-speaking.jpg', source: 'SIAA Conference', authors: 'Matthew Esler' },
+  { kind: 'event',    title: 'Anne-Marie Esler on AI, Tech and the Emerging Client Experience',            href: 'cfs-empowerher.html', date: '29 Apr - 1 May 2026', image: 'assets/empowerher-noosa.png', source: 'CFS EmpowerHer Summit', authors: 'Anne-Marie Esler' },
 ];
 const CURATED_RESOURCES = [
   // Same — link to the local resource landing pages, which carry the
