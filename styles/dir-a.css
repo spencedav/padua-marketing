@@ -1421,14 +1421,23 @@
   display: flex; flex-direction: column; justify-content: center;
 }
 .dir-a .eco-portal-body .eyebrow { margin-bottom: 14px; }
-.dir-a .eco-portal-body h3 {
+.dir-a .eco-portal-title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 30px;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
-  margin-bottom: 16px;
+  font-size: clamp(34px, 3.6vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin: 0 0 10px;
   color: var(--ink);
+}
+.dir-a .eco-portal-body h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(20px, 1.8vw, 24px);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0 0 18px;
+  color: var(--ink-mid);
 }
 .dir-a .eco-portal-body > p {
   font-size: 15.5px;
