@@ -32,7 +32,7 @@ function ArticleHero() {
   return (
     <section className="article-hero" data-screen-label="article-hero">
       <div className="container">
-        <a className="article-back" href="/News%20%26%20Insights">
+        <a className="article-back" href="/news-insights">
           <span aria-hidden="true">←</span> All news &amp; insights
         </a>
         <div className="article-eyebrow">{kindLabel}</div>
@@ -119,7 +119,7 @@ function ArticleNotFound() {
   return (
     <section className="article-hero" data-screen-label="article-missing">
       <div className="container">
-        <a className="article-back" href="/News%20%26%20Insights">
+        <a className="article-back" href="/news-insights">
           <span aria-hidden="true">←</span> All news &amp; insights
         </a>
         <div className="article-eyebrow">Not found</div>
