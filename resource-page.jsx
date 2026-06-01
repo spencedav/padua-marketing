@@ -89,6 +89,73 @@ const RESOURCE_HREF = {
   eofySuper: 'eofy-super-strategies.html',
 };
 
+const RP_KIND_LABEL = {
+  article: 'Article', event: 'Event', podcast: 'Podcast',
+  webinar: 'Webinar', report: 'Report', whitepaper: 'Whitepaper',
+};
+function formatBridgedDateRP(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+function resourceToCard(key, entry) {
+  return {
+    title: entry.title,
+    kind: entry.kind || 'report',
+    date: entry.date || '',
+    href: RESOURCE_HREF[key] || '#',
+    excerpt: (entry.standfirst || '').slice(0, 140),
+  };
+}
+function bridgedToCardRP(a) {
+  return {
+    title: a.title,
+    kind: a.kind || 'article',
+    date: formatBridgedDateRP(a.date),
+    href: '/news-insights/' + a.slug,
+    excerpt: a.excerpt || '',
+  };
+}
+
+// "Keep reading" — 3 related cards. Pool = the two other resources +
+// any bridged PADUA_ARTICLES of kind=report/whitepaper (if loaded).
+// Same visual pattern as the bridged-news article-related section.
+function ResourceRelated() {
+  const currentKey = window.__PADUA_RESOURCE;
+  const others = Object.entries(RESOURCE_COPY)
+    .filter(([key]) => key !== currentKey)
+    .map(([key, entry]) => resourceToCard(key, entry));
+  const bridgedAll = (typeof window !== 'undefined' && window.PADUA_ARTICLES) || [];
+  const bridged = bridgedAll
+    .filter((a) => a.kind === 'report' || a.kind === 'whitepaper')
+    .map(bridgedToCardRP);
+  const pool = [...others, ...bridged];
+  if (!pool.length) return null;
+  const related = pool.slice(0, 3);
+  return (
+    <section className="article-related" data-screen-label="article-related">
+      <div className="container">
+        <div className="article-related-head">
+          <div className="eyebrow">Keep reading</div>
+        </div>
+        <div className="article-related-grid">
+          {related.map((c) => (
+            <a key={c.href} className="article-related-card" href={c.href}>
+              <div className="article-related-meta">
+                <span className="article-related-kind">{RP_KIND_LABEL[c.kind] || 'Insight'}</span>
+                {c.date && <span className="article-related-date">{c.date}</span>}
+              </div>
+              <h3 className="article-related-title">{c.title}</h3>
+              {c.excerpt && <p className="article-related-excerpt">{c.excerpt}</p>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ResourcePage() {
   const r = RESOURCE;
   const next = RESOURCE_COPY[r.next];
@@ -131,15 +198,7 @@ function ResourcePage() {
         </div>
       </article>
 
-      {next && (
-        <nav className="article-next" aria-label="More resources">
-          <a className="article-next-link" href={RESOURCE_HREF[r.next]}>
-            <span className="article-next-label">next</span>
-            <span className="article-next-title">{next.title}</span>
-            <span className="article-next-arrow" aria-hidden="true">→</span>
-          </a>
-        </nav>
-      )}
+      <ResourceRelated />
     </main>
   );
 }

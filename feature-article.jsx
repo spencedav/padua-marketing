@@ -62,6 +62,86 @@ const ARTICLE_HREF = {
   empowerher: 'cfs-empowerher.html',
 };
 
+const FA_KIND_LABEL = {
+  article: 'Article',
+  event: 'Event',
+  podcast: 'Podcast',
+  webinar: 'Webinar',
+  report: 'Report',
+  whitepaper: 'Whitepaper',
+};
+
+function formatBridgedDateFA(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// Normalise an ARTICLE_COPY entry into a related-card shape.
+function featureToCard(key, entry) {
+  return {
+    title: entry.title,
+    kind: entry.kind || 'article',
+    date: entry.date || '',
+    href: ARTICLE_HREF[key] || '#',
+    excerpt: (entry.standfirst || '').slice(0, 140),
+  };
+}
+
+// Normalise a bridged PADUA_ARTICLES entry into the same shape.
+function bridgedToCard(a) {
+  return {
+    title: a.title,
+    kind: a.kind || 'article',
+    date: formatBridgedDateFA(a.date),
+    href: '/news-insights/' + a.slug,
+    excerpt: a.excerpt || '',
+  };
+}
+
+// Bottom-of-page "Keep reading" — 3 related cards. Pool = the two
+// other ARTICLE_COPY entries plus the bridged PADUA_ARTICLES (if
+// articles.jsx is loaded). Prefer items with matching kind; fall
+// back to fill 3 from the rest.
+function FeatureArticleRelated() {
+  const currentKey = window.__PADUA_ARTICLE;
+  const others = Object.entries(ARTICLE_COPY)
+    .filter(([key]) => key !== currentKey)
+    .map(([key, entry]) => featureToCard(key, entry));
+  const bridged = (typeof window !== 'undefined' && window.PADUA_ARTICLES)
+    ? window.PADUA_ARTICLES.map(bridgedToCard)
+    : [];
+  const pool = [...others, ...bridged];
+  if (!pool.length) return null;
+  const currentKind = ARTICLE.kind || 'article';
+  const sameKind = pool.filter((p) => p.kind === currentKind).slice(0, 3);
+  const fill = pool.filter((p) => p.kind !== currentKind).slice(0, 3 - sameKind.length);
+  const related = [...sameKind, ...fill].slice(0, 3);
+  if (!related.length) return null;
+  return (
+    <section className="article-related" data-screen-label="article-related">
+      <div className="container">
+        <div className="article-related-head">
+          <div className="eyebrow">Keep reading</div>
+        </div>
+        <div className="article-related-grid">
+          {related.map((c) => (
+            <a key={c.href} className="article-related-card" href={c.href}>
+              <div className="article-related-meta">
+                <span className="article-related-kind">{FA_KIND_LABEL[c.kind] || 'Insight'}</span>
+                {c.date && <span className="article-related-date">{c.date}</span>}
+              </div>
+              <h3 className="article-related-title">{c.title}</h3>
+              {c.excerpt && <p className="article-related-excerpt">{c.excerpt}</p>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ArticlePage() {
   const a = ARTICLE;
   const next = ARTICLE_COPY[a.next];
@@ -106,15 +186,7 @@ function ArticlePage() {
         </div>
       </article>
 
-      {next && (
-        <nav className="article-next" aria-label="Keep reading">
-          <a className="article-next-link" href={ARTICLE_HREF[a.next]}>
-            <span className="article-next-label">next</span>
-            <span className="article-next-title">{next.title}</span>
-            <span className="article-next-arrow" aria-hidden="true">→</span>
-          </a>
-        </nav>
-      )}
+      <FeatureArticleRelated />
 
       {a.zoomable && zoomed && (
         <div className="article-lightbox" onClick={() => setZoomed(false)} role="dialog" aria-label={a.title}>
