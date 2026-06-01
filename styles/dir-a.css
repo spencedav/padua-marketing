@@ -1638,13 +1638,14 @@
   flex-shrink: 0;
   object-fit: contain;
   margin-right: 64px; /* uniform spacing carried per-item → seamless -50% loop */
-  filter: grayscale(1);
-  opacity: 0.6;
-  transition: opacity .25s ease, filter .25s ease;
+  /* Client logos now always in full colour (per designer brief);
+     hover keeps a subtle lift for affordance. */
+  opacity: 1;
+  transition: opacity .25s ease, transform .25s ease;
 }
 .dir-a .logo-img:hover {
-  filter: grayscale(0);
-  opacity: 1;
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
 /* ===== FOOTER (light variant) ===== */
