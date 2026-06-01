@@ -45,9 +45,11 @@ const NAV_AUDIENCES = [
         title: 'Modular Components',
         items: [
           { type: 'label', label: 'Part of the Padua Portal' },
-          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html' },
+          // SteveAI moved to last of this group: it's 'Coming soon' so we
+          // don't want it to be the first thing visitors click in the nav.
           { h: 'WealthX', p: 'Open banking', href: 'WealthX.html' },
           { h: 'WealthAI', p: 'Video & statements', href: 'WealthAI.html' },
+          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html' },
           { type: 'label', label: 'Standalone' },
           { h: 'WealthData', p: 'Adviser movement data', href: 'WealthData.html' },
         ],
@@ -84,9 +86,11 @@ const NAV_AUDIENCES = [
         title: 'Modular Components',
         items: [
           { type: 'label', label: 'Part of the Padua Portal' },
-          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html' },
+          // SteveAI moved to last of this group: it's 'Coming soon' so we
+          // don't want it to be the first thing visitors click in the nav.
           { h: 'WealthX', p: 'Open banking', href: 'WealthX.html' },
           { h: 'WealthAI', p: 'Personalised member video', href: 'WealthAI.html' },
+          { h: 'SteveAI', p: 'AI advice assistant', href: 'SteveAI.html' },
           { type: 'label', label: 'Standalone' },
           { h: 'WealthData', p: 'Adviser movement data', href: 'WealthData.html' },
         ],
@@ -537,10 +541,11 @@ function PaduaNav({ variant = 'streams' }) {
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Padua Portal</div>
               <a className="nav-mobile-link" href="padua-portal.html" onClick={() => setMobileOpen(false)}>Portal overview</a>
-              <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
+              {/* SteveAI moved to last: it's 'Coming soon', don't lead with it. */}
               <a className="nav-mobile-link" href="WealthX.html" onClick={() => setMobileOpen(false)}>WealthX</a>
               <a className="nav-mobile-link" href="WealthAI.html" onClick={() => setMobileOpen(false)}>WealthAI</a>
               <a className="nav-mobile-link" href="WealthData.html" onClick={() => setMobileOpen(false)}>WealthData</a>
+              <a className="nav-mobile-link" href="SteveAI.html" onClick={() => setMobileOpen(false)}>SteveAI</a>
             </div>
             <div className="nav-mobile-section">
               <div className="nav-mobile-h">Advice services</div>
